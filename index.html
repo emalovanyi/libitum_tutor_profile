@@ -1,0 +1,2551 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Кабінет репетитора — Libitum</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════
+   LIBITUM DESIGN SYSTEM — TUTOR CABINET
+   Teal #14B8A6 / #0D9488 / #0F766E — primary
+   Amber #F59E0B — магазин / рейтинги
+   Violet #8B5CF6 — AI
+   Fraunces (display) + Manrope (body)
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --teal-400:#2DD4BF;--teal-500:#14B8A6;--teal-600:#0D9488;--teal-700:#0F766E;
+  --teal-50:#F0FDFA;--teal-100:#CCFBF1;
+  --amber:#F59E0B;--amber-50:#FFFBEB;--amber-100:#FDE68A;
+  --violet:#8B5CF6;--violet-50:#F5F3FF;--violet-100:#DDD6FE;
+  --bg:#F8FAFB;--ink:#0F172A;--ink-2:#1E293B;
+  --muted:#64748B;--muted-2:#94A3B8;--border:#E2E8F0;
+  --red:#DC2626;--red-50:#FEF2F2;--blue:#3B82F6;--blue-50:#EFF6FF;--green:#16A34A;--green-50:#F0FDF4;
+  --r-sm:10px;--r:14px;--r-lg:20px;--r-xl:26px;
+  --sh-sm:0 1px 3px rgba(15,23,42,.06);--sh:0 4px 16px rgba(15,23,42,.08);
+  --sh-lg:0 10px 40px rgba(15,23,42,.10);--sh-xl:0 20px 60px rgba(15,23,42,.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,select,textarea{font-family:'Manrope',sans-serif}
+:focus-visible{outline:2px solid var(--teal-500);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ══ APP SHELL ══ */
+.app{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sb{width:264px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:220;display:flex;flex-direction:column;
+   background:linear-gradient(175deg,#0F766E 0%,#0C534E 55%,#0A3B38 100%);color:#fff;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sb-head{padding:18px 18px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sb-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.sb-logo-ic{width:34px;height:34px;background:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--teal-700);font-family:'Fraunces',serif;font-weight:900;font-size:16px;flex-shrink:0}
+.sb-logo-tx{font-family:'Fraunces',serif;font-weight:900;font-size:19px;letter-spacing:-.4px}
+.sb-logo-sub{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:1px}
+.sb-x{display:none;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);border:none;color:#fff;cursor:pointer;align-items:center;justify-content:center;font-size:15px}
+
+/* profile mini */
+.sb-me{margin:0 14px 12px;padding:12px;border-radius:var(--r);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+.sb-me-top{display:flex;align-items:center;gap:10px}
+.sb-me img{width:40px;height:40px;border-radius:11px;object-fit:cover;flex-shrink:0}
+.sb-me-n{font-size:13px;font-weight:800;line-height:1.2}
+.sb-me-r{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px}
+.sb-me-r i{color:var(--amber);font-size:9px}
+.sb-streak{margin-top:11px;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:11px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3)}
+.sb-streak-ic{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#FB923C;font-size:14px;flex-shrink:0}
+.sb-streak-n{font-size:13px;font-weight:800;line-height:1.15}
+.sb-streak-n b{font-family:'Fraunces',serif;font-weight:900}
+.sb-streak-d{font-size:10.5px;color:rgba(255,255,255,.55);margin-top:1px;font-weight:700}
+
+.sb-nav{flex:1;overflow-y:auto;padding:4px 10px 10px;scrollbar-width:thin}
+.sb-nav::-webkit-scrollbar{width:5px}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:5px}
+.sb-lbl{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:12px 10px 6px}
+.sb-i{width:100%;display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;background:none;border:none;cursor:pointer;
+     color:rgba(255,255,255,.72);font-size:14px;font-weight:700;text-align:left;transition:all .18s;margin-bottom:2px}
+.sb-i i:first-child{width:18px;text-align:center;font-size:14px;flex-shrink:0}
+.sb-i:hover{background:rgba(255,255,255,.09);color:#fff}
+.sb-i.on{background:rgba(255,255,255,.15);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.14)}
+.sb-i.on.ai{background:rgba(139,92,246,.34);box-shadow:inset 0 0 0 1.5px rgba(196,181,253,.55)}
+.sb-i.on.shop{background:rgba(245,158,11,.3);box-shadow:inset 0 0 0 1.5px rgba(253,230,138,.5)}
+.sb-cnt{margin-left:auto;background:var(--teal-400);color:#06312C;border-radius:20px;padding:1px 8px;font-size:11px;font-weight:900;flex-shrink:0}
+.sb-cnt.v{background:var(--violet-100);color:#5B21B6}
+.sb-lock{margin-left:auto;font-size:10px;color:rgba(255,255,255,.4)}
+
+.sb-foot{padding:12px 14px 16px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-help{border-radius:var(--r);padding:12px 13px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.sb-help-t{font-size:12px;font-weight:800;margin-bottom:5px}
+.sb-help-d{font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:10px}
+.sb-help-cta{width:100%;padding:9px;border-radius:11px;border:none;cursor:pointer;background:#fff;color:var(--teal-700);font-size:12px;font-weight:800}
+.sb-logout{width:100%;margin-top:10px;padding:9px;border-radius:11px;background:none;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.7);font-size:12px;font-weight:700;cursor:pointer}
+.sb-logout:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.sb-ov{display:none;position:fixed;inset:0;background:rgba(6,49,44,.55);z-index:210}
+.sb-ov.on{display:block}
+
+/* ── MAIN ── */
+.main{flex:1;margin-left:264px;min-width:0;display:flex;flex-direction:column}
+.tb{position:sticky;top:0;z-index:150;height:64px;display:flex;align-items:center;padding:0 24px;
+   background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.tb-in{flex:1;display:flex;align-items:center;gap:14px;width:100%;max-width:1360px;margin:0 auto;min-width:0}
+.burger{display:none;width:40px;height:40px;border-radius:11px;border:1.5px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+.tb-t{font-family:'Fraunces',serif;font-size:19px;font-weight:900;line-height:1.1;letter-spacing:-.4px}
+.tb-s{font-size:12px;color:var(--muted-2);font-weight:600;margin-top:2px}
+.tb-r{margin-left:auto;display:flex;align-items:center;gap:8px}
+.tb-chip{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:50px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:800;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.tb-chip i{font-size:12px}
+.tb-chip.fire i{color:#F97316}
+.tb-chip.req{border-color:var(--teal-100);background:var(--teal-50);color:var(--teal-700)}
+.tb-chip.req i{color:var(--teal-600)}
+.tb-ic{width:36px;height:36px;border-radius:50px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.tb-ic:hover{border-color:var(--teal-400);color:var(--teal-600)}
+.tb-dot{position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--red);border:1.5px solid #fff}
+.demo-sel{height:36px;padding:0 30px 0 12px;border-radius:50px;border:1.5px solid var(--border);background:#fff url("data:image/svg+xml,%3Csvg width='11' height='7' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2394A3B8' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+   -webkit-appearance:none;appearance:none;font-size:12px;font-weight:800;color:var(--ink-2);cursor:pointer}
+
+.wrap{padding:22px 24px 40px;max-width:1360px;width:100%;margin:0 auto}
+
+/* ══ PRIMITIVES ══ */
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--sh-sm);overflow:hidden}
+.card+.card{margin-top:16px}
+.ch{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ct{font-size:15px;font-weight:800;display:flex;align-items:center;gap:9px}
+.ct i{color:var(--teal-500);font-size:14px}
+.ct-s{font-size:12px;color:var(--muted-2);font-weight:600;margin-top:2px}
+.ch-r{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cb{padding:20px}
+.cb.tight{padding:14px 20px}
+.hr{height:1px;background:var(--border);margin:18px 0}
+
+.h-sec{font-family:'Fraunces',serif;font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px}
+.p-sec{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;max-width:640px}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.g-side{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;gap:10px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:12px;border:1.5px solid transparent;
+    font-size:13px;font-weight:800;cursor:pointer;transition:all .18s;white-space:nowrap}
+.btn i{font-size:12px}
+.b-pri{background:var(--teal-600);color:#fff;box-shadow:0 4px 14px rgba(13,148,136,.28)}
+.b-pri:hover{background:var(--teal-700)}
+.b-sec{background:#fff;border-color:var(--border);color:var(--ink-2)}
+.b-sec:hover{border-color:var(--teal-400);color:var(--teal-600)}
+.b-soft{background:var(--teal-50);border-color:var(--teal-100);color:var(--teal-700)}
+.b-soft:hover{background:var(--teal-100)}
+.b-amber{background:var(--amber);color:#fff;box-shadow:0 4px 14px rgba(245,158,11,.28)}
+.b-amber:hover{background:#D97706}
+.b-amber-soft{background:var(--amber-50);border-color:var(--amber-100);color:#92400E}
+.b-violet{background:var(--violet);color:#fff;box-shadow:0 4px 14px rgba(139,92,246,.3)}
+.b-violet:hover{background:#7C3AED}
+.b-violet-soft{background:var(--violet-50);border-color:var(--violet-100);color:#5B21B6}
+.b-danger{background:#fff;border-color:#FECACA;color:var(--red)}
+.b-danger:hover{background:var(--red-50)}
+.b-sm{padding:7px 13px;border-radius:10px;font-size:12px}
+.b-xs{padding:5px 10px;border-radius:9px;font-size:11px;font-weight:800}
+.b-block{width:100%}
+.b-ic{width:34px;height:34px;padding:0;border-radius:10px;background:#fff;border-color:var(--border);color:var(--muted)}
+.b-ic:hover{border-color:var(--teal-400);color:var(--teal-600)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+/* pills / tabs / chips */
+.seg{display:inline-flex;background:var(--bg);border:1.5px solid var(--border);padding:3px;border-radius:50px;gap:2px}
+.seg button{padding:7px 15px;border-radius:50px;border:none;background:none;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer;white-space:nowrap}
+.seg button.on{background:#fff;color:var(--teal-700);box-shadow:var(--sh-sm)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;padding:0 20px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:14px 14px;border:none;background:none;border-bottom:2.5px solid transparent;margin-bottom:-1px;font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tab.on{color:var(--teal-600);border-bottom-color:var(--teal-500)}
+.tab .n{background:var(--bg);color:var(--muted);border-radius:20px;padding:1px 7px;font-size:10px;font-weight:900;margin-left:5px}
+.tab.on .n{background:var(--teal-50);color:var(--teal-600)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:50px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .18s}
+.chip:hover{border-color:var(--teal-400);color:var(--teal-600)}
+.chip.on{background:var(--teal-500);border-color:var(--teal-500);color:#fff}
+.chip.on.v{background:var(--violet);border-color:var(--violet)}
+
+/* status badges */
+.st{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap}
+.st i{font-size:9px}
+.st-ok{background:var(--teal-50);color:var(--teal-700)}
+.st-warn{background:var(--amber-50);color:#92400E}
+.st-bad{background:var(--red-50);color:var(--red)}
+.st-info{background:var(--blue-50);color:#1D4ED8}
+.st-mut{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.st-v{background:var(--violet-50);color:#5B21B6}
+.tagx{display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:3px 9px;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+
+/* forms */
+.f{display:block;margin-bottom:14px}
+.lbl{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+.lbl .req{color:var(--red)}
+.hint{font-size:11px;color:var(--muted-2);margin-top:5px;line-height:1.5}
+.inp,.sel,.ta{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-weight:600;color:var(--ink);background:#fff;outline:none;transition:border-color .18s}
+.ta{resize:vertical;font-weight:500;line-height:1.6}
+.inp:focus,.sel:focus,.ta:focus{border-color:var(--teal-500)}
+.sel{-webkit-appearance:none;appearance:none;cursor:pointer;background:#fff url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2394A3B8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 13px center;padding-right:34px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cnt{font-size:11px;color:var(--muted-2);text-align:right;margin-top:4px}
+
+/* switch */
+.sw-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.sw-row:last-child{border-bottom:none}
+.sw-tx{flex:1;min-width:0}
+.sw-t{font-size:14px;font-weight:700;color:var(--ink)}
+.sw-d{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+.sw{width:46px;height:26px;border-radius:50px;background:var(--border);border:none;cursor:pointer;position:relative;flex-shrink:0;transition:background .22s}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(15,23,42,.2);transition:transform .22s}
+.sw.on{background:var(--teal-500)}
+.sw.on::after{transform:translateX(20px)}
+
+/* checkbox */
+.cx{display:flex;align-items:flex-start;gap:11px;padding:10px 0;cursor:pointer}
+.cx-b{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;transition:all .15s;margin-top:1px}
+.cx.on .cx-b{background:var(--teal-500);border-color:var(--teal-500)}
+.cx.on .cx-b::after{content:'✓'}
+.cx-t{font-size:14px;font-weight:600;color:var(--ink-2);line-height:1.45}
+.cx.on .cx-t{color:var(--muted-2);text-decoration:line-through}
+.cx-t.nodone{text-decoration:none!important}
+
+/* upload zone */
+.up{border:2px dashed var(--border);border-radius:var(--r-lg);padding:22px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.up:hover{border-color:var(--teal-400);background:var(--teal-50)}
+.up-ic{width:44px;height:44px;border-radius:13px;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:var(--teal-500);font-size:17px}
+.up-t{font-size:13px;font-weight:800;color:var(--ink-2)}
+.up-d{font-size:11px;color:var(--muted-2);margin-top:4px;line-height:1.5}
+
+/* banners */
+.bn{display:flex;align-items:flex-start;gap:12px;padding:15px 17px;border-radius:var(--r-lg);border:1.5px solid;margin-bottom:16px}
+.bn-ic{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.bn-t{font-size:14px;font-weight:800;margin-bottom:3px}
+.bn-d{font-size:12.5px;line-height:1.55}
+.bn-warn{background:var(--amber-50);border-color:var(--amber-100)}
+.bn-warn .bn-ic{background:#fff;color:var(--amber)}.bn-warn .bn-t{color:#78350F}.bn-warn .bn-d{color:#92400E}
+.bn-ok{background:var(--teal-50);border-color:var(--teal-100)}
+.bn-ok .bn-ic{background:#fff;color:var(--teal-600)}.bn-ok .bn-t{color:var(--teal-700)}.bn-ok .bn-d{color:var(--teal-700)}
+.bn-bad{background:var(--red-50);border-color:#FECACA}
+.bn-bad .bn-ic{background:#fff;color:var(--red)}.bn-bad .bn-t{color:#991B1B}.bn-bad .bn-d{color:#B91C1C}
+.bn-v{background:var(--violet-50);border-color:var(--violet-100)}
+.bn-v .bn-ic{background:#fff;color:var(--violet)}.bn-v .bn-t{color:#5B21B6}.bn-v .bn-d{color:#6D28D9}
+.bn-r{margin-left:auto;display:flex;gap:8px;align-items:center;flex-shrink:0}
+
+/* progress */
+.pr{height:8px;border-radius:8px;background:var(--border);overflow:hidden}
+.pr-f{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--teal-400),var(--teal-600))}
+.pr-f.v{background:linear-gradient(90deg,#A78BFA,var(--violet))}
+.pr-f.a{background:linear-gradient(90deg,#FCD34D,var(--amber))}
+
+/* metric */
+.met{background:#fff;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;box-shadow:var(--sh-sm)}
+.met-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.met-ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.met-l{font-size:11px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em}
+.met-v{font-family:'Fraunces',serif;font-size:27px;font-weight:900;line-height:1;letter-spacing:-.6px}
+.met-s{font-size:11px;color:var(--muted-2);font-weight:600;margin-top:5px}
+.met-s b{color:var(--green);font-weight:800}
+
+/* list items */
+.li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--border)}
+.li:last-child{border-bottom:none}
+.li-av{width:42px;height:42px;border-radius:12px;object-fit:cover;flex-shrink:0}
+.li-ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;background:var(--bg);color:var(--muted)}
+.li-b{flex:1;min-width:0}
+.li-t{font-size:14px;font-weight:800;line-height:1.25}
+.li-d{font-size:12px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.li-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.dotsep{width:3px;height:3px;border-radius:50%;background:var(--muted-2);display:inline-block}
+
+/* request card */
+.rq{border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;background:#fff}
+.rq+.rq{margin-top:12px}
+.rq-h{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.rq-t{font-size:15px;font-weight:800;line-height:1.25}
+.rq-m{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+.rq-p{margin-left:auto;text-align:right;flex-shrink:0}
+.rq-price{font-family:'Fraunces',serif;font-size:20px;font-weight:900}
+.rq-note{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:11px 13px;font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:12px}
+.sla{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:900;background:var(--amber-50);color:#92400E;border:1px solid var(--amber-100)}
+.sla.hot{background:var(--red-50);color:var(--red);border-color:#FECACA}
+.rq-a{display:flex;gap:8px;flex-wrap:wrap}
+
+/* stepper */
+.step{display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.step-i{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--muted-2)}
+.step-d{width:18px;height:18px;border-radius:50%;background:var(--border);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px}
+.step-i.done{color:var(--teal-700)}.step-i.done .step-d{background:var(--teal-500)}
+.step-i.cur{color:var(--ink)}.step-i.cur .step-d{background:var(--ink)}
+.step-l{width:16px;height:2px;background:var(--border);border-radius:2px}
+
+/* calendar */
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.wk-col{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:8px;min-height:190px}
+.wk-col.today{border-color:var(--teal-400);background:var(--teal-50)}
+.wk-col.drop{border-color:var(--teal-500);border-style:dashed;background:var(--teal-50)}
+.wk-d{font-size:11px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em;text-align:center;margin-bottom:8px}
+.wk-d b{display:block;font-family:'Fraunces',serif;font-size:16px;color:var(--ink);letter-spacing:0}
+.ls{background:#fff;border:1.5px solid var(--border);border-left:3px solid var(--teal-500);border-radius:10px;padding:7px 8px;margin-bottom:6px;cursor:grab;box-shadow:var(--sh-sm)}
+.ls:active{cursor:grabbing}
+.ls.dragging{opacity:.4}
+.ls-t{font-size:11px;font-weight:900;color:var(--teal-700)}
+.ls-n{font-size:11.5px;font-weight:700;margin-top:2px;line-height:1.3}
+.ls-s{font-size:10px;color:var(--muted-2);margin-top:3px}
+.ls.done{border-left-color:var(--green)}.ls.done .ls-t{color:var(--green)}
+.ls.moved{border-left-color:var(--amber)}.ls.moved .ls-t{color:#B45309}
+.ls.cancel{border-left-color:var(--muted-2);opacity:.6}.ls.cancel .ls-n{text-decoration:line-through}
+.slot{border:1.5px dashed var(--teal-100);background:#fff;border-radius:10px;padding:6px 8px;font-size:11px;font-weight:800;color:var(--teal-600);text-align:center;margin-bottom:6px;cursor:pointer}
+.slot.off{border-color:var(--border);color:var(--muted-2)}
+.mth{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.mth-c{aspect-ratio:1;border:1.5px solid var(--border);border-radius:11px;padding:6px;background:#fff;display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:800}
+.mth-c.dim{background:var(--bg);color:var(--muted-2)}
+.mth-c.today{border-color:var(--teal-500);background:var(--teal-50)}
+.mth-b{display:flex;gap:2px;margin-top:auto;flex-wrap:wrap}
+.mth-b span{width:6px;height:6px;border-radius:50%;background:var(--teal-500)}
+.mth-b span.g{background:var(--green)}
+.mth-b span.a{background:var(--amber)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;font-weight:700;color:var(--muted)}
+.leg i{font-size:9px;margin-right:5px}
+
+/* student card */
+.stu{border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;background:#fff;transition:all .22s}
+.stu:hover{box-shadow:var(--sh-lg);border-color:transparent;transform:translateY(-2px)}
+.stu-h{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.stu-h img{width:46px;height:46px;border-radius:13px;object-fit:cover;flex-shrink:0}
+.stu-n{font-size:14px;font-weight:800;line-height:1.2}
+.stu-m{font-size:11.5px;color:var(--muted);margin-top:3px}
+.stu-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.stu-cell{background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:9px 10px}
+.stu-cell-l{font-size:9.5px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em}
+.stu-cell-v{font-size:12.5px;font-weight:800;margin-top:3px}
+
+/* AI */
+.ai-g{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:start}
+.ai-tools{display:flex;gap:8px;flex-wrap:wrap}
+.ai-tool{flex:1;min-width:150px;border:1.5px solid var(--border);background:#fff;border-radius:var(--r);padding:13px;cursor:pointer;text-align:left;transition:all .2s}
+.ai-tool.on{border-color:var(--violet);background:var(--violet-50);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+.ai-tool-ic{width:32px;height:32px;border-radius:10px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:13px;margin-bottom:9px}
+.ai-tool.on .ai-tool-ic{background:var(--violet);color:#fff}
+.ai-tool-t{font-size:13px;font-weight:800}
+.ai-tool-d{font-size:11px;color:var(--muted-2);margin-top:3px;line-height:1.45}
+.sheet-i{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;border:1.5px solid var(--border);background:#fff;cursor:pointer;margin-bottom:7px;transition:all .18s}
+.sheet-i:hover{border-color:var(--violet);background:var(--violet-50)}
+.sheet-ic{width:32px;height:32px;border-radius:10px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.sheet-t{font-size:12.5px;font-weight:800}
+.sheet-d{font-size:11px;color:var(--muted-2);margin-top:2px}
+.res-blk{border:1.5px solid var(--border);border-radius:var(--r-lg);background:#fff;margin-bottom:12px;overflow:hidden}
+.res-h{padding:13px 16px;background:var(--violet-50);border-bottom:1px solid var(--violet-100);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.res-t{font-size:13.5px;font-weight:900;color:#5B21B6}
+.res-b{padding:16px;font-size:13px;color:var(--muted);line-height:1.7}
+.res-b ul{margin:8px 0 0 18px}
+.res-b li{margin-bottom:5px}
+.limit{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:#5B21B6;background:var(--violet-50);border:1px solid var(--violet-100);border-radius:20px;padding:4px 10px}
+.acc{border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden}
+.acc-h{width:100%;padding:12px 14px;background:var(--bg);border:none;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--ink-2);cursor:pointer}
+.acc-b{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#fff}
+.acc-b.on{max-height:600px}
+.acc-in{padding:14px}
+
+/* shop */
+.pk{border:1.5px solid var(--border);border-radius:var(--r-xl);background:#fff;padding:20px;display:flex;flex-direction:column;box-shadow:var(--sh-sm);transition:all .22s}
+.pk:hover{box-shadow:var(--sh-lg);transform:translateY(-3px)}
+.pk.hot{border-color:var(--amber-100);background:linear-gradient(180deg,var(--amber-50),#fff 55%)}
+.pk-ic{width:44px;height:44px;border-radius:13px;background:var(--amber-50);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:13px}
+.pk-t{font-family:'Fraunces',serif;font-size:18px;font-weight:900;margin-bottom:6px}
+.pk-d{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.pk-p{display:flex;align-items:baseline;gap:6px;margin-bottom:14px}
+.pk-pv{font-family:'Fraunces',serif;font-size:26px;font-weight:900}
+.pk-pu{font-size:12px;color:var(--muted-2);font-weight:700}
+.an{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.an-c{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:11px;text-align:center}
+.an-v{font-family:'Fraunces',serif;font-size:18px;font-weight:900}
+.an-l{font-size:10px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.04em;margin-top:3px}
+
+/* plans */
+.pl{border:1.5px solid var(--border);border-radius:var(--r-xl);background:#fff;padding:20px;display:flex;flex-direction:column}
+.pl.cur{border-color:var(--teal-500);box-shadow:0 0 0 3px rgba(20,184,166,.12)}
+.pl.best{border-color:var(--violet);box-shadow:0 0 0 3px rgba(139,92,246,.12);position:relative}
+.pl-b{position:absolute;top:-11px;left:20px;background:var(--violet);color:#fff;font-size:10px;font-weight:900;padding:3px 11px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+.pl-n{font-family:'Fraunces',serif;font-size:20px;font-weight:900}
+.pl-p{display:flex;align-items:baseline;gap:5px;margin:8px 0 14px}
+.pl-pv{font-family:'Fraunces',serif;font-size:30px;font-weight:900}
+.pl-pu{font-size:12px;color:var(--muted-2);font-weight:700}
+.pl-f{list-style:none;flex:1;margin-bottom:16px}
+.pl-f li{display:flex;gap:9px;font-size:12.5px;color:var(--ink-2);padding:6px 0;line-height:1.5}
+.pl-f li i{color:var(--teal-500);font-size:11px;margin-top:4px;flex-shrink:0}
+.pl-f li.no{color:var(--muted-2)}
+.pl-f li.no i{color:var(--muted-2)}
+
+/* table */
+.tblw{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:620px}
+.tbl th{padding:11px 14px;text-align:left;font-size:10.5px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em;background:var(--bg);border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:13px 14px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:#FCFDFE}
+.tbl .num{font-weight:800}
+.tbl .cell-n{font-weight:800}
+
+/* lock overlay */
+.lk{position:relative}
+.lk-badge{display:inline-flex;align-items:center;gap:5px;background:var(--violet-50);border:1px solid var(--violet-100);color:#5B21B6;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+body[data-plan="free"] .pro-hide{display:none!important}
+body[data-plan="pro"] .free-only,body[data-plan="expert"] .free-only{display:none!important}
+body[data-plan="free"] .expert-hide,body[data-plan="pro"] .expert-hide{display:none!important}
+body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
+
+/* views */
+.view{display:none;animation:fade .35s ease both}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* mobile tabbar */
+.tbar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:180;background:#fff;border-top:1px solid var(--border);padding:7px 0 calc(7px + env(safe-area-inset-bottom,0px))}
+.tbar-in{display:flex;justify-content:space-around}
+.ti{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;font-size:10px;font-weight:800;color:var(--muted-2);cursor:pointer;position:relative;padding:2px}
+.ti i{font-size:18px}
+.ti.on{color:var(--teal-600)}
+.ti .b{position:absolute;top:-2px;right:calc(50% - 24px);background:var(--red);color:#fff;font-size:9px;font-weight:900;border-radius:20px;padding:0 5px;line-height:15px;border:1.5px solid #fff}
+
+/* modal */
+.mv{position:fixed;inset:0;z-index:400;background:rgba(15,23,42,.55);backdrop-filter:blur(5px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .28s}
+.mv.on{opacity:1;pointer-events:all}
+.mb{background:#fff;width:100%;max-width:560px;max-height:92vh;border-radius:26px 26px 0 0;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .36s cubic-bezier(.4,0,.2,1)}
+.mv.on .mb{transform:none}
+@media(min-width:768px){.mv{align-items:center}.mb{border-radius:24px;margin:16px;max-height:88vh}}
+.mh{padding:17px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;flex-shrink:0}
+.mh-t{font-family:'Fraunces',serif;font-size:17px;font-weight:900;line-height:1.2}
+.mh-s{font-size:12px;color:var(--muted-2);margin-top:3px}
+.mx{width:34px;height:34px;border-radius:50%;background:var(--bg);border:none;color:var(--muted);cursor:pointer;margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.mbody{padding:20px;overflow-y:auto;flex:1}
+.mfoot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:9px;flex-shrink:0}
+.mfoot .btn{flex:1}
+
+/* toast */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:50px;font-size:13px;font-weight:700;z-index:500;opacity:0;pointer-events:none;transition:all .3s;box-shadow:var(--sh-xl);max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media(min-width:1024px){.toast{bottom:32px}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1200px){.g-side{grid-template-columns:1fr}.ai-g{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1023px){
+  .sb{transform:translateX(-100%);width:290px;box-shadow:var(--sh-xl)}
+  .sb.on{transform:none}
+  .sb-x{display:flex}
+  .main{margin-left:0}
+  .burger{display:flex}
+  .tb{padding:0 16px;gap:10px}
+  .tb-t{font-size:16px}
+  .tb-s{display:none}
+  .desk{display:none!important}
+  .wrap{padding:16px 16px 92px}
+  .g2,.g3,.g4{grid-template-columns:1fr 1fr}
+  .g5{grid-template-columns:1fr 1fr}
+  .tbar{display:block}
+  .wk{grid-template-columns:1fr;gap:6px}
+  .wk-col{min-height:auto}
+  .ch{padding:14px 16px}
+  .cb{padding:16px}
+  .tabs{padding:0 12px}
+  .bn{flex-wrap:wrap}
+  .bn-r{margin-left:0;width:100%}
+  .bn-r .btn,.bn-r .demo-sel{flex:1;width:100%}
+  .bn>div:not(.bn-ic):not(.bn-r){flex:1 1 200px;min-width:0}
+}
+@media(max-width:640px){
+  .g2,.g3,.g4,.g5{grid-template-columns:1fr}
+  .f-row{grid-template-columns:1fr}
+  .an{grid-template-columns:1fr 1fr}
+  .h-sec{font-size:19px}
+  .met-v{font-size:24px}
+  .rq-p{margin-left:0;text-align:left;width:100%}
+  .rq-h{flex-wrap:wrap}
+  .btn{padding:10px 15px}
+  .mth-c{padding:4px;font-size:10px;border-radius:9px}
+}
+</style>
+</head>
+<body data-plan="free">
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<div class="sb-ov" id="sbOv" onclick="closeSb()"></div>
+<aside class="sb" id="sb">
+  <div class="sb-head">
+    <a href="#" class="sb-logo">
+      <div class="sb-logo-ic">L</div>
+      <div>
+        <div class="sb-logo-tx">Libitum</div>
+        <div class="sb-logo-sub">Кабінет репетитора</div>
+      </div>
+    </a>
+    <button class="sb-x" onclick="closeSb()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <div class="sb-me">
+    <div class="sb-me-top">
+      <img src="https://i.pravatar.cc/200?u=olena" alt="Олена І.">
+      <div style="min-width:0">
+        <div class="sb-me-n">Олена І.</div>
+        <div class="sb-me-r"><i class="fa-solid fa-star"></i> 4.9 · 48 відгуків</div>
+      </div>
+    </div>
+    <div class="sb-streak">
+      <div class="sb-streak-ic"><i class="fa-solid fa-fire"></i></div>
+      <div style="min-width:0">
+        <div class="sb-streak-n"><b>12</b> днів поспіль</div>
+        <div class="sb-streak-d">Daily Streak</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sb-nav" id="sbNav">
+    <div class="sb-lbl">Робота</div>
+    <button class="sb-i on" data-view="dash"><i class="fa-solid fa-gauge-high"></i>Робочий стіл</button>
+    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки та біржа<span class="sb-cnt">3</span></button>
+    <button class="sb-i" data-view="sched"><i class="fa-regular fa-calendar"></i>Розклад</button>
+    <button class="sb-i" data-view="students"><i class="fa-solid fa-user-group"></i>Мої учні<span class="sb-cnt">4</span></button>
+    <button class="sb-i" data-view="journal"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ<span class="sb-cnt">2</span></button>
+
+    <div class="sb-lbl">Інструменти</div>
+    <button class="sb-i ai" data-view="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI-помічник<span class="sb-cnt v">Pro</span></button>
+    <button class="sb-i" data-view="lib"><i class="fa-solid fa-folder-open"></i>Бібліотека</button>
+    <button class="sb-i shop" data-view="shop"><i class="fa-solid fa-bullhorn"></i>Магазин і просування</button>
+
+    <div class="sb-lbl">Акаунт</div>
+    <button class="sb-i" data-view="profile"><i class="fa-regular fa-id-badge"></i>Профіль</button>
+    <button class="sb-i" data-view="plans"><i class="fa-solid fa-crown"></i>Тарифи</button>
+    <button class="sb-i" data-view="fin"><i class="fa-solid fa-wallet"></i>Фінанси</button>
+  </nav>
+
+  <div class="sb-foot">
+    <div class="sb-help">
+      <div class="sb-help-t">Потрібна допомога?</div>
+      <div class="sb-help-d">Напишіть нам у Telegram — відповідаємо 09:00–19:00 (Пн–Сб).</div>
+      <button class="sb-help-cta" onclick="toast('Відкриваємо чат у Telegram: @libitum_support')"><i class="fa-brands fa-telegram" style="margin-right:6px"></i>Написати в підтримку</button>
+    </div>
+    <button class="sb-logout" onclick="toast('Вихід — у демо недоступний')"><i class="fa-solid fa-arrow-right-from-bracket" style="margin-right:7px"></i>Вийти</button>
+  </div>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<div class="app">
+  <div class="main">
+
+    <header class="tb">
+      <div class="tb-in">
+        <button class="burger" onclick="openSb()"><i class="fa-solid fa-bars"></i></button>
+        <div style="min-width:0">
+          <div class="tb-t" id="tbT">Робочий стіл</div>
+          <div class="tb-s" id="tbS">Понеділок, 17 серпня 2026</div>
+        </div>
+        <div class="tb-r">
+          <span class="tb-chip req desk" onclick="go('req')" title="Нові заявки від учнів"><i class="fa-solid fa-inbox"></i>1 нова заявка</span>
+          <span class="tb-chip fire desk" onclick="go('dash')"><i class="fa-solid fa-fire"></i>12 днів</span>
+          <button class="tb-ic" onclick="openM('notif')" title="Сповіщення"><i class="fa-regular fa-bell"></i><span class="tb-dot"></span></button>
+          <button class="tb-ic" onclick="go('profile')" title="Профіль" style="overflow:hidden;padding:0;border-color:var(--teal-100)">
+            <img src="https://i.pravatar.cc/100?u=olena" alt="" style="width:100%;height:100%;object-fit:cover">
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+
+    <!-- ═════════ 2. РОБОЧИЙ СТІЛ ═════════ -->
+    <section class="view on" id="v-dash">
+      <div class="bn bn-warn" id="modBanner">
+        <div class="bn-ic"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div style="flex:1">
+          <div class="bn-t">Профіль на модерації</div>
+          <div class="bn-d">Ваша анкета ще не показується в каталозі. Перевірка триває до 24 годин — зазвичай швидше.</div>
+        </div>
+        <div class="bn-r"><button class="btn b-sec b-sm" onclick="go('profile')">Перейти до профілю</button></div>
+      </div>
+
+      <div class="between" style="margin-bottom:14px">
+        <div>
+          <div class="h-sec" style="margin-bottom:2px">Вітаємо, Олено 👋</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600">Сьогодні у вас 3 уроки та 2 заявки, що чекають відповіді.</div>
+        </div>
+        <div class="seg desk" id="metSeg">
+          <button class="on" onclick="setPeriod('m',this)">За місяць</button>
+          <button onclick="setPeriod('a',this)">Всього</button>
+        </div>
+      </div>
+
+      <div class="g5" style="margin-bottom:16px">
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-chalkboard-user"></i></div><div class="met-l">Проведені уроки</div></div>
+          <div class="met-v" data-m="38" data-a="4 975">38</div>
+          <div class="met-s"><b>+12%</b> до попереднього місяця</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--green-50);color:var(--green)"><i class="fa-solid fa-hryvnia-sign"></i></div><div class="met-l">Зароблено</div></div>
+          <div class="met-v" data-m="₴15 200" data-a="₴412 800">₴15 200</div>
+          <div class="met-s">За оплаченими уроками з розкладу</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--blue-50);color:var(--blue)"><i class="fa-solid fa-user-group"></i></div><div class="met-l">Активні учні</div></div>
+          <div class="met-v" data-m="4" data-a="49">4</div>
+          <div class="met-s">Ліміт плану Free: 4 / 5</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-solid fa-star"></i></div><div class="met-l">Середній рейтинг</div></div>
+          <div class="met-v" data-m="4.9" data-a="4.9">4.9</div>
+          <div class="met-s">48 відгуків · 88% п'ятірок</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-inbox"></i></div><div class="met-l">Заявки / конверсія</div></div>
+          <div class="met-v" data-m="11 / 64%" data-a="187 / 58%">11 / 64%</div>
+          <div class="met-s">7 з 11 дійшли до пробного</div>
+        </div>
+      </div>
+
+      <div class="g-side">
+        <div>
+          <div class="card">
+            <div class="ch">
+              <div><div class="ct"><i class="fa-regular fa-clock"></i>Наступні уроки</div><div class="ct-s">Сьогодні та завтра</div></div>
+              <div class="ch-r"><button class="btn b-sec b-sm" onclick="go('sched')">Весь розклад</button></div>
+            </div>
+            <div class="cb tight">
+              <div class="li">
+                <img class="li-av" src="https://i.pravatar.cc/100?u=st1" alt="">
+                <div class="li-b">
+                  <div class="li-t">Софія Т. · Англійська, B1</div>
+                  <div class="li-d">Сьогодні 15:00–15:40 <span class="dotsep"></span> Zoom <span class="st st-warn"><i class="fa-solid fa-circle"></i>За 25 хв</span></div>
+                </div>
+                <div class="li-r"><button class="btn b-pri b-sm" onclick="toast('Відкриваємо Zoom…')"><i class="fa-solid fa-video"></i>Приєднатися</button></div>
+              </div>
+              <div class="li">
+                <img class="li-av" src="https://i.pravatar.cc/100?u=st2" alt="">
+                <div class="li-b">
+                  <div class="li-t">Артем К. · Німецька, A2</div>
+                  <div class="li-d">Сьогодні 18:00–18:40 <span class="dotsep"></span> Google Meet</div>
+                </div>
+                <div class="li-r"><button class="btn b-soft b-sm" onclick="toast('Посилання відкриється за 10 хв до уроку')"><i class="fa-solid fa-video"></i>Приєднатися</button></div>
+              </div>
+              <div class="li">
+                <img class="li-av" src="https://i.pravatar.cc/100?u=st3" alt="">
+                <div class="li-b">
+                  <div class="li-t">Марта Л. · Англійська, IELTS</div>
+                  <div class="li-d">Завтра 10:00–11:00 <span class="dotsep"></span> Zoom</div>
+                </div>
+                <div class="li-r"><button class="btn b-sec b-sm" onclick="openM('lesson')">Деталі</button></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="ch">
+              <div><div class="ct"><i class="fa-solid fa-bolt"></i>Активні приватні заявки</div><div class="ct-s">Відповідь у межах SLA підвищує рейтинг</div></div>
+              <div class="ch-r"><button class="btn b-sec b-sm" onclick="go('req')">Усі заявки</button></div>
+            </div>
+            <div class="cb">
+              <div class="rq">
+                <div class="rq-h">
+                  <div>
+                    <div class="rq-t">Англійська · 7 клас · підтягнути оцінки</div>
+                    <div class="rq-m">Ольга (мама) · Онлайн · 2 рази на тиждень · Київ</div>
+                  </div>
+                  <div class="rq-p"><div class="rq-price">₴400</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
+                </div>
+                <div class="row" style="margin-bottom:12px"><span class="sla" data-sla="7200"><i class="fa-regular fa-clock"></i>SLA: 02:00:00</span><span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span></div>
+                <div class="rq-a">
+                  <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти</button>
+                  <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
+                </div>
+              </div>
+              <div class="rq">
+                <div class="rq-h">
+                  <div>
+                    <div class="rq-t">Німецька · дорослий · з нуля</div>
+                    <div class="rq-m">Богдан · Онлайн · вечірні слоти · Львів</div>
+                  </div>
+                  <div class="rq-p"><div class="rq-price">₴380</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
+                </div>
+                <div class="row" style="margin-bottom:12px"><span class="sla hot" data-sla="1500"><i class="fa-regular fa-clock"></i>SLA: 00:25:00</span><span class="st st-warn"><i class="fa-solid fa-circle"></i>Спливає</span></div>
+                <div class="rq-a">
+                  <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти</button>
+                  <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- right column: gamification -->
+        <div>
+          <div class="card">
+            <div class="ch"><div class="ct"><i class="fa-solid fa-bolt" style="color:var(--violet)"></i>Ваш рівень</div></div>
+            <div class="cb">
+              <div class="between" style="margin-bottom:10px">
+                <div>
+                  <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:900;line-height:1">Рівень 4</div>
+                  <div style="font-size:12px;color:var(--muted-2);font-weight:700;margin-top:3px">Досвідчений наставник</div>
+                </div>
+                <div style="text-align:right">
+                  <div style="font-size:13px;font-weight:900">1 240 XP</div>
+                  <div style="font-size:11px;color:var(--muted-2)">до 5 рівня: 760</div>
+                </div>
+              </div>
+              <div class="pr"><div class="pr-f v" style="width:62%"></div></div>
+              <div class="hint">XP нараховується за проведені уроки, заповнені звіти та відповіді в межах SLA.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="ch"><div class="ct"><i class="fa-solid fa-fire" style="color:#F97316"></i>Daily Streak</div></div>
+            <div class="cb">
+              <div class="row" style="gap:14px;margin-bottom:12px">
+                <div style="font-family:'Fraunces',serif;font-size:38px;font-weight:900;line-height:1;color:#F97316">12</div>
+                <div>
+                  <div style="font-size:13px;font-weight:800">днів підряд</div>
+                  <div style="font-size:12px;color:var(--muted)">Бонус за серію: <b style="color:var(--violet)">+50 XP</b></div>
+                </div>
+              </div>
+              <div class="bn bn-warn" style="margin-bottom:0;padding:11px 13px">
+                <div class="bn-ic" style="width:28px;height:28px;font-size:12px"><i class="fa-regular fa-clock"></i></div>
+                <div><div class="bn-d">Зайдіть сьогодні, щоб не втратити серію — залишилось <b id="streakTimer">06:42:15</b></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="ch">
+              <div><div class="ct"><i class="fa-solid fa-list-check"></i>Цілі на сьогодні</div><div class="ct-s">Виконано <b id="goalsDone">1</b> з 4</div></div>
+            </div>
+            <div class="cb tight">
+              <div class="cx on" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Заповнити звіт після уроку</div></div>
+              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Перевірити ДЗ (2 роботи)</div></div>
+              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Додати матеріал у бібліотеку</div></div>
+              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Додати учня</div></div>
+              <div class="hr" style="margin:10px 0"></div>
+              <div style="font-size:11px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Тиждень</div>
+              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Провести 10 уроків (7 / 10)</div></div>
+              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Відповісти на всі заявки в SLA</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 3. ЗАЯВКИ / БІРЖА ═════════ -->
+    <section class="view" id="v-req">
+      <div class="h-sec">Заявки та біржа</div>
+      <p class="p-sec">Приватні заявки приходять від клієнтів напряму. На біржі — відкриті запити, які може взяти будь-який верифікований спеціаліст.</p>
+
+      <div class="card">
+        <div class="tabs">
+          <button class="tab on" onclick="reqTab('mine',this)">Мої заявки<span class="n">3</span></button>
+          <button class="tab" onclick="reqTab('market',this)">Біржа<span class="n">12</span></button>
+        </div>
+
+        <!-- MINE -->
+        <div class="cb" id="req-mine">
+          <div class="step">
+            <span class="step-i done"><span class="step-d"><i class="fa-solid fa-check"></i></span>Нова</span><span class="step-l"></span>
+            <span class="step-i done"><span class="step-d"><i class="fa-solid fa-check"></i></span>Прийнята</span><span class="step-l"></span>
+            <span class="step-i cur"><span class="step-d">3</span>Пробне</span><span class="step-l"></span>
+            <span class="step-i"><span class="step-d">4</span>Активна</span>
+          </div>
+
+          <div class="rq">
+            <div class="rq-h">
+              <div>
+                <div class="rq-t">Англійська · 9 клас · підготовка до НМТ</div>
+                <div class="rq-m">Ірина (мама) · Онлайн · 2 рази на тиждень · рівень B1</div>
+              </div>
+              <div class="rq-p"><div class="rq-price">₴400</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
+            </div>
+            <div class="rq-note">«Донька готується до НМТ, найбільша проблема — reading і брак словникового запасу. Хочемо почати з наступного тижня, вечірні години.»</div>
+            <div class="row" style="margin-bottom:12px">
+              <span class="st st-ok"><i class="fa-solid fa-circle"></i>Прийнята</span>
+              <span class="st st-mut"><i class="fa-solid fa-phone"></i>+380 67 ••• 12 34</span>
+              <span class="st st-mut"><i class="fa-brands fa-telegram"></i>@iryna_k</span>
+            </div>
+            <div class="rq-a">
+              <button class="btn b-pri b-sm" onclick="openM('trial')"><i class="fa-regular fa-calendar-plus"></i>Вказати дату пробного</button>
+              <button class="btn b-sec b-sm" onclick="openM('happened')">Чи відбувся урок?</button>
+              <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
+            </div>
+          </div>
+
+          <div class="rq">
+            <div class="rq-h">
+              <div>
+                <div class="rq-t">Німецька · 5 клас · з нуля</div>
+                <div class="rq-m">Марина (мама) · Онлайн · 1 раз на тиждень</div>
+              </div>
+              <div class="rq-p"><div class="rq-price">₴380</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
+            </div>
+            <div class="row" style="margin-bottom:12px">
+              <span class="sla" data-sla="5400"><i class="fa-regular fa-clock"></i>SLA: 01:30:00</span>
+              <span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span>
+            </div>
+            <div class="rq-a">
+              <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти</button>
+              <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
+            </div>
+          </div>
+
+          <div class="rq">
+            <div class="rq-h">
+              <div>
+                <div class="rq-t">Англійська · дорослий · співбесіда англійською</div>
+                <div class="rq-m">Олег · Онлайн · інтенсив 3 рази на тиждень</div>
+              </div>
+              <div class="rq-p"><div class="rq-price">₴550</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
+            </div>
+            <div class="row" style="margin-bottom:12px">
+              <span class="st st-warn"><i class="fa-solid fa-circle"></i>Пробне 19.08, 19:00</span>
+              <span class="st st-mut">Очікує підтвердження уроку</span>
+            </div>
+            <div class="rq-a">
+              <button class="btn b-pri b-sm" onclick="openM('happened')">Чи відбувся урок?</button>
+              <button class="btn b-sec b-sm" onclick="openM('trial')">Перенести пробне</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MARKET -->
+        <div class="cb" id="req-market" style="display:none">
+          <div class="row" style="margin-bottom:16px">
+            <span style="font-size:12px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em">Фільтр за предметами</span>
+            <span class="chip on" onclick="tglChip(this)">Англійська</span>
+            <span class="chip on" onclick="tglChip(this)">Німецька</span>
+            <span class="chip" onclick="tglChip(this)">НМТ / ЗНО</span>
+            <span class="chip" onclick="tglChip(this)">Розмовна практика</span>
+          </div>
+
+          <div class="rq">
+            <div class="rq-h">
+              <div>
+                <div class="rq-t">Англійська · 11 клас · IELTS 6.5+</div>
+                <div class="rq-m">Онлайн · 2 рази на тиждень · опубліковано 18 хв тому</div>
+              </div>
+              <div class="rq-p"><div class="rq-price">₴600</div><div style="font-size:11px;color:var(--muted-2)">бюджет клієнта</div></div>
+            </div>
+            <div class="rq-note">«Потрібен викладач із досвідом підготовки до IELTS. Ціль — 6.5 до грудня. Готові займатися інтенсивно.»</div>
+            <div class="row" style="margin-bottom:12px"><span class="st st-info"><i class="fa-solid fa-users"></i>Відгукнулось 2 з 5</span><span class="st st-mut">Заявка відкрита 46 хв</span></div>
+            <div class="rq-a">
+              <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти заявку</button>
+              <button class="btn b-sec b-sm" onclick="toast('Заявку приховано з біржі')">Приховати</button>
+            </div>
+          </div>
+
+          <div class="rq">
+            <div class="rq-h">
+              <div>
+                <div class="rq-t">Німецька · 8 клас · шкільна програма</div>
+                <div class="rq-m">Онлайн або офлайн (Київ, Печерськ) · 1 раз на тиждень</div>
+              </div>
+              <div class="rq-p"><div class="rq-price">₴350</div><div style="font-size:11px;color:var(--muted-2)">бюджет клієнта</div></div>
+            </div>
+            <div class="row" style="margin-bottom:12px"><span class="st st-ok"><i class="fa-solid fa-bolt"></i>Ще ніхто не відгукнувся</span></div>
+            <div class="rq-a">
+              <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти заявку</button>
+              <button class="btn b-sec b-sm" onclick="toast('Заявку приховано з біржі')">Приховати</button>
+            </div>
+          </div>
+
+          <div class="bn bn-ok" style="margin:16px 0 0">
+            <div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
+            <div><div class="bn-t">Ліди не обмежені жодним планом</div><div class="bn-d">Ви можете брати будь-яку кількість заявок і на Free, і на Pro. Обмеження стосуються лише AI-функцій та кількості активних учнів у CRM.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 4. РОЗКЛАД ═════════ -->
+    <section class="view" id="v-sched">
+      <div class="between" style="margin-bottom:14px">
+        <div>
+          <div class="h-sec" style="margin-bottom:2px">Розклад</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600">17–23 серпня 2026 · 9 уроків, 6 оплачено</div>
+        </div>
+        <div class="row">
+          <div class="seg">
+            <button onclick="schedMode('day',this)">День</button>
+            <button class="on" onclick="schedMode('week',this)">Тиждень</button>
+            <button onclick="schedMode('month',this)">Місяць</button>
+          </div>
+          <button class="btn b-sec b-sm" onclick="openM('slots')"><i class="fa-regular fa-clock"></i>Слоти доступності</button>
+          <button class="btn b-pri b-sm" onclick="openM('newlesson')"><i class="fa-solid fa-plus"></i>Створити урок</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch">
+          <div class="leg">
+            <span><i class="fa-solid fa-circle" style="color:var(--teal-500)"></i>Заплановано</span>
+            <span><i class="fa-solid fa-circle" style="color:var(--green)"></i>Проведено (оплачено)</span>
+            <span><i class="fa-solid fa-circle" style="color:var(--amber)"></i>Перенесено</span>
+            <span><i class="fa-solid fa-circle" style="color:var(--muted-2)"></i>Скасовано</span>
+          </div>
+          <div class="ch-r"><span class="st st-mut"><i class="fa-solid fa-hand-pointer"></i>Картку уроку можна перетягнути на інший день</span></div>
+        </div>
+        <div class="cb">
+          <div id="sched-week"></div>
+          <div id="sched-day" style="display:none"></div>
+          <div id="sched-month" style="display:none"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-toggle-on"></i>Мої слоти доступності</div><div class="ct-s">Клієнт бачить у профілі лише увімкнені слоти</div></div>
+          <div class="ch-r"><button class="btn b-sec b-sm" onclick="openM('slots')">Налаштувати</button></div></div>
+        <div class="cb">
+          <div class="wk" id="slotsPreview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 5. МОЇ УЧНІ ═════════ -->
+    <section class="view" id="v-students">
+      <div class="between" style="margin-bottom:14px">
+        <div>
+          <div class="h-sec" style="margin-bottom:2px">Мої учні</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600">4 активних учні · ліміт плану Free: 5</div>
+        </div>
+        <div class="row">
+          <input class="inp" placeholder="Пошук учня…" style="width:200px;padding:9px 13px" oninput="filterStu(this.value)">
+          <button class="btn b-pri b-sm" onclick="openM('addstudent')"><i class="fa-solid fa-user-plus"></i>Додати учня</button>
+        </div>
+      </div>
+
+      <div class="bn bn-ok">
+        <div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
+        <div><div class="bn-t">Як активується власний учень</div><div class="bn-d">Ви надсилаєте учню посилання-запрошення. Учень стає активним після реєстрації за посиланням і 3 завантажень домашнього завдання.</div></div>
+      </div>
+
+      <div class="g3" id="stuGrid">
+        <div class="stu" data-n="софія т">
+          <div class="stu-h">
+            <img src="https://i.pravatar.cc/100?u=st1" alt="">
+            <div style="flex:1;min-width:0">
+              <div class="stu-n">Софія Т.</div>
+              <div class="stu-m">7 клас · Англійська</div>
+            </div>
+            <span class="st st-ok">Платформа</span>
+          </div>
+          <div class="stu-g">
+            <div class="stu-cell"><div class="stu-cell-l">Рівень</div><div class="stu-cell-v">B1</div></div>
+            <div class="stu-cell"><div class="stu-cell-l">Уроків</div><div class="stu-cell-v">24</div></div>
+          </div>
+          <div class="row" style="margin-bottom:12px"><span class="tagx">Ціль: НМТ</span><span class="tagx">2× на тиждень</span></div>
+          <div class="row" style="gap:7px">
+            <button class="btn b-sec b-sm" style="flex:1" onclick="openM('student')">Картка учня</button>
+            <button class="btn b-violet-soft b-sm" onclick="aiQuick('Підготувати матеріал')" title="AI: підготувати матеріал"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+          </div>
+        </div>
+
+        <div class="stu" data-n="артем к">
+          <div class="stu-h">
+            <img src="https://i.pravatar.cc/100?u=st2" alt="">
+            <div style="flex:1;min-width:0">
+              <div class="stu-n">Артем К.</div>
+              <div class="stu-m">5 клас · Німецька</div>
+            </div>
+            <span class="st st-ok">Платформа</span>
+          </div>
+          <div class="stu-g">
+            <div class="stu-cell"><div class="stu-cell-l">Рівень</div><div class="stu-cell-v">A2</div></div>
+            <div class="stu-cell"><div class="stu-cell-l">Уроків</div><div class="stu-cell-v">11</div></div>
+          </div>
+          <div class="row" style="margin-bottom:12px"><span class="tagx">Ціль: школа</span><span class="tagx">1× на тиждень</span></div>
+          <div class="row" style="gap:7px">
+            <button class="btn b-sec b-sm" style="flex:1" onclick="openM('student')">Картка учня</button>
+            <button class="btn b-violet-soft b-sm" onclick="aiQuick('Згенерувати ДЗ')" title="AI: згенерувати ДЗ"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+          </div>
+        </div>
+
+        <div class="stu" data-n="марта л">
+          <div class="stu-h">
+            <img src="https://i.pravatar.cc/100?u=st3" alt="">
+            <div style="flex:1;min-width:0">
+              <div class="stu-n">Марта Л.</div>
+              <div class="stu-m">Дорослий · Англійська</div>
+            </div>
+            <span class="st st-ok">Платформа</span>
+          </div>
+          <div class="stu-g">
+            <div class="stu-cell"><div class="stu-cell-l">Рівень</div><div class="stu-cell-v">B2</div></div>
+            <div class="stu-cell"><div class="stu-cell-l">Уроків</div><div class="stu-cell-v">32</div></div>
+          </div>
+          <div class="row" style="margin-bottom:12px"><span class="tagx">Ціль: IELTS 7.0</span><span class="tagx">2× на тиждень</span></div>
+          <div class="row" style="gap:7px">
+            <button class="btn b-sec b-sm" style="flex:1" onclick="openM('student')">Картка учня</button>
+            <button class="btn b-violet-soft b-sm" onclick="aiQuick('Написати звіт')" title="AI: написати звіт"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+          </div>
+        </div>
+
+        <div class="stu" data-n="назар п">
+          <div class="stu-h">
+            <img src="https://i.pravatar.cc/100?u=st4" alt="">
+            <div style="flex:1;min-width:0">
+              <div class="stu-n">Назар П.</div>
+              <div class="stu-m">9 клас · Англійська</div>
+            </div>
+            <span class="st st-warn">Власний</span>
+          </div>
+          <div class="stu-cell" style="margin-bottom:12px">
+            <div class="stu-cell-l">Активація власного учня</div>
+            <div class="row" style="justify-content:space-between;margin:6px 0 7px"><span style="font-size:11.5px;font-weight:700;color:var(--muted)">Реєстрація + 3 завантаження ДЗ</span><span style="font-size:11.5px;font-weight:900">2 / 3</span></div>
+            <div class="pr" style="height:6px"><div class="pr-f a" style="width:66%"></div></div>
+          </div>
+          <div class="row" style="margin-bottom:12px"><span class="tagx">Запрошення надіслано</span></div>
+          <div class="row" style="gap:7px">
+            <button class="btn b-sec b-sm" style="flex:1" onclick="openM('student')">Картка учня</button>
+            <button class="btn b-soft b-sm" onclick="toast('Посилання-запрошення скопійовано')"><i class="fa-solid fa-link"></i></button>
+          </div>
+        </div>
+
+        <div class="stu" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:200px;cursor:pointer" onclick="openM('addstudent')">
+          <div class="up-ic" style="margin:0"><i class="fa-solid fa-user-plus"></i></div>
+          <div>
+            <div style="font-size:13.5px;font-weight:800">Додати учня</div>
+            <div style="font-size:11.5px;color:var(--muted-2);margin-top:3px">Залишилось 1 місце на плані Free</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 6. ЖУРНАЛ І ДЗ ═════════ -->
+    <section class="view" id="v-journal">
+      <div class="h-sec">Журнал і ДЗ</div>
+      <p class="p-sec">Звіт після уроку впливає на рейтинг і автоматично формує лист батькам. ДЗ можна додати текстом або файлом.</p>
+
+      <div class="card">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-book-open"></i>Проведені уроки</div><div class="ct-s">2 уроки без звіту</div></div>
+          <div class="ch-r">
+            <span class="chip on" onclick="tglChip(this)">Усі</span>
+            <span class="chip" onclick="tglChip(this)">Без звіту</span>
+            <span class="chip" onclick="tglChip(this)">ДЗ на перевірці</span>
+          </div>
+        </div>
+        <div class="tblw">
+          <table class="tbl">
+            <thead><tr><th>Дата</th><th>Учень / тема</th><th>Звіт</th><th>ДЗ</th><th style="text-align:right">Дії</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="num">16.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">15:00</div></td>
+                <td><div class="cell-n">Софія Т.</div><div style="font-size:11.5px;color:var(--muted)">Present Perfect · практика</div></td>
+                <td><span class="st st-bad"><i class="fa-solid fa-circle"></i>Немає</span></td>
+                <td><span class="st st-mut">Не задано</span></td>
+                <td style="text-align:right"><div class="row" style="justify-content:flex-end;gap:6px">
+                  <button class="btn b-pri b-xs" onclick="openM('report')">Звіт</button>
+                  <button class="btn b-sec b-xs" onclick="openM('hw')">Додати ДЗ</button>
+                </div></td>
+              </tr>
+              <tr>
+                <td class="num">15.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">18:00</div></td>
+                <td><div class="cell-n">Артем К.</div><div style="font-size:11.5px;color:var(--muted)">Modalverben · вступ</div></td>
+                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Готовий · 10/12</span></td>
+                <td><span class="st st-warn"><i class="fa-solid fa-hourglass-half"></i>На перевірці</span></td>
+                <td style="text-align:right"><div class="row" style="justify-content:flex-end;gap:6px">
+                  <button class="btn b-pri b-xs" onclick="openM('check')">Перевірити ДЗ</button>
+                  <button class="btn b-sec b-xs" onclick="openM('report')">Звіт</button>
+                </div></td>
+              </tr>
+              <tr>
+                <td class="num">14.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">10:00</div></td>
+                <td><div class="cell-n">Марта Л.</div><div style="font-size:11.5px;color:var(--muted)">IELTS Speaking Part 2</div></td>
+                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Готовий · 11/12</span></td>
+                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Оцінено · 11/12</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="openM('report')">Відкрити</button></td>
+              </tr>
+              <tr>
+                <td class="num">13.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">16:00</div></td>
+                <td><div class="cell-n">Назар П.</div><div style="font-size:11.5px;color:var(--muted)">Reading · НМТ формат</div></td>
+                <td><span class="st st-bad"><i class="fa-solid fa-circle"></i>Немає</span></td>
+                <td><span class="st st-info">Здано</span></td>
+                <td style="text-align:right"><div class="row" style="justify-content:flex-end;gap:6px">
+                  <button class="btn b-pri b-xs" onclick="openM('report')">Звіт</button>
+                  <button class="btn b-sec b-xs" onclick="openM('check')">Перевірити</button>
+                </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card" style="margin-top:16px">
+          <div class="ch"><div class="ct"><i class="fa-brands fa-telegram" style="color:var(--blue)"></i>Звіт для батьків</div></div>
+          <div class="cb">
+            <div class="sw-row">
+              <div class="sw-tx"><div class="sw-t">Автовідправка в Telegram</div><div class="sw-d">Звіт іде батькам одразу після збереження — без вашої участі.</div></div>
+              <button class="sw on" onclick="tglSw(this)"></button>
+            </div>
+            <div class="sw-row">
+              <div class="sw-tx"><div class="sw-t">Додавати оцінку і ДЗ у звіт</div><div class="sw-d">Батьки бачать оцінку 1–12, тег-фідбек і дедлайн ДЗ.</div></div>
+              <button class="sw on" onclick="tglSw(this)"></button>
+            </div>
+            <div class="hint">Останній звіт надіслано 15.08 у 19:12 — доставлено 2 отримувачам.</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="ch"><div class="ct"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--violet)"></i>AI у журналі</div></div>
+          <div class="cb">
+            <div class="li">
+              <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-file-pen"></i></div>
+              <div class="li-b"><div class="li-t">Згенерувати ДЗ</div><div class="li-d">Кнопка біля поля ДЗ у формі</div></div>
+              <div class="li-r"><span class="lk-badge">Pro</span></div>
+            </div>
+            <div class="li">
+              <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-list-check"></i></div>
+              <div class="li-b"><div class="li-t">Перевірити ДЗ з AI</div><div class="li-d">Чернетка оцінки та коментаря</div></div>
+              <div class="li-r"><span class="lk-badge">Expert</span></div>
+            </div>
+            <div class="li">
+              <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-file-lines"></i></div>
+              <div class="li-b"><div class="li-t">Написати звіт після уроку</div><div class="li-d">З контексту учня та теми уроку</div></div>
+              <div class="li-r"><span class="lk-badge">Pro</span></div>
+            </div>
+            <button class="btn b-violet b-block b-sm free-only" style="margin-top:12px" onclick="go('plans')">Спробувати AI безкоштовно 14 днів</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 7. AI-ПОМІЧНИК ═════════ -->
+    <section class="view" id="v-ai">
+      <!-- FREE gate -->
+      <div class="free-only">
+        <div class="card" style="text-align:center">
+          <div class="cb" style="padding:44px 24px">
+            <div style="width:72px;height:72px;border-radius:22px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 18px"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:900;letter-spacing:-.6px;margin-bottom:8px">Спробуйте AI безкоштовно 14 днів</div>
+            <p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto 22px">
+              Підбір матеріалів під рівень учня, генерація ДЗ і звіт після уроку — за пару секунд.
+              Тріал активується в один клік, без картки. Відлік 14 днів стартує з моменту запуску.
+            </p>
+            <div class="g3" style="max-width:640px;margin:0 auto 24px;text-align:left">
+              <div class="stu-cell"><div class="stu-cell-l">Підбір матеріалів</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">План уроку, вправи, картки, тест</div></div>
+              <div class="stu-cell"><div class="stu-cell-l">Генерація ДЗ</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Тип, складність, час, дедлайн</div></div>
+              <div class="stu-cell"><div class="stu-cell-l">Звіт після уроку</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Готовий текст для батьків</div></div>
+            </div>
+            <button class="btn b-violet" onclick="startTrial()"><i class="fa-solid fa-bolt"></i>Активувати тріал Pro</button>
+            <div class="hint" style="margin-top:12px">Картка не потрібна. За 3 дні до завершення надішлемо нагадування в Telegram.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRO/EXPERT tool -->
+      <div class="pro-hide">
+        <div class="bn bn-v">
+          <div class="bn-ic"><i class="fa-solid fa-bolt"></i></div>
+          <div style="flex:1"><div class="bn-t">Тріал Pro активний — залишилось 11 днів</div><div class="bn-d">Ліміт цього місяця: 28 з 40 AI-запитів. Додайте картку до 28 серпня, щоб лишитися на Pro.</div></div>
+          <div class="bn-r"><button class="btn b-violet b-sm" onclick="go('plans')">Додати картку</button></div>
+        </div>
+
+        <div class="ai-tools" style="margin-bottom:16px">
+          <button class="ai-tool on" onclick="aiTool(this,'Підбір матеріалів')">
+            <div class="ai-tool-ic"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="ai-tool-t">Підбір матеріалів</div>
+            <div class="ai-tool-d">План уроку, вправи, відео, картки</div>
+          </button>
+          <button class="ai-tool" onclick="aiTool(this,'Генерація ДЗ')">
+            <div class="ai-tool-ic"><i class="fa-solid fa-file-pen"></i></div>
+            <div class="ai-tool-t">Генерація ДЗ</div>
+            <div class="ai-tool-d">Вправи, тест, творче, повторення</div>
+          </button>
+          <button class="ai-tool" onclick="aiTool(this,'Звіт після уроку')">
+            <div class="ai-tool-ic"><i class="fa-solid fa-file-lines"></i></div>
+            <div class="ai-tool-t">Звіт після уроку</div>
+            <div class="ai-tool-d">Текст для батьків і для журналу</div>
+          </button>
+        </div>
+
+        <!-- INPUT SCREEN -->
+        <div id="aiInput">
+          <div class="ai-g">
+            <div class="card">
+              <div class="ch">
+                <div><div class="ct" id="aiToolTitle"><i class="fa-solid fa-layer-group" style="color:var(--violet)"></i>Підбір матеріалів</div><div class="ct-s">Контекст учня підставляється автоматично</div></div>
+                <div class="ch-r"><span class="limit"><i class="fa-solid fa-bolt"></i>12 запитів залишилось</span></div>
+              </div>
+              <div class="cb">
+                <div style="border:1.5px solid var(--violet-100);background:var(--violet-50);border-radius:var(--r);padding:13px;margin-bottom:16px">
+                  <div class="row" style="gap:11px">
+                    <img src="https://i.pravatar.cc/100?u=st1" style="width:42px;height:42px;border-radius:12px;object-fit:cover" alt="">
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:13.5px;font-weight:900">Софія Т. · 7 клас · Англійська B1</div>
+                      <div style="font-size:11.5px;color:#6D28D9;margin-top:3px;line-height:1.5">Ціль: НМТ. Сильна в grammar, слабкі reading і словниковий запас. Любить теми про подорожі.</div>
+                    </div>
+                    <button class="btn b-sec b-xs" onclick="openM('aictx')">Редагувати</button>
+                  </div>
+                </div>
+
+                <label class="f">
+                  <span class="lbl">Що потрібно згенерувати</span>
+                  <textarea class="ta" rows="3" placeholder="Наприклад: підбери матеріал на Present Perfect для reading, тема — подорожі, 40 хвилин">Матеріал на Present Perfect: короткий текст на reading про подорожі + 8 вправ + 10 карток нових слів.</textarea>
+                </label>
+
+                <div class="row" style="margin-bottom:14px">
+                  <button class="btn b-sec b-sm" onclick="toast('Виберіть файл: PDF, DOCX, JPG до 20 МБ')"><i class="fa-solid fa-paperclip"></i>Прикріпити файл</button>
+                  <span class="hint" style="margin:0">Підручник, скан зошита або ваш власний шаблон</span>
+                </div>
+
+                <div class="lbl">Швидкі теги</div>
+                <div class="row" style="margin-bottom:16px">
+                  <span class="chip on v" onclick="tglChip(this)">Reading</span>
+                  <span class="chip" onclick="tglChip(this)">Grammar</span>
+                  <span class="chip" onclick="tglChip(this)">Speaking</span>
+                  <span class="chip" onclick="tglChip(this)">Словниковий запас</span>
+                  <span class="chip" onclick="tglChip(this)">НМТ формат</span>
+                  <span class="chip" onclick="tglChip(this)">Ігрова форма</span>
+                </div>
+
+                <div class="acc" style="margin-bottom:16px">
+                  <button class="acc-h" onclick="tglAcc(this)">Додаткові налаштування <span style="color:var(--muted-2);font-weight:700">на «авто» <i class="fa-solid fa-chevron-down" style="margin-left:6px;font-size:10px"></i></span></button>
+                  <div class="acc-b"><div class="acc-in">
+                    <div class="f-row">
+                      <label class="f"><span class="lbl">Складність</span><select class="sel"><option>Авто (за рівнем учня)</option><option>Легше</option><option>Складніше</option></select></label>
+                      <label class="f"><span class="lbl">Формат</span><select class="sel"><option>Авто</option><option>Тільки текст</option><option>Текст + картинки</option><option>Для друку</option></select></label>
+                    </div>
+                    <label class="f" style="margin-bottom:0"><span class="lbl">Стиль викладу</span><select class="sel"><option>Авто</option><option>Академічний</option><option>Розмовний</option><option>Для дітей</option></select></label>
+                  </div></div>
+                </div>
+
+                <button class="btn b-violet b-block" onclick="aiGenerate()"><i class="fa-solid fa-wand-magic-sparkles"></i>Згенерувати</button>
+              </div>
+            </div>
+
+            <!-- cheat sheet -->
+            <div>
+              <div class="card">
+                <div class="ch"><div><div class="ct"><i class="fa-regular fa-lightbulb" style="color:var(--violet)"></i>Що можна отримати</div><div class="ct-s">Натисніть, щоб додати до запиту</div></div></div>
+                <div class="cb tight" style="padding-top:14px;padding-bottom:14px">
+                  <div class="sheet-i" onclick="toast('Додано до запиту: план уроку')"><div class="sheet-ic"><i class="fa-solid fa-list-ol"></i></div><div><div class="sheet-t">План уроку</div><div class="sheet-d">Структура на 40 або 60 хв</div></div></div>
+                  <div class="sheet-i" onclick="toast('Додано до запиту: вправи')"><div class="sheet-ic"><i class="fa-solid fa-pen-to-square"></i></div><div><div class="sheet-t">Вправи</div><div class="sheet-d">З відповідями для викладача</div></div></div>
+                  <div class="sheet-i" onclick="toast('Додано до запиту: відео')"><div class="sheet-ic"><i class="fa-solid fa-play"></i></div><div><div class="sheet-t">Відео</div><div class="sheet-d">Підбірка з таймкодами</div></div></div>
+                  <div class="sheet-i" onclick="toast('Додано до запиту: інфографіка')"><div class="sheet-ic"><i class="fa-solid fa-chart-simple"></i></div><div><div class="sheet-t">Інфографіка</div><div class="sheet-d">Шпаргалка або схема</div></div></div>
+                  <div class="sheet-i" onclick="toast('Додано до запиту: картки')"><div class="sheet-ic"><i class="fa-regular fa-clone"></i></div><div><div class="sheet-t">Картки</div><div class="sheet-d">Слова та фрази для друку</div></div></div>
+                  <div class="sheet-i" style="margin-bottom:0" onclick="toast('Додано до запиту: тест')"><div class="sheet-ic"><i class="fa-solid fa-square-check"></i></div><div><div class="sheet-t">Тест</div><div class="sheet-d">З балами та ключем</div></div></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="cb">
+                  <div class="up" onclick="toast('Виберіть файл-приклад: PDF або DOCX')">
+                    <div class="up-ic"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <div class="up-t">Завантажте свій приклад</div>
+                    <div class="up-d">AI повторить структуру та стиль вашого матеріалу</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="aiResult" style="display:none">
+          <div class="between" style="margin-bottom:14px">
+            <div>
+              <div class="h-sec" style="margin-bottom:2px">Результат готовий</div>
+              <div style="font-size:13px;color:var(--muted);font-weight:600">Софія Т. · Present Perfect · reading + вправи + картки</div>
+            </div>
+            <button class="btn b-sec b-sm" onclick="aiBack()"><i class="fa-solid fa-arrow-left"></i>Змінити запит</button>
+          </div>
+
+          <div class="res-blk">
+            <div class="res-h">
+              <div class="res-t"><i class="fa-solid fa-list-ol" style="margin-right:7px"></i>План уроку · 40 хв</div>
+              <div class="ch-r">
+                <button class="btn b-sec b-xs" onclick="toast('Блок перегенеровано')">Перегенерувати</button>
+                <button class="btn b-sec b-xs" onclick="toast('Редагування блоку')">Редагувати</button>
+                <button class="btn b-sec b-xs" onclick="toast('PDF блоку завантажено')">PDF</button>
+                <button class="btn b-violet-soft b-xs" onclick="openM('info')">Інфографіка</button>
+              </div>
+            </div>
+            <div class="res-b">
+              <ul>
+                <li><b>0–5 хв.</b> Warm-up: 5 питань «Have you ever…» про подорожі.</li>
+                <li><b>5–15 хв.</b> Reading: текст «A trip that changed everything» (280 слів, B1).</li>
+                <li><b>15–28 хв.</b> Grammar focus: Present Perfect vs Past Simple, 8 вправ.</li>
+                <li><b>28–36 хв.</b> Speaking: розповідь про власну подорож із 4 цільовими конструкціями.</li>
+                <li><b>36–40 хв.</b> Підсумок і видача ДЗ.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="res-blk">
+            <div class="res-h">
+              <div class="res-t"><i class="fa-solid fa-pen-to-square" style="margin-right:7px"></i>Вправи · 8 завдань з ключем</div>
+              <div class="ch-r">
+                <button class="btn b-sec b-xs" onclick="toast('Блок перегенеровано')">Перегенерувати</button>
+                <button class="btn b-sec b-xs" onclick="toast('Редагування блоку')">Редагувати</button>
+                <button class="btn b-sec b-xs" onclick="toast('PDF блоку завантажено')">PDF</button>
+                <button class="btn b-violet-soft b-xs" onclick="openM('info')">Інфографіка</button>
+              </div>
+            </div>
+            <div class="res-b">Заповнення пропусків (3), вибір правильної форми (2), трансформація речень (2), відкрите питання (1). Ключ відповідей — на другій сторінці PDF.</div>
+          </div>
+
+          <div class="res-blk">
+            <div class="res-h">
+              <div class="res-t"><i class="fa-regular fa-clone" style="margin-right:7px"></i>Картки · 10 слів</div>
+              <div class="ch-r">
+                <button class="btn b-sec b-xs" onclick="toast('Блок перегенеровано')">Перегенерувати</button>
+                <button class="btn b-sec b-xs" onclick="toast('Редагування блоку')">Редагувати</button>
+                <button class="btn b-sec b-xs" onclick="toast('PDF блоку завантажено')">PDF</button>
+                <button class="btn b-violet-soft b-xs" onclick="openM('info')">Інфографіка</button>
+              </div>
+            </div>
+            <div class="res-b">journey, luggage, sightseeing, delayed, souvenir, hostel, boarding pass, currency, itinerary, landmark — з перекладом і прикладом уживання.</div>
+          </div>
+
+          <div class="card">
+            <div class="cb">
+              <div class="row" style="gap:9px">
+                <button class="btn b-violet" onclick="toast('Пакет PDF завантажено')"><i class="fa-solid fa-file-pdf"></i>Весь пакет PDF</button>
+                <button class="btn b-sec" onclick="toast('Збережено в бібліотеку')"><i class="fa-solid fa-folder-plus"></i>Зберегти в бібліотеку</button>
+                <button class="btn b-sec" onclick="go('journal')"><i class="fa-solid fa-book-open"></i>До журналу уроків</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 9. БІБЛІОТЕКА ═════════ -->
+    <section class="view" id="v-lib">
+      <div class="between" style="margin-bottom:14px">
+        <div>
+          <div class="h-sec" style="margin-bottom:2px">Бібліотека матеріалів</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600">18 матеріалів · повторне використання не витрачає AI-запит</div>
+        </div>
+        <div class="row">
+          <input class="inp" placeholder="Пошук за назвою або темою…" style="width:230px;padding:9px 13px" oninput="filterLib(this.value)">
+          <button class="btn b-pri b-sm" onclick="toast('Завантаження власного матеріалу')"><i class="fa-solid fa-plus"></i>Додати матеріал</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="cb tight" style="padding-top:14px;padding-bottom:14px">
+          <div class="row">
+            <span class="chip on" onclick="tglChip(this)">Усі</span>
+            <span class="chip" onclick="tglChip(this)">Англійська</span>
+            <span class="chip" onclick="tglChip(this)">Німецька</span>
+            <span class="chip" onclick="tglChip(this)">B1</span>
+            <span class="chip" onclick="tglChip(this)">A2</span>
+            <span class="chip" onclick="tglChip(this)">НМТ</span>
+            <span class="chip" onclick="tglChip(this)">Для друку</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="g3" id="libGrid">
+        <div class="card" data-n="present perfect podorozhi">
+          <div class="cb">
+            <div class="row" style="justify-content:space-between;margin-bottom:11px">
+              <div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-list-ol"></i></div>
+              <span class="st st-mut">Використано 4 рази</span>
+            </div>
+            <div style="font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px">Present Perfect · подорожі</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:11px">План уроку 40 хв + 8 вправ + 10 карток</div>
+            <div class="row" style="margin-bottom:14px"><span class="tagx">Англійська</span><span class="tagx">B1</span><span class="tagx">Grammar</span></div>
+            <div class="row" style="gap:7px">
+              <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Матеріал відкрито — AI-запит не витрачено')">Використати</button>
+              <button class="btn b-ic b-sm" onclick="toast('Редагування матеріалу')"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn b-ic b-sm" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-n="ielts speaking part 2">
+          <div class="cb">
+            <div class="row" style="justify-content:space-between;margin-bottom:11px">
+              <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-microphone"></i></div>
+              <span class="st st-mut">Використано 7 разів</span>
+            </div>
+            <div style="font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px">IELTS Speaking Part 2 · банк тем</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:11px">20 cue cards + фрази-зв'язки + критерії оцінювання</div>
+            <div class="row" style="margin-bottom:14px"><span class="tagx">Англійська</span><span class="tagx">B2–C1</span><span class="tagx">IELTS</span></div>
+            <div class="row" style="gap:7px">
+              <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Матеріал відкрито — AI-запит не витрачено')">Використати</button>
+              <button class="btn b-ic b-sm" onclick="toast('Редагування матеріалу')"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn b-ic b-sm" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-n="modalverben a2">
+          <div class="cb">
+            <div class="row" style="justify-content:space-between;margin-bottom:11px">
+              <div class="li-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-regular fa-clone"></i></div>
+              <span class="st st-mut">Використано 2 рази</span>
+            </div>
+            <div style="font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px">Modalverben · картки для друку</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:11px">24 картки, A4, з прикладами речень</div>
+            <div class="row" style="margin-bottom:14px"><span class="tagx">Німецька</span><span class="tagx">A2</span><span class="tagx">Для друку</span></div>
+            <div class="row" style="gap:7px">
+              <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Матеріал відкрито — AI-запит не витрачено')">Використати</button>
+              <button class="btn b-ic b-sm" onclick="toast('Редагування матеріалу')"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn b-ic b-sm" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 8. МАГАЗИН ═════════ -->
+    <section class="view" id="v-shop">
+      <div class="h-sec">Магазин і просування</div>
+      <p class="p-sec">Платні позиції піднімають вашу анкету в каталозі. Оплата разова через Monobank, термін дії кожної позиції — 7 днів. Одночасно може бути до 5 активних оголошень.</p>
+
+      <div class="g3" style="margin-bottom:16px">
+        <div class="pk hot">
+          <div class="pk-ic"><i class="fa-solid fa-crown"></i></div>
+          <div class="pk-t">Топ каталогу</div>
+          <div class="pk-d">Ваша анкета займає одну з 2 виділених топ-позицій на сторінці каталогу — на кожній сторінці пагінації.</div>
+          <div class="pk-p"><span class="pk-pv">₴499</span><span class="pk-pu">/ 7 днів</span></div>
+          <button class="btn b-amber b-block" onclick="openM('buy')">Купити «Топ»</button>
+        </div>
+        <div class="pk">
+          <div class="pk-ic"><i class="fa-solid fa-bullhorn"></i></div>
+          <div class="pk-t">Оголошення</div>
+          <div class="pk-d">Ваша картка потрапляє в рекламний слайдер після 5-ї картки видачі. До 8 оголошень у каруселі.</div>
+          <div class="pk-p"><span class="pk-pv">₴299</span><span class="pk-pu">/ 7 днів</span></div>
+          <button class="btn b-amber-soft b-block" onclick="openM('buy')">Купити «Оголошення»</button>
+        </div>
+        <div class="pk">
+          <div class="pk-ic"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+          <div class="pk-t">Підняти анкету</div>
+          <div class="pk-d">Тимчасовий буст видимості в каталозі: ваша анкета показується вище у звичайній видачі.</div>
+          <div class="pk-p"><span class="pk-pv">₴149</span><span class="pk-pu">/ 7 днів</span></div>
+          <button class="btn b-amber-soft b-block" onclick="openM('buy')">Купити «Підняти»</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-chart-line" style="color:var(--amber)"></i>Активні позиції</div><div class="ct-s">2 з 5 активних оголошень</div></div>
+        </div>
+        <div class="cb">
+          <div style="border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:12px">
+            <div class="between" style="margin-bottom:13px">
+              <div class="row" style="gap:10px">
+                <div class="li-ic" style="background:var(--amber-50);color:var(--amber);width:36px;height:36px;font-size:13px"><i class="fa-solid fa-crown"></i></div>
+                <div>
+                  <div style="font-size:14px;font-weight:800">Топ каталогу · Англійська, Київ</div>
+                  <div style="font-size:11.5px;color:var(--muted);margin-top:2px">Активно до 22.08 · оплачено 15.08</div>
+                </div>
+              </div>
+              <span class="st st-warn"><i class="fa-regular fa-clock"></i>5 днів залишилось</span>
+            </div>
+            <div class="an">
+              <div class="an-c"><div class="an-v">3 412</div><div class="an-l">Покази</div></div>
+              <div class="an-c"><div class="an-v">228</div><div class="an-l">Кліки</div></div>
+              <div class="an-c"><div class="an-v">6,7%</div><div class="an-l">CTR</div></div>
+              <div class="an-c"><div class="an-v">5</div><div class="an-l">Днів</div></div>
+            </div>
+          </div>
+
+          <div style="border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px">
+            <div class="between" style="margin-bottom:13px">
+              <div class="row" style="gap:10px">
+                <div class="li-ic" style="background:var(--amber-50);color:var(--amber);width:36px;height:36px;font-size:13px"><i class="fa-solid fa-bullhorn"></i></div>
+                <div>
+                  <div style="font-size:14px;font-weight:800">Оголошення · слайдер репетиторів</div>
+                  <div style="font-size:11.5px;color:var(--muted);margin-top:2px">Активно до 19.08 · оплачено 12.08</div>
+                </div>
+              </div>
+              <span class="st st-bad"><i class="fa-regular fa-clock"></i>2 дні залишилось</span>
+            </div>
+            <div class="an">
+              <div class="an-c"><div class="an-v">1 190</div><div class="an-l">Покази</div></div>
+              <div class="an-c"><div class="an-v">64</div><div class="an-l">Кліки</div></div>
+              <div class="an-c"><div class="an-v">5,4%</div><div class="an-l">CTR</div></div>
+              <div class="an-c"><div class="an-v">2</div><div class="an-l">Днів</div></div>
+            </div>
+            <button class="btn b-amber-soft b-sm b-block" style="margin-top:12px" onclick="openM('buy')">Продовжити на 7 днів</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bn bn-ok" style="margin-top:16px">
+        <div class="bn-ic"><i class="fa-solid fa-gift"></i></div>
+        <div><div class="bn-t">Безкоштовний буст для новачка</div><div class="bn-d">Після 100% заповнення профілю ви автоматично отримуєте місце на 4–6 позиції каталогу на 10 днів із бейджем «Новий». Заповніть профіль до кінця, щоб активувати.</div></div>
+        <div class="bn-r"><button class="btn b-sec b-sm" onclick="go('profile')">Заповнити профіль</button></div>
+      </div>
+    </section>
+
+    <!-- ═════════ 1. ПРОФІЛЬ ═════════ -->
+    <section class="view" id="v-profile">
+      <div class="bn bn-warn">
+        <div class="bn-ic"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div style="flex:1">
+          <div class="bn-t">Статус модерації: на модерації</div>
+          <div class="bn-d">Ми перевіряємо відео-привітання та диплом. До завершення перевірки анкета не показується клієнтам.</div>
+        </div>
+        <div class="bn-r">
+          <select class="demo-sel" onchange="setMod(this.value)" title="Демо: статус модерації">
+            <option value="pending">На модерації</option>
+            <option value="active">Активний</option>
+            <option value="rejected">Відхилено</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="cb">
+          <div class="between" style="margin-bottom:10px">
+            <div>
+              <div style="font-size:14.5px;font-weight:800">Профіль заповнено на 85%</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:3px">Заповніть до 100%, щоб отримати безкоштовний буст новачка на 10 днів</div>
+            </div>
+            <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:900">85%</div>
+          </div>
+          <div class="pr"><div class="pr-f" style="width:85%"></div></div>
+          <div class="row" style="margin-top:12px">
+            <span class="st st-bad"><i class="fa-solid fa-xmark"></i>Немає міст для офлайн</span>
+            <span class="st st-bad"><i class="fa-solid fa-xmark"></i>Не додано Zoom-посилання</span>
+            <span class="st st-ok"><i class="fa-solid fa-check"></i>Відео завантажено</span>
+            <span class="st st-ok"><i class="fa-solid fa-check"></i>Диплом додано</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- основна інформація -->
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-regular fa-id-badge"></i>Основна інформація</div><div class="ct-s">Це бачать клієнти на вашій публічній сторінці</div></div></div>
+        <div class="cb">
+          <div class="row" style="gap:16px;margin-bottom:18px;align-items:flex-start">
+            <img src="https://i.pravatar.cc/240?u=olena" alt="" style="width:96px;height:96px;border-radius:22px;object-fit:cover;border:3px solid var(--teal-50);flex-shrink:0">
+            <div style="flex:1;min-width:180px">
+              <div class="lbl">Фото профілю <span class="req">*</span></div>
+              <div class="row" style="gap:8px">
+                <button class="btn b-sec b-sm" onclick="toast('Виберіть фото: JPG або PNG, до 5 МБ')"><i class="fa-solid fa-camera"></i>Замінити фото</button>
+                <button class="btn b-danger b-sm" onclick="toast('Фото видалено')">Видалити</button>
+              </div>
+              <div class="hint">Обличчя видно повністю, без окулярів і фільтрів. JPG або PNG, мінімум 400×400.</div>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <label class="f"><span class="lbl">Ім'я та прізвище <span class="req">*</span></span><input class="inp" value="Олена І."></label>
+            <label class="f"><span class="lbl">Стаж викладання <span class="req">*</span></span>
+              <select class="sel"><option>7 років</option><option>1 рік</option><option>3 роки</option><option>5 років</option><option>10+ років</option></select>
+            </label>
+          </div>
+
+          <label class="f" style="margin-bottom:0">
+            <span class="lbl">Про себе <span class="req">*</span></span>
+            <textarea class="ta" rows="5" maxlength="1200" oninput="cnt(this)">Навчаю англійській та німецькій мові 7 років. Мої уроки — це жива взаємодія: ми розмовляємо, дивимося відео, читаємо цікаві тексти. Кожен урок адаптований під конкретні цілі учня. Працюю з дітьми від 6 років і дорослими.</textarea>
+            <div class="cnt">318 / 1200</div>
+            <div class="hint">Напишіть, з ким ви працюєте, які цілі закриваєте і як проходить урок. Перші 2 рядки видно в каталозі.</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- відео -->
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-video"></i>Відео-привітання</div><div class="ct-s">Профілі з відео отримують у 2,5 раза більше заявок</div></div>
+          <div class="ch-r"><span class="st st-warn"><i class="fa-solid fa-hourglass-half"></i>На модерації</span></div></div>
+        <div class="cb">
+          <div class="g2">
+            <div style="position:relative;border-radius:var(--r-lg);overflow:hidden;background:#000;aspect-ratio:16/9">
+              <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=70" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.85">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <button class="btn" style="background:rgba(255,255,255,.92);color:var(--ink);border-radius:50px" onclick="toast('Прев\'ю відео')"><i class="fa-solid fa-play"></i>Прев'ю</button>
+              </div>
+              <div style="position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:800">01:42 · 42 МБ · MP4</div>
+            </div>
+            <div>
+              <div class="up" onclick="toast('Виберіть відео: MP4 або MOV')">
+                <div class="up-ic"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <div class="up-t">Замінити відео</div>
+                <div class="up-d">MP4 або MOV · до 100 МБ · 30 сек – 3 хв · вертикальне або 16:9</div>
+              </div>
+              <div class="bn bn-bad" style="margin:12px 0 0;padding:11px 13px">
+                <div class="bn-ic" style="width:28px;height:28px;font-size:11px"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div><div class="bn-d"><b>Приклад помилки валідації:</b> файл 180 МБ перевищує ліміт 100 МБ. Стисніть відео або зменшіть тривалість.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- предмети + ціни -->
+      <div class="card">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-book"></i>Предмети, рівні та ціни</div><div class="ct-s">Своя ціна для кожної пари «предмет + рівень»</div></div>
+          <div class="ch-r"><button class="btn b-pri b-sm" onclick="openM('subject')"><i class="fa-solid fa-plus"></i>Додати пару</button></div>
+        </div>
+        <div class="tblw">
+          <table class="tbl">
+            <thead><tr><th>Предмет</th><th>Рівень / клас</th><th>Тривалість</th><th>Ціна</th><th style="text-align:right">Дії</th></tr></thead>
+            <tbody>
+              <tr><td class="cell-n">Англійська мова</td><td>1–4 клас</td><td>40 хв</td><td class="num">₴350</td>
+                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
+              <tr><td class="cell-n">Англійська мова</td><td>5–9 клас</td><td>40 хв</td><td class="num">₴400</td>
+                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
+              <tr><td class="cell-n">Англійська мова</td><td>НМТ / ЗНО</td><td>60 хв</td><td class="num">₴650</td>
+                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
+              <tr><td class="cell-n">Німецька мова</td><td>A1–B1</td><td>40 хв</td><td class="num">₴380</td>
+                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cb tight" style="padding-top:14px;padding-bottom:16px">
+          <div class="bn bn-ok" style="margin:0">
+            <div class="bn-ic"><i class="fa-solid fa-tag"></i></div>
+            <div><div class="bn-t">У каталозі показуємо ціну «від ₴350»</div><div class="bn-d">Це найдешевша пара з вашого списку — «Англійська, 1–4 клас». Ціна оновлюється автоматично.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- освіта -->
+      <div class="card">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-graduation-cap"></i>Освіта та сертифікати</div><div class="ct-s">Мінімум 1 запис із файлом диплому</div></div>
+          <div class="ch-r"><button class="btn b-pri b-sm" onclick="openM('edu')"><i class="fa-solid fa-plus"></i>Додати запис</button></div>
+        </div>
+        <div class="cb tight" style="padding-top:8px;padding-bottom:16px">
+          <div class="li">
+            <div class="li-ic" style="background:var(--blue-50);color:var(--blue)"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="li-b"><div class="li-t">КНУ ім. Шевченка · Іноземна філологія</div><div class="li-d">Бакалавр · 2015–2019 <span class="dotsep"></span> diploma_knu.pdf</div></div>
+            <div class="li-r"><span class="st st-ok"><i class="fa-solid fa-check"></i>Підтверджено</span><button class="btn b-ic b-sm" onclick="openM('edu')"><i class="fa-solid fa-pen"></i></button></div>
+          </div>
+          <div class="li">
+            <div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-certificate"></i></div>
+            <div class="li-b"><div class="li-t">Cambridge CELTA</div><div class="li-d">Сертифікат викладача · 2020 <span class="dotsep"></span> celta.pdf</div></div>
+            <div class="li-r"><span class="st st-ok"><i class="fa-solid fa-check"></i>Підтверджено</span><button class="btn b-ic b-sm" onclick="openM('edu')"><i class="fa-solid fa-pen"></i></button></div>
+          </div>
+          <div class="li">
+            <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-award"></i></div>
+            <div class="li-b"><div class="li-t">Goethe-Zertifikat C1</div><div class="li-d">Goethe-Institut · 2022 <span class="dotsep"></span> goethe_c1.pdf</div></div>
+            <div class="li-r"><span class="st st-warn"><i class="fa-solid fa-hourglass-half"></i>На перевірці</span><button class="btn b-ic b-sm" onclick="openM('edu')"><i class="fa-solid fa-pen"></i></button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- формати -->
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-desktop"></i>Формати та локації</div></div></div>
+        <div class="cb">
+          <div class="lbl">Формати занять <span class="req">*</span></div>
+          <div class="row" style="margin-bottom:16px">
+            <span class="chip on" onclick="tglChip(this)"><i class="fa-solid fa-video"></i>Онлайн</span>
+            <span class="chip on" onclick="tglFormatOffline(this)"><i class="fa-solid fa-house"></i>Офлайн</span>
+            <span class="chip" onclick="tglChip(this)"><i class="fa-solid fa-user-group"></i>Групові</span>
+          </div>
+          <div id="offlineCities">
+            <div class="lbl">Міста для офлайн-роботи <span class="req">*</span></div>
+            <div class="row" style="margin-bottom:8px">
+              <span class="chip on" onclick="tglChip(this)">Київ <i class="fa-solid fa-xmark" style="font-size:9px"></i></span>
+              <span class="chip on" onclick="tglChip(this)">Бровари <i class="fa-solid fa-xmark" style="font-size:9px"></i></span>
+              <button class="chip" onclick="toast('Додайте місто зі списку')"><i class="fa-solid fa-plus"></i>Додати місто</button>
+            </div>
+            <div class="hint">Клієнти з інших міст побачать лише онлайн-формат.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- перемикачі -->
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-sliders"></i>Налаштування анкети</div></div></div>
+        <div class="cb">
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">У пошуку клієнтів</div><div class="sw-d">Вимкніть, якщо повністю зайняті — анкета зникне з видачі, активні учні залишаться.</div></div>
+            <button class="sw on" onclick="tglSw(this)"></button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">Парні (групові) заняття</div><div class="sw-d">Показуємо клієнтам, що ви берете двох учнів на один урок.</div></div>
+            <button class="sw" onclick="tglSw(this)"></button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">Викладаю за програмою іншої країни</div><div class="sw-d">З'явиться фільтр «закордонна програма» у вашій картці каталогу.</div></div>
+            <button class="sw on" onclick="tglSw(this,'progCountry')"></button>
+          </div>
+          <div id="progCountry" style="padding-top:14px">
+            <label class="f" style="margin-bottom:0;max-width:320px"><span class="lbl">Країна програми</span>
+              <select class="sel"><option>🇩🇪 Німецька</option><option>🇵🇱 Польська</option><option>🇺🇸 Американська</option><option>🇬🇧 Британська</option><option>IB (міжнародна)</option></select>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- інтеграції -->
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-plug"></i>Інтеграції та сповіщення</div></div></div>
+        <div class="cb">
+          <div class="f-row">
+            <label class="f"><span class="lbl">Посилання Zoom або Google Meet</span><input class="inp" placeholder="https://zoom.us/j/…"><div class="hint">Підставляється у кнопку «Приєднатися» за 10 хв до уроку.</div></label>
+            <div class="f">
+              <span class="lbl">Telegram</span>
+              <div class="row" style="gap:8px">
+                <input class="inp" value="@olena_teach" style="flex:1;min-width:120px">
+                <button class="btn b-soft b-sm" onclick="toast('Telegram прив\'язано')">Прив'язати</button>
+              </div>
+              <div class="hint">Через бота приходять заявки, нагадування та звіти.</div>
+            </div>
+          </div>
+          <div class="hr"></div>
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">Звіти для батьків</div><div class="sw-d">Автовідправка після кожного уроку, о 19:00 за Києвом.</div></div>
+            <button class="sw on" onclick="tglSw(this)"></button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">Нові заявки в Telegram</div><div class="sw-d">Одразу, щоб не пропустити SLA.</div></div>
+            <button class="sw on" onclick="tglSw(this)"></button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">Нагадування про урок</div><div class="sw-d">За 30 хвилин до початку.</div></div>
+            <button class="sw on" onclick="tglSw(this)"></button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-tx"><div class="sw-t">Новини платформи</div><div class="sw-d">Оновлення, акції магазину, зміни правил.</div></div>
+            <button class="sw" onclick="tglSw(this)"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- системні поля -->
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-lock" style="color:var(--muted-2)"></i>Системні дані профілю</div><div class="ct-s">Формуються платформою — редагувати не можна</div></div></div>
+        <div class="cb">
+          <div class="g4">
+            <div class="stu-cell"><div class="stu-cell-l">Рейтинг</div><div class="stu-cell-v"><i class="fa-solid fa-star" style="color:var(--amber);font-size:11px"></i> 4.9</div></div>
+            <div class="stu-cell"><div class="stu-cell-l">Відгуки</div><div class="stu-cell-v">48</div></div>
+            <div class="stu-cell"><div class="stu-cell-l">Активні клієнти</div><div class="stu-cell-v">4</div></div>
+            <div class="stu-cell"><div class="stu-cell-l">Рівень активності</div><div class="stu-cell-v">Високий</div></div>
+          </div>
+          <div class="hr"></div>
+          <div class="lbl">Бейджі</div>
+          <div class="row">
+            <span class="st st-ok"><i class="fa-solid fa-circle-check"></i>Документи перевірено</span>
+            <span class="st st-info"><i class="fa-solid fa-bolt"></i>Швидка відповідь</span>
+            <span class="st st-warn"><i class="fa-solid fa-star"></i>Топ-рейтинг місяця</span>
+            <span class="st st-mut"><i class="fa-solid fa-seedling"></i>Новий (не активний)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card"><div class="cb"><div class="row" style="gap:9px">
+        <button class="btn b-pri" onclick="toast('Зміни збережено. Оновлені поля йдуть на модерацію.')"><i class="fa-solid fa-check"></i>Зберегти зміни</button>
+        <button class="btn b-sec" onclick="toast('Прев\'ю публічної сторінки')"><i class="fa-regular fa-eye"></i>Дивитися як клієнт</button>
+      </div></div></div>
+    </section>
+
+    <!-- ═════════ 10. ТАРИФИ ═════════ -->
+    <section class="view" id="v-plans">
+      <div class="h-sec">Тарифи</div>
+      <p class="p-sec">Кількість лідів не обмежена на жодному плані. Pro та Expert відрізняються від Free тільки AI-функціями та зручністю CRM.</p>
+
+      <div class="bn bn-v" style="margin-bottom:16px">
+        <div class="bn-ic"><i class="fa-solid fa-flask"></i></div>
+        <div style="flex:1"><div class="bn-t">Демо: перемикач плану</div><div class="bn-d">Перемкніть план, щоб побачити, як змінюється AI-помічник, ліміти та ця сторінка.</div></div>
+        <div class="bn-r"><select class="demo-sel" id="planSel" onchange="setPlan(this.value)">
+          <option value="free">Free</option><option value="pro">Pro</option><option value="expert">Expert</option>
+        </select></div>
+      </div>
+
+      <div class="bn bn-v pro-hide">
+        <div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div style="flex:1"><div class="bn-t">Тріал Pro завершується через 3 дні</div><div class="bn-d">Додайте картку до 28 серпня, щоб лишитися на Pro. Якщо картки не буде — акаунт автоматично перейде на Free, дані залишаться на місці.</div></div>
+        <div class="bn-r"><button class="btn b-violet b-sm" onclick="openM('card')">Додати картку</button></div>
+      </div>
+
+      <div class="g3" style="margin-bottom:16px">
+        <div class="pl cur">
+          <div class="row" style="justify-content:space-between"><div class="pl-n">Free</div><span class="st st-ok">Ваш план</span></div>
+          <div class="pl-p"><span class="pl-pv">₴0</span><span class="pl-pu">/ міс</span></div>
+          <ul class="pl-f">
+            <li><i class="fa-solid fa-check"></i>Ліди без обмежень</li>
+            <li><i class="fa-solid fa-check"></i>Профіль у каталозі</li>
+            <li><i class="fa-solid fa-check"></i>До 5 активних учнів</li>
+            <li><i class="fa-solid fa-check"></i>Розклад і журнал</li>
+            <li><i class="fa-solid fa-check"></i>Базові заметки й ДЗ</li>
+            <li><i class="fa-solid fa-check"></i>Telegram-сповіщення</li>
+            <li><i class="fa-solid fa-check"></i>Гейміфікація (XP, streak)</li>
+            <li class="no"><i class="fa-solid fa-xmark"></i>Без AI-генерації</li>
+          </ul>
+          <button class="btn b-sec b-block" disabled>Активний</button>
+        </div>
+
+        <div class="pl best">
+          <span class="pl-b">Рекомендуємо</span>
+          <div class="row" style="justify-content:space-between"><div class="pl-n">Pro</div><span class="st st-v">14 днів безкоштовно</span></div>
+          <div class="pl-p"><span class="pl-pv">₴349</span><span class="pl-pu">/ міс</span></div>
+          <ul class="pl-f">
+            <li><i class="fa-solid fa-check"></i>Усе з Free</li>
+            <li><i class="fa-solid fa-check"></i>AI: підбір матеріалів</li>
+            <li><i class="fa-solid fa-check"></i>AI: генерація ДЗ</li>
+            <li><i class="fa-solid fa-check"></i>AI: звіт після уроку</li>
+            <li><i class="fa-solid fa-check"></i>AI-контекст учня</li>
+            <li><i class="fa-solid fa-check"></i>До 25 активних учнів</li>
+            <li><i class="fa-solid fa-check"></i>40 AI-запитів на місяць</li>
+            <li class="no"><i class="fa-solid fa-xmark"></i>Без перевірки ДЗ з AI</li>
+          </ul>
+          <button class="btn b-violet b-block" onclick="startTrial()">Запустити тріал</button>
+        </div>
+
+        <div class="pl">
+          <div class="row" style="justify-content:space-between"><div class="pl-n">Expert</div><span class="st st-mut">Для повного завантаження</span></div>
+          <div class="pl-p"><span class="pl-pv">₴599</span><span class="pl-pu">/ міс</span></div>
+          <ul class="pl-f">
+            <li><i class="fa-solid fa-check"></i>Усе з Pro</li>
+            <li><i class="fa-solid fa-check"></i>Перевірка ДЗ з AI</li>
+            <li><i class="fa-solid fa-check"></i>Без ліміту активних учнів</li>
+            <li><i class="fa-solid fa-check"></i>150 AI-запитів на місяць</li>
+            <li><i class="fa-solid fa-check"></i>Розширена аналітика CRM</li>
+            <li><i class="fa-solid fa-check"></i>Пріоритетна підтримка</li>
+          </ul>
+          <button class="btn b-sec b-block" onclick="openM('card')">Перейти на Expert</button>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div class="card">
+          <div class="ch"><div class="ct"><i class="fa-solid fa-gauge-simple-high"></i>Ваші ліміти</div></div>
+          <div class="cb">
+            <div style="margin-bottom:16px">
+              <div class="between" style="margin-bottom:7px"><span style="font-size:13px;font-weight:700">Активні учні</span><span style="font-size:12.5px;font-weight:900">4 / 5</span></div>
+              <div class="pr"><div class="pr-f" style="width:80%"></div></div>
+            </div>
+            <div style="margin-bottom:16px">
+              <div class="between" style="margin-bottom:7px"><span style="font-size:13px;font-weight:700">AI-запити цього місяця</span><span style="font-size:12.5px;font-weight:900" id="aiLimitTx">0 / 0</span></div>
+              <div class="pr"><div class="pr-f v" style="width:0%" id="aiLimitBar"></div></div>
+              <div class="hint free-only">На плані Free AI-генерація недоступна. Запустіть тріал, щоб отримати 40 запитів.</div>
+            </div>
+            <div>
+              <div class="between" style="margin-bottom:7px"><span style="font-size:13px;font-weight:700">Активні оголошення в магазині</span><span style="font-size:12.5px;font-weight:900">2 / 5</span></div>
+              <div class="pr"><div class="pr-f a" style="width:40%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><div class="ct"><i class="fa-solid fa-circle-question"></i>Як працює тріал</div></div>
+          <div class="cb">
+            <div class="li"><div class="li-ic" style="background:var(--violet-50);color:var(--violet)">1</div>
+              <div class="li-b"><div class="li-t">Запуск в один клік</div><div class="li-d">Без картки. 14 днів відлічуються з моменту активації.</div></div></div>
+            <div class="li"><div class="li-ic" style="background:var(--violet-50);color:var(--violet)">2</div>
+              <div class="li-b"><div class="li-t">Нагадування за 3 дні</div><div class="li-d">Банер у кабінеті та повідомлення в Telegram.</div></div></div>
+            <div class="li"><div class="li-ic" style="background:var(--violet-50);color:var(--violet)">3</div>
+              <div class="li-b"><div class="li-t">Без картки — автоперехід на Free</div><div class="li-d">Учні, розклад і журнал залишаються. Зникає лише AI.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ 11. ФІНАНСИ ═════════ -->
+    <section class="view" id="v-fin">
+      <div class="h-sec">Фінанси</div>
+      <p class="p-sec">Заробіток вважається за оплаченими уроками з розкладу. Комісія платформи списується після пробного заняття.</p>
+
+      <div class="g4" style="margin-bottom:16px">
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--green-50);color:var(--green)"><i class="fa-solid fa-hryvnia-sign"></i></div><div class="met-l">Зароблено в серпні</div></div>
+          <div class="met-v">₴15 200</div>
+          <div class="met-s">38 оплачених уроків</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-solid fa-hourglass-half"></i></div><div class="met-l">Очікує оплати</div></div>
+          <div class="met-v">₴1 150</div>
+          <div class="met-s">2 заявки в підвішеному стані</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-percent"></i></div><div class="met-l">Комісія платформи</div></div>
+          <div class="met-v">₴1 320</div>
+          <div class="met-s">За 11 заявок цього місяця</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-crown"></i></div><div class="met-l">Підписка</div></div>
+          <div class="met-v" style="font-size:20px">Free</div>
+          <div class="met-s">Наступне списання: —</div>
+        </div>
+      </div>
+
+      <div class="bn bn-warn">
+        <div class="bn-ic"><i class="fa-solid fa-circle-exclamation"></i></div>
+        <div>
+          <div class="bn-t">Правила оплати комісії</div>
+          <div class="bn-d">Оплата протягом доби після пробного дає бонус до рейтингу. Дедлайн — 3 дні, інакше акаунт ставиться на паузу. Одночасно може бути максимум 3 заявки в підвішеному стані.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-list"></i>Транзакції</div><div class="ct-s">Комісії, підписка, повернення</div></div>
+          <div class="ch-r">
+            <span class="chip on" onclick="tglChip(this)">Усі</span>
+            <span class="chip" onclick="tglChip(this)">Неоплачені</span>
+            <span class="chip" onclick="tglChip(this)">Підписка</span>
+          </div>
+        </div>
+        <div class="tblw">
+          <table class="tbl">
+            <thead><tr><th>Дата</th><th>Призначення</th><th>Лід</th><th>Сума</th><th>Статус</th><th style="text-align:right">Чек</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="num">16.08</td><td>Комісія після пробного</td>
+                <td>Ірина К. · Англійська НМТ</td><td class="num">₴480</td>
+                <td><span class="st st-bad"><i class="fa-regular fa-clock"></i>До сплати · 2 дні</span></td>
+                <td style="text-align:right"><button class="btn b-pri b-xs" onclick="openM('pay')">Сплатити</button></td>
+              </tr>
+              <tr>
+                <td class="num">14.08</td><td>Комісія після пробного</td>
+                <td>Олег Д. · Розмовна англійська</td><td class="num">₴670</td>
+                <td><span class="st st-warn"><i class="fa-regular fa-clock"></i>До сплати · сьогодні</span></td>
+                <td style="text-align:right"><button class="btn b-pri b-xs" onclick="openM('pay')">Сплатити</button></td>
+              </tr>
+              <tr>
+                <td class="num">12.08</td><td>Оголошення · слайдер (7 днів)</td>
+                <td>—</td><td class="num">₴299</td>
+                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Оплачено</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Чек відкрито у новій вкладці')">Відкрити чек</button></td>
+              </tr>
+              <tr>
+                <td class="num">15.08</td><td>Топ каталогу (7 днів)</td>
+                <td>—</td><td class="num">₴499</td>
+                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Оплачено</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Чек відкрито у новій вкладці')">Відкрити чек</button></td>
+              </tr>
+              <tr>
+                <td class="num">05.08</td><td>Комісія після пробного</td>
+                <td>Марта Л. · IELTS</td><td class="num">₴720</td>
+                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Оплачено · бонус +2 до рейтингу</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Чек відкрито у новій вкладці')">Відкрити чек</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><div><div class="ct"><i class="fa-solid fa-credit-card"></i>Спосіб оплати</div><div class="ct-s">Списання підписки Monobank у дату білінгу</div></div></div>
+        <div class="cb tight" style="padding-top:8px;padding-bottom:16px">
+          <div class="li">
+            <div class="li-ic" style="background:var(--bg)"><i class="fa-regular fa-credit-card"></i></div>
+            <div class="li-b"><div class="li-t">Картка не додана</div><div class="li-d">Потрібна лише для підписки Pro або Expert. Комісії можна сплачувати разово.</div></div>
+            <div class="li-r"><button class="btn b-pri b-sm" onclick="openM('card')">Додати картку</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div><!-- /wrap -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ══════════ MOBILE TABBAR ══════════ -->
+<nav class="tbar">
+  <div class="tbar-in">
+    <button class="ti on" data-tab="dash" onclick="go('dash')"><i class="fa-solid fa-gauge-high"></i><span>Стіл</span></button>
+    <button class="ti" data-tab="req" onclick="go('req')"><i class="fa-solid fa-inbox"></i><span class="b">3</span><span>Заявки</span></button>
+    <button class="ti" data-tab="sched" onclick="go('sched')"><i class="fa-regular fa-calendar"></i><span>Розклад</span></button>
+    <button class="ti" data-tab="students" onclick="go('students')"><i class="fa-solid fa-user-group"></i><span>Учні</span></button>
+    <button class="ti" onclick="openSb()"><i class="fa-solid fa-bars"></i><span>Ще</span></button>
+  </div>
+</nav>
+
+<!-- ══════════ MODAL ══════════ -->
+<div class="mv" id="mv" onclick="if(event.target===this)closeM()">
+  <div class="mb">
+    <div class="mh">
+      <div><div class="mh-t" id="mTitle">—</div><div class="mh-s" id="mSub"></div></div>
+      <button class="mx" onclick="closeM()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="mbody" id="mBody"></div>
+    <div class="mfoot" id="mFoot"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════ NAV ══════════ */
+const TITLES = {
+  dash:['Робочий стіл','Понеділок, 17 серпня 2026'],
+  req:['Заявки та біржа','3 приватні заявки · 12 на біржі'],
+  sched:['Розклад','17–23 серпня 2026'],
+  students:['Мої учні','4 активних · ліміт 5'],
+  journal:['Журнал і ДЗ','2 уроки без звіту'],
+  ai:['AI-помічник','Матеріали, ДЗ та звіти'],
+  lib:['Бібліотека матеріалів','18 матеріалів'],
+  shop:['Магазин і просування','2 активні позиції'],
+  profile:['Профіль','Статус: на модерації'],
+  plans:['Тарифи','Ваш план: Free'],
+  fin:['Фінанси','₴1 150 очікує оплати']
+};
+
+function go(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById('v-'+v);
+  if(el) el.classList.add('on');
+  document.querySelectorAll('.sb-i').forEach(b=>b.classList.toggle('on', b.dataset.view===v));
+  document.querySelectorAll('.ti').forEach(b=>b.classList.toggle('on', b.dataset.tab===v));
+  const t=TITLES[v]||['',''];
+  document.getElementById('tbT').textContent=t[0];
+  document.getElementById('tbS').textContent=t[1];
+  closeSb();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.sb-i').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+
+function openSb(){document.getElementById('sb').classList.add('on');document.getElementById('sbOv').classList.add('on');document.body.style.overflow='hidden'}
+function closeSb(){document.getElementById('sb').classList.remove('on');document.getElementById('sbOv').classList.remove('on');document.body.style.overflow=''}
+
+/* ══════════ SMALL UI HELPERS ══════════ */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.classList.remove('on'),2600);
+}
+function tglChip(el){el.classList.toggle('on')}
+function tglSw(el,linked){
+  el.classList.toggle('on');
+  if(linked){const b=document.getElementById(linked); if(b) b.style.display=el.classList.contains('on')?'block':'none'}
+}
+function tglFormatOffline(el){
+  el.classList.toggle('on');
+  document.getElementById('offlineCities').style.display=el.classList.contains('on')?'block':'none';
+}
+function tglAcc(btn){
+  const b=btn.nextElementSibling;
+  b.classList.toggle('on');
+  const ic=btn.querySelector('i');
+  if(ic) ic.style.transform=b.classList.contains('on')?'rotate(180deg)':'none';
+}
+function tglGoal(el){
+  el.classList.toggle('on');
+  const done=document.querySelectorAll('#v-dash .cx.on').length;
+  const d=document.getElementById('goalsDone'); if(d) d.textContent=Math.min(done,4);
+  if(el.classList.contains('on')) toast('Ціль виконано · +25 XP');
+}
+function cnt(ta){
+  const w=ta.parentElement.querySelector('.cnt');
+  if(w) w.textContent=ta.value.length+' / '+(ta.maxLength||1200);
+}
+function setPeriod(p,btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('#v-dash .met-v').forEach(v=>{
+    const val=p==='m'?v.dataset.m:v.dataset.a;
+    if(val) v.textContent=val;
+  });
+}
+function filterStu(q){
+  q=(q||'').toLowerCase().trim();
+  document.querySelectorAll('#stuGrid .stu[data-n]').forEach(c=>{
+    c.style.display=!q||c.dataset.n.includes(q)?'':'none';
+  });
+}
+function filterLib(q){
+  q=(q||'').toLowerCase().trim();
+  document.querySelectorAll('#libGrid .card[data-n]').forEach(c=>{
+    c.style.display=!q||c.dataset.n.includes(q)?'':'none';
+  });
+}
+function reqTab(which,btn){
+  btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('req-mine').style.display=which==='mine'?'block':'none';
+  document.getElementById('req-market').style.display=which==='market'?'block':'none';
+}
+function setMod(s){
+  const b=document.getElementById('modBanner');
+  const box=document.querySelector('#v-profile .bn');
+  const map={
+    pending:['bn-warn','fa-hourglass-half','Статус модерації: на модерації','Ми перевіряємо відео-привітання та диплом. До завершення перевірки анкета не показується клієнтам.'],
+    active:['bn-ok','fa-circle-check','Статус модерації: активний','Анкета опублікована в каталозі й отримує заявки. Нові зміни в профілі проходять швидку повторну перевірку.'],
+    rejected:['bn-bad','fa-circle-xmark','Статус модерації: відхилено','Причина: на відео не чути звук у перші 20 секунд. Перезавантажте відео-привітання та надішліть анкету повторно.']
+  };
+  const [cls,ic,t,d]=map[s];
+  box.className='bn '+cls;
+  box.querySelector('.bn-ic i').className='fa-solid '+ic;
+  box.querySelector('.bn-t').textContent=t;
+  box.querySelector('.bn-d').textContent=d;
+  if(b){
+    b.className='bn '+cls;
+    b.querySelector('.bn-ic i').className='fa-solid '+ic;
+    b.querySelector('.bn-t').textContent = s==='active'?'Профіль активний у каталозі':(s==='rejected'?'Профіль відхилено модерацією':'Профіль на модерації');
+    b.querySelector('.bn-d').textContent = d;
+  }
+  document.getElementById('tbS').textContent = s==='active'?'Статус: активний':(s==='rejected'?'Статус: відхилено':'Статус: на модерації');
+}
+
+/* ══════════ PLAN ══════════ */
+function setPlan(p){
+  document.body.dataset.plan=p;
+  const sel=document.getElementById('planSel'); if(sel) sel.value=p;
+  const lim = p==='free'?[0,0]:(p==='pro'?[28,40]:[54,150]);
+  document.getElementById('aiLimitTx').textContent=lim[0]+' / '+lim[1];
+  document.getElementById('aiLimitBar').style.width=(lim[1]?Math.round(lim[0]/lim[1]*100):0)+'%';
+  document.querySelectorAll('.sb-i.ai .sb-cnt').forEach(c=>c.textContent = p==='free'?'Pro':'AI');
+}
+function startTrial(){
+  setPlan('pro');
+  toast('Тріал Pro активовано на 14 днів');
+  go('ai');
+}
+
+/* ══════════ AI ══════════ */
+function aiTool(btn,name){
+  document.querySelectorAll('.ai-tool').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const icons={'Підбір матеріалів':'fa-layer-group','Генерація ДЗ':'fa-file-pen','Звіт після уроку':'fa-file-lines'};
+  document.getElementById('aiToolTitle').innerHTML='<i class="fa-solid '+icons[name]+'" style="color:var(--violet)"></i>'+name;
+  aiBack();
+}
+function aiGenerate(){
+  toast('Генеруємо… це займе кілька секунд');
+  setTimeout(()=>{
+    document.getElementById('aiInput').style.display='none';
+    document.getElementById('aiResult').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  },900);
+}
+function aiBack(){
+  const i=document.getElementById('aiInput'), r=document.getElementById('aiResult');
+  if(i&&r){i.style.display='block';r.style.display='none'}
+}
+function aiQuick(what){
+  if(document.body.dataset.plan==='free'){openM('trialgate');return}
+  toast('AI: '+what+' — відкриваємо помічник');
+  go('ai');
+}
+
+/* ══════════ SCHEDULE ══════════ */
+const DAYS=['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
+const WEEK=[
+  {d:17,t:'Пн',today:true,items:[
+    {time:'15:00',n:'Софія Т.',s:'Англійська B1 · Zoom',cls:''},
+    {time:'18:00',n:'Артем К.',s:'Німецька A2 · Meet',cls:''}]},
+  {d:18,t:'Вт',items:[{time:'10:00',n:'Марта Л.',s:'IELTS · 60 хв',cls:''}]},
+  {d:19,t:'Ср',items:[
+    {time:'16:00',n:'Назар П.',s:'Англійська · НМТ',cls:''},
+    {time:'19:00',n:'Олег Д.',s:'Пробне заняття',cls:'moved'}]},
+  {d:20,t:'Чт',items:[{time:'15:00',n:'Софія Т.',s:'Англійська B1',cls:''}]},
+  {d:21,t:'Пт',items:[
+    {time:'11:00',n:'Марта Л.',s:'IELTS Writing',cls:''},
+    {time:'18:00',n:'Артем К.',s:'Німецька A2',cls:'cancel'}]},
+  {d:22,t:'Сб',items:[{time:'10:00',n:'Група A2',s:'Парне заняття',cls:'done'}]},
+  {d:23,t:'Нд',items:[]}
+];
+
+function renderWeek(){
+  document.getElementById('sched-week').innerHTML='<div class="wk">'+WEEK.map(c=>`
+    <div class="wk-col${c.today?' today':''}" data-day="${c.d}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropLesson(event)">
+      <div class="wk-d">${c.t}<b>${c.d}</b></div>
+      ${c.items.map(i=>`
+        <div class="ls ${i.cls}" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" onclick="openM('lesson')">
+          <div class="ls-t">${i.time}</div>
+          <div class="ls-n">${i.n}</div>
+          <div class="ls-s">${i.s}</div>
+        </div>`).join('')}
+      ${c.items.length?'':'<div class="slot off" onclick="openM(\'newlesson\')">+ урок</div>'}
+    </div>`).join('')+'</div>';
+}
+function renderDay(){
+  document.getElementById('sched-day').innerHTML=`
+    <div class="row" style="justify-content:space-between;margin-bottom:14px">
+      <div style="font-family:'Fraunces',serif;font-size:19px;font-weight:900">Понеділок, 17 серпня</div>
+      <span class="st st-ok">2 уроки · ₴800</span>
+    </div>
+    <div class="li"><div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)">15<sup style="font-size:8px">00</sup></div>
+      <div class="li-b"><div class="li-t">Софія Т. · Англійська B1</div><div class="li-d">40 хв · Zoom <span class="st st-warn">Заплановано</span></div></div>
+      <div class="li-r"><button class="btn b-pri b-sm" onclick="toast('Відкриваємо Zoom…')">Приєднатися</button><button class="btn b-sec b-sm" onclick="openM('lesson')">Деталі</button></div></div>
+    <div class="li"><div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)">18<sup style="font-size:8px">00</sup></div>
+      <div class="li-b"><div class="li-t">Артем К. · Німецька A2</div><div class="li-d">40 хв · Google Meet <span class="st st-warn">Заплановано</span></div></div>
+      <div class="li-r"><button class="btn b-soft b-sm" onclick="toast('Посилання відкриється за 10 хв до уроку')">Приєднатися</button><button class="btn b-sec b-sm" onclick="openM('lesson')">Деталі</button></div></div>
+    <div class="hr"></div>
+    <div class="lbl">Вільні слоти, які бачить клієнт</div>
+    <div class="row">
+      <span class="chip on" onclick="tglChip(this)">09:00</span><span class="chip on" onclick="tglChip(this)">10:00</span>
+      <span class="chip" onclick="tglChip(this)">11:00</span><span class="chip on" onclick="tglChip(this)">16:00</span>
+      <span class="chip on" onclick="tglChip(this)">19:00</span><span class="chip" onclick="tglChip(this)">20:00</span>
+    </div>`;
+}
+function renderMonth(){
+  let h='<div class="row" style="justify-content:space-between;margin-bottom:12px"><div style="font-family:\'Fraunces\',serif;font-size:19px;font-weight:900">Серпень 2026</div>'
+   +'<div class="leg"><span><i class="fa-solid fa-circle" style="color:var(--teal-500)"></i>Заплановано</span><span><i class="fa-solid fa-circle" style="color:var(--green)"></i>Проведено</span><span><i class="fa-solid fa-circle" style="color:var(--amber)"></i>Перенесено</span></div></div>';
+  h+='<div class="mth">'+DAYS.map(d=>`<div style="text-align:center;font-size:10px;font-weight:900;color:var(--muted-2);padding-bottom:4px">${d}</div>`).join('')+'</div>';
+  h+='<div class="mth">';
+  for(let i=0;i<5;i++) h+='<div class="mth-c dim"></div>';   // 1 серпня 2026 = субота
+  for(let d=1;d<=31;d++){
+    const today=d===17;
+    let dots='';
+    if(d%7===1) dots='<span class="g"></span><span class="g"></span>';
+    else if(d%5===0) dots='<span></span><span></span><span class="a"></span>';
+    else if(d%3===0) dots='<span></span>';
+    h+=`<div class="mth-c${today?' today':''}" onclick="openM('newlesson')">${d}<div class="mth-b">${dots}</div></div>`;
+  }
+  h+='</div>';
+  document.getElementById('sched-month').innerHTML=h;
+}
+function schedMode(m,btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ['day','week','month'].forEach(x=>document.getElementById('sched-'+x).style.display = x===m?'block':'none');
+}
+function renderSlotsPreview(){
+  const on=[['Пн','09:00','15:00','18:00'],['Вт','10:00','11:00'],['Ср','16:00','19:00'],['Чт','15:00','20:00'],['Пт','11:00','18:00'],['Сб','10:00'],['Нд']];
+  document.getElementById('slotsPreview').innerHTML=on.map(([d,...ts])=>`
+    <div class="wk-col" style="min-height:auto">
+      <div class="wk-d">${d}</div>
+      ${ts.length?ts.map(t=>`<div class="slot" onclick="openM('slots')">${t}</div>`).join(''):'<div class="slot off" onclick="openM(\'slots\')">вихідний</div>'}
+    </div>`).join('');
+}
+
+/* drag & drop */
+let dragEl=null;
+function dragStart(e){dragEl=e.currentTarget;dragEl.classList.add('dragging');e.dataTransfer.effectAllowed='move'}
+function dragEnd(e){if(dragEl)dragEl.classList.remove('dragging');document.querySelectorAll('.wk-col.drop').forEach(c=>c.classList.remove('drop'))}
+function dragOver(e){e.preventDefault();e.currentTarget.classList.add('drop')}
+function dragLeave(e){e.currentTarget.classList.remove('drop')}
+function dropLesson(e){
+  e.preventDefault();
+  const col=e.currentTarget;
+  col.classList.remove('drop');
+  if(!dragEl) return;
+  const ph=col.querySelector('.slot');
+  if(ph) ph.remove();
+  col.appendChild(dragEl);
+  const name=dragEl.querySelector('.ls-n').textContent;
+  toast('Урок «'+name+'» перенесено на '+col.dataset.day+' серпня');
+  dragEl=null;
+}
+
+/* ══════════ TIMERS ══════════ */
+function fmt(s){
+  const h=String(Math.floor(s/3600)).padStart(2,'0');
+  const m=String(Math.floor(s%3600/60)).padStart(2,'0');
+  const x=String(s%60).padStart(2,'0');
+  return h+':'+m+':'+x;
+}
+function tick(){
+  document.querySelectorAll('.sla').forEach(el=>{
+    let s=parseInt(el.dataset.sla||'0',10);
+    if(s>0){s--;el.dataset.sla=s;el.innerHTML='<i class="fa-regular fa-clock"></i>SLA: '+fmt(s)}
+    if(s<1800) el.classList.add('hot');
+  });
+  const st=document.getElementById('streakTimer');
+  if(st){
+    let s=parseInt(st.dataset.s||'24135',10);
+    if(s>0){s--;st.dataset.s=s;st.textContent=fmt(s)}
+  }
+}
+setInterval(tick,1000);
+
+/* ══════════ MODALS ══════════ */
+const M={
+  notif:{t:'Сповіщення',s:'3 нові',b:`
+    <div class="li"><div class="li-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-solid fa-inbox"></i></div>
+      <div class="li-b"><div class="li-t">Нова заявка: Німецька, 5 клас</div><div class="li-d">SLA спливає через 1 год 30 хв</div></div></div>
+    <div class="li"><div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-circle-check"></i></div>
+      <div class="li-b"><div class="li-t">Диплом КНУ підтверджено</div><div class="li-d">Сьогодні, 09:14</div></div></div>
+    <div class="li"><div class="li-ic" style="background:var(--red-50);color:var(--red)"><i class="fa-solid fa-hryvnia-sign"></i></div>
+      <div class="li-b"><div class="li-t">Комісія ₴480 — залишилось 2 дні</div><div class="li-d">Інакше акаунт стане на паузу</div></div></div>`,
+    f:[['Позначити прочитаними','b-sec','toast("Усі сповіщення прочитано")']]},
+
+  accept:{t:'Прийняти заявку',s:'Контакти клієнта відкриються одразу',b:`
+    <div class="bn bn-ok" style="margin-bottom:16px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
+      <div><div class="bn-d">Після прийняття ви бачите телефон і Telegram клієнта. Комісія списується лише після пробного заняття.</div></div></div>
+    <label class="f"><span class="lbl">Коментар клієнту (необов'язково)</span>
+      <textarea class="ta" rows="3" placeholder="Напишіть, коли вам зручно провести пробне заняття"></textarea></label>
+    <label class="f" style="margin-bottom:0"><span class="lbl">Запропонувати дату пробного</span>
+      <div class="f-row"><input class="inp" type="date" value="2026-08-19"><select class="sel"><option>19:00</option><option>18:00</option><option>10:00</option></select></div></label>`,
+    f:[['Скасувати','b-sec','close'],['Прийняти заявку','b-pri','toast("Заявку прийнято · контакти відкриті")']]},
+
+  reject:{t:'Відхилити заявку',s:'Причина допомагає нам краще підбирати заявки',b:`
+    <div class="lbl">Причина відмови <span class="req">*</span></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Немає вільних слотів</div></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Не мій предмет або рівень</div></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Не підходить бюджет клієнта</div></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Незручний формат або місто</div></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Інше</div></div>
+    <label class="f" style="margin-top:12px;margin-bottom:0"><span class="lbl">Коментар</span>
+      <textarea class="ta" rows="3" placeholder="Опишіть причину, якщо вибрали «Інше»"></textarea></label>`,
+    f:[['Скасувати','b-sec','close'],['Відхилити','b-danger','toast("Заявку відхилено")']]},
+
+  trial:{t:'Дата пробного заняття',s:'Клієнт отримає підтвердження в Telegram',b:`
+    <div class="f-row"><label class="f"><span class="lbl">Дата <span class="req">*</span></span><input class="inp" type="date" value="2026-08-19"></label>
+    <label class="f"><span class="lbl">Час <span class="req">*</span></span><select class="sel"><option>19:00</option><option>18:00</option><option>16:00</option><option>10:00</option></select></label></div>
+    <label class="f"><span class="lbl">Тривалість</span><select class="sel"><option>25 хв (пробне)</option><option>40 хв</option></select></label>
+    <label class="f" style="margin-bottom:0"><span class="lbl">Посилання на зустріч</span><input class="inp" placeholder="https://zoom.us/j/…" value="https://zoom.us/j/9812345"></label>`,
+    f:[['Скасувати','b-sec','close'],['Зберегти дату','b-pri','toast("Дату пробного надіслано клієнту")']]},
+
+  happened:{t:'Чи відбувся урок?',s:'Софія Т. · пробне 19.08, 19:00',b:`
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Відбувся успішно</b> — переводимо заявку в «активна», нараховуємо комісію</div></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Клієнт відмовився</b> — комісія не нараховується</div></div>
+    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Не відбувся</b> — перенесемо або закриємо заявку</div></div>
+    <label class="f" style="margin-top:14px;margin-bottom:0"><span class="lbl">Причина (для відмови або якщо не відбувся)</span>
+      <select class="sel"><option>Клієнт не прийшов</option><option>Не влаштувала ціна</option><option>Обрали іншого спеціаліста</option><option>Технічні проблеми</option><option>Інше</option></select></label>`,
+    f:[['Скасувати','b-sec','close'],['Підтвердити','b-pri','toast("Статус заявки оновлено")']]},
+
+  newlesson:{t:'Створити урок',s:'Урок з’явиться у розкладі й у клієнта',b:`
+    <label class="f"><span class="lbl">Учень <span class="req">*</span></span>
+      <select class="sel"><option>Софія Т. · Англійська B1</option><option>Артем К. · Німецька A2</option><option>Марта Л. · IELTS</option><option>Назар П. · Англійська НМТ</option></select></label>
+    <div class="f-row"><label class="f"><span class="lbl">Дата <span class="req">*</span></span><input class="inp" type="date" value="2026-08-18"></label>
+    <label class="f"><span class="lbl">Час <span class="req">*</span></span><select class="sel"><option>15:00</option><option>16:00</option><option>18:00</option><option>19:00</option></select></label></div>
+    <label class="f"><span class="lbl">Тривалість</span><select class="sel"><option>40 хв</option><option>25 хв</option><option>60 хв</option></select></label>
+    <div class="sw-row" style="border-top:1px solid var(--border)">
+      <div class="sw-tx"><div class="sw-t">Повторюваний урок</div><div class="sw-d">Щотижня в цей самий день і час</div></div>
+      <button class="sw on" onclick="tglSw(this)"></button></div>
+    <label class="f" style="margin:14px 0 0"><span class="lbl">Тема уроку</span><input class="inp" placeholder="Present Perfect · reading"></label>`,
+    f:[['Скасувати','b-sec','close'],['Створити урок','b-pri','toast("Урок додано до розкладу")']]},
+
+  lesson:{t:'Урок · Софія Т.',s:'16.08, 15:00 · Англійська B1 · 40 хв',b:`
+    <div class="lbl">Статус уроку</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="chip" onclick="pickChip(this)">Заплановано</span>
+      <span class="chip on" onclick="pickChip(this)">Проведено</span>
+      <span class="chip" onclick="pickChip(this)">Перенесено</span>
+      <span class="chip" onclick="pickChip(this)">Скасовано</span>
+    </div>
+    <div class="sw-row" style="border-top:1px solid var(--border)">
+      <div class="sw-tx"><div class="sw-t">Урок оплачено</div><div class="sw-d">Проведений урок за замовчуванням вважається оплаченим. Знімайте позначку, якщо оплати не було — тоді він не потрапить у статистику заробітку.</div></div>
+      <button class="sw on" onclick="tglSw(this)"></button></div>
+    <div class="stu-cell" style="margin-top:14px"><div class="stu-cell-l">Сума уроку</div><div class="stu-cell-v">₴400</div></div>`,
+    f:[['Видалити','b-danger','toast("Урок видалено")'],['Зберегти','b-pri','toast("Урок оновлено")']]},
+
+  slots:{t:'Слоти доступності',s:'Клієнт бачить у профілі лише увімкнені слоти',b:`
+    <div class="hint" style="margin-bottom:14px">Натисніть на час, щоб увімкнути або вимкнути слот. Слоти можна копіювати на весь тиждень.</div>
+    <div id="slotEditor"></div>
+    <div class="row" style="margin-top:14px"><button class="btn b-sec b-sm" onclick="toast('Пн скопійовано на всі робочі дні')"><i class="fa-regular fa-copy"></i>Копіювати Пн на всі дні</button></div>`,
+    f:[['Скасувати','b-sec','close'],['Зберегти слоти','b-pri','toast("Слоти доступності збережено")']]},
+
+  addstudent:{t:'Додати учня',s:'Власний учень або учень з платформи',b:`
+    <div class="lbl">Тип учня</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="chip on" onclick="pickChip(this)">Власний учень</span>
+      <span class="chip" onclick="pickChip(this)">З платформи</span>
+    </div>
+    <div class="f-row"><label class="f"><span class="lbl">Ім'я учня <span class="req">*</span></span><input class="inp" placeholder="Наприклад: Назар П."></label>
+    <label class="f"><span class="lbl">Клас / вік</span><select class="sel"><option>1–4 клас</option><option>5–9 клас</option><option>10–11 клас</option><option>Дорослий</option></select></label></div>
+    <div class="f-row"><label class="f"><span class="lbl">Предмет</span><select class="sel"><option>Англійська мова</option><option>Німецька мова</option></select></label>
+    <label class="f"><span class="lbl">Рівень</span><select class="sel"><option>A1</option><option>A2</option><option>B1</option><option>B2</option></select></label></div>
+    <label class="f"><span class="lbl">Контакт для запрошення</span><input class="inp" placeholder="Telegram або email"></label>
+    <div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-link"></i></div>
+      <div><div class="bn-d">Учень стане активним після реєстрації за посиланням і 3 завантажень домашнього завдання. До того він не займає місце у ліміті плану.</div></div></div>`,
+    f:[['Скасувати','b-sec','close'],['Надіслати запрошення','b-pri','toast("Запрошення надіслано · посилання скопійовано")']]},
+
+  student:{t:'Софія Т.',s:'7 клас · Англійська B1 · 24 уроки',b:`
+    <div class="g2" style="margin-bottom:16px">
+      <div class="stu-cell"><div class="stu-cell-l">Телефон</div><div class="stu-cell-v">+380 67 ••• 12 34</div></div>
+      <div class="stu-cell"><div class="stu-cell-l">Telegram</div><div class="stu-cell-v">@iryna_k (мама)</div></div>
+    </div>
+    <label class="f"><span class="lbl">Цілі навчання</span><textarea class="ta" rows="2">Скласти НМТ на 170+, підтягнути reading і словниковий запас.</textarea></label>
+    <div class="lbl">AI-контекст учня <span class="lk-badge" style="margin-left:6px">Pro</span></div>
+    <textarea class="ta" rows="4">Рівень B1, сильна в grammar (Present/Past Simple, Perfect). Прогалини: reading speed, синоніми, phrasal verbs. Мотивується темами про подорожі та кіно. Не любить довгі письмові завдання.</textarea>
+    <div class="hint" style="margin-bottom:16px">Цей опис підставляється в усі AI-запити щодо цього учня. Можна редагувати вручну.</div>
+    <div class="lbl">Швидкі AI-дії</div>
+    <div class="row" style="margin-bottom:16px">
+      <button class="btn b-violet-soft b-sm" onclick="aiQuick('Підготувати матеріал')">Підготувати матеріал</button>
+      <button class="btn b-violet-soft b-sm" onclick="aiQuick('Згенерувати ДЗ')">Згенерувати ДЗ</button>
+      <button class="btn b-violet-soft b-sm" onclick="aiQuick('Написати звіт')">Написати звіт</button>
+    </div>
+    <div class="lbl">Історія уроків</div>
+    <div class="li"><div class="li-b"><div class="li-t">16.08 · Present Perfect</div><div class="li-d">Проведено · звіт не заповнено</div></div><div class="li-r"><span class="st st-bad">Немає звіту</span></div></div>
+    <div class="li"><div class="li-b"><div class="li-t">13.08 · Reading НМТ</div><div class="li-d">Проведено · 10/12</div></div><div class="li-r"><span class="st st-ok">Готово</span></div></div>
+    <div class="li"><div class="li-b"><div class="li-t">09.08 · Vocabulary: travel</div><div class="li-d">Проведено · 11/12</div></div><div class="li-r"><span class="st st-ok">Готово</span></div></div>`,
+    f:[['Призупинити навчання','b-danger','openM("pause")'],['Зберегти','b-pri','toast("Картку учня збережено")']]},
+
+  pause:{t:'Призупинити навчання?',s:'Софія Т.',b:`
+    <div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div><div class="bn-d">Заплановані уроки буде скасовано, учень отримає повідомлення. Учень звільнить місце у ліміті плану. Історію уроків і ДЗ ми збережемо.</div></div></div>
+    <label class="f" style="margin-bottom:0"><span class="lbl">Причина</span>
+      <select class="sel"><option>Пауза на прохання учня</option><option>Канікули</option><option>Завершили курс</option><option>Інше</option></select></label>`,
+    f:[['Скасувати','b-sec','close'],['Призупинити','b-danger','toast("Навчання призупинено")']]},
+
+  report:{t:'Звіт після уроку',s:'Софія Т. · 16.08, Present Perfect',b:`
+    <div class="lbl">Оцінка за урок (1–12) <span class="req">*</span></div>
+    <div class="row" style="margin-bottom:16px" id="gradeRow">
+      ${[1,2,3,4,5,6,7,8,9,10,11,12].map(n=>`<span class="chip${n===10?' on':''}" onclick="pickChip(this)">${n}</span>`).join('')}
+    </div>
+    <div class="lbl">Тег-фідбек</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="chip on" onclick="tglChip(this)">Активно працював</span>
+      <span class="chip" onclick="tglChip(this)">Виконав ДЗ</span>
+      <span class="chip on" onclick="tglChip(this)">Потрібно більше практики</span>
+      <span class="chip" onclick="tglChip(this)">Спізнився</span>
+      <span class="chip" onclick="tglChip(this)">Великий прогрес</span>
+    </div>
+    <label class="f"><span class="lbl">Коментар <span class="req">*</span></span>
+      <textarea class="ta" rows="4" placeholder="Що робили на уроці, що вдалося, над чим працюємо далі">Розібрали Present Perfect у контексті подорожей. Софія впевнено вживає конструкцію в мовленні, залишаються помилки з for/since. На наступний урок — reading на швидкість.</textarea>
+      <div class="row" style="margin-top:9px"><button class="btn b-violet-soft b-sm" onclick="aiQuick('Написати звіт')"><i class="fa-solid fa-wand-magic-sparkles"></i>Згенерувати з AI</button><span class="lk-badge">Pro</span></div></label>
+    <div class="sw-row" style="border-top:1px solid var(--border)">
+      <div class="sw-tx"><div class="sw-t">Надіслати звіт батькам у Telegram</div><div class="sw-d">Одразу після збереження</div></div>
+      <button class="sw on" onclick="tglSw(this)"></button></div>`,
+    f:[['Скасувати','b-sec','close'],['Зберегти звіт','b-pri','toast("Звіт збережено та надіслано батькам · +25 XP")']]},
+
+  hw:{t:'Домашнє завдання',s:'Софія Т. · до наступного уроку',b:`
+    <label class="f"><span class="lbl">Завдання <span class="req">*</span></span>
+      <textarea class="ta" rows="4" placeholder="Опишіть завдання або прикріпіть файл">Впр. 4–6 стор. 78. Написати 8 речень у Present Perfect про свою останню подорож. Вивчити 10 слів із карток.</textarea>
+      <div class="row" style="margin-top:9px"><button class="btn b-violet-soft b-sm" onclick="aiQuick('Згенерувати ДЗ')"><i class="fa-solid fa-wand-magic-sparkles"></i>Згенерувати з AI</button><span class="lk-badge">Pro</span></div></label>
+    <div class="up" style="margin-bottom:14px" onclick="toast('Виберіть файл: PDF, DOCX, JPG до 20 МБ')">
+      <div class="up-ic"><i class="fa-solid fa-paperclip"></i></div>
+      <div class="up-t">Прикріпити файл</div><div class="up-d">PDF, DOCX або фото · до 20 МБ</div></div>
+    <div class="f-row" style="margin-bottom:0">
+      <label class="f" style="margin-bottom:0"><span class="lbl">Дедлайн <span class="req">*</span></span><input class="inp" type="date" value="2026-08-20"></label>
+      <label class="f" style="margin-bottom:0"><span class="lbl">Орієнтовний час</span><select class="sel"><option>30 хв</option><option>45 хв</option><option>1 година</option></select></label></div>`,
+    f:[['Скасувати','b-sec','close'],['Задати ДЗ','b-pri','toast("ДЗ надіслано учню")']]},
+
+  check:{t:'Перевірка ДЗ',s:'Артем К. · Modalverben · здано 16.08',b:`
+    <div class="lbl">Статус</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="chip" onclick="pickChip(this)">Здано</span>
+      <span class="chip on" onclick="pickChip(this)">На перевірці</span>
+      <span class="chip" onclick="pickChip(this)">Оцінено</span>
+    </div>
+    <div class="li" style="border-top:1px solid var(--border)"><div class="li-ic" style="background:var(--bg)"><i class="fa-regular fa-file-lines"></i></div>
+      <div class="li-b"><div class="li-t">hausaufgabe_16_08.pdf</div><div class="li-d">1,2 МБ · завантажено 16.08, 21:04</div></div>
+      <div class="li-r"><button class="btn b-sec b-sm" onclick="toast('Файл відкрито')">Відкрити</button></div></div>
+    <div class="lbl" style="margin-top:16px">Оцінка (1–12) <span class="req">*</span></div>
+    <div class="row" style="margin-bottom:16px">
+      ${[6,7,8,9,10,11,12].map(n=>`<span class="chip${n===9?' on':''}" onclick="pickChip(this)">${n}</span>`).join('')}
+    </div>
+    <label class="f" style="margin-bottom:14px"><span class="lbl">Коментар для учня</span>
+      <textarea class="ta" rows="3" placeholder="Що зроблено добре, де помилки">Гарна робота з müssen/können. Помилки в порядку слів у підрядних реченнях — повторимо на уроці.</textarea></label>
+    <div class="row"><button class="btn b-violet-soft b-sm" onclick="aiQuick('Перевірити ДЗ')"><i class="fa-solid fa-wand-magic-sparkles"></i>Перевірити з AI</button><span class="lk-badge">Expert</span></div>`,
+    f:[['Скасувати','b-sec','close'],['Зберегти оцінку','b-pri','toast("ДЗ оцінено · учень отримав повідомлення")']]},
+
+  aictx:{t:'AI-контекст учня',s:'Софія Т. · підставляється в усі запити',b:`
+    <label class="f" style="margin-bottom:0"><span class="lbl">Опис рівня та прогалин</span>
+      <textarea class="ta" rows="6">Рівень B1. Сильна в grammar (Present/Past Simple, Perfect). Прогалини: reading speed, синоніми, phrasal verbs. Мотивується темами про подорожі та кіно. Не любить довгі письмові завдання.</textarea>
+      <div class="hint">Чим конкретніше опишете прогалини, тим точніші матеріали генерує AI.</div></label>`,
+    f:[['Скасувати','b-sec','close'],['Зберегти контекст','b-pri','toast("AI-контекст оновлено")']]},
+
+  info:{t:'Інфографіка з блоку',s:'Оберіть стиль і подивіться прев’ю',b:`
+    <div class="lbl">Стиль інфографіки</div>
+    <div class="g2" style="margin-bottom:16px">
+      <div class="sheet-i" onclick="pickSheet(this)" style="border-color:var(--violet);background:var(--violet-50)"><div class="sheet-ic"><i class="fa-solid fa-note-sticky"></i></div><div><div class="sheet-t">Шпаргалка</div><div class="sheet-d">Одна сторінка A4</div></div></div>
+      <div class="sheet-i" onclick="pickSheet(this)"><div class="sheet-ic"><i class="fa-solid fa-diagram-project"></i></div><div><div class="sheet-t">Поетапна схема</div><div class="sheet-d">Крок за кроком</div></div></div>
+      <div class="sheet-i" onclick="pickSheet(this)"><div class="sheet-ic"><i class="fa-solid fa-table-columns"></i></div><div><div class="sheet-t">Порівняльна таблиця</div><div class="sheet-d">Правило проти правила</div></div></div>
+      <div class="sheet-i" onclick="pickSheet(this)"><div class="sheet-ic"><i class="fa-solid fa-sitemap"></i></div><div><div class="sheet-t">Карта понять</div><div class="sheet-d">Зв'язки між темами</div></div></div>
+    </div>
+    <div class="lbl">Прев'ю</div>
+    <div style="border:1.5px solid var(--border);border-radius:var(--r-lg);background:var(--bg);padding:22px;text-align:center">
+      <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:900;margin-bottom:8px">Present Perfect · шпаргалка</div>
+      <div style="font-size:12.5px;color:var(--muted);line-height:1.6">have / has + V3 · маркери: ever, never, just, already, yet, for, since<br>Порівняння з Past Simple · 6 прикладів · місце для нотаток учня</div>
+    </div>`,
+    f:[['Скасувати','b-sec','close'],['Завантажити PNG','b-violet','toast("Інфографіку завантажено")']]},
+
+  buy:{t:'Оплата позиції',s:'Разова оплата через Monobank',b:`
+    <div class="stu-cell" style="margin-bottom:14px">
+      <div class="stu-cell-l">Позиція</div><div class="stu-cell-v">Топ каталогу · Англійська, Київ</div></div>
+    <div class="g2" style="margin-bottom:14px">
+      <div class="stu-cell"><div class="stu-cell-l">Термін дії</div><div class="stu-cell-v">7 днів</div></div>
+      <div class="stu-cell"><div class="stu-cell-l">До сплати</div><div class="stu-cell-v">₴499</div></div>
+    </div>
+    <div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-chart-line"></i></div>
+      <div><div class="bn-d">Аналітика позиції (покази, кліки, CTR, залишок днів) з'явиться в магазині одразу після оплати.</div></div></div>`,
+    f:[['Скасувати','b-sec','close'],['Оплатити ₴499','b-amber','toast("Перехід на сторінку оплати Monobank")']]},
+
+  card:{t:'Додати картку',s:'Для підписки Pro або Expert',b:`
+    <div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-lock"></i></div>
+      <div><div class="bn-d">Дані картки вводяться на захищеній сторінці Monobank. Ми не бачимо і не зберігаємо номер картки.</div></div></div>
+    <div class="stu-cell" style="margin-bottom:14px"><div class="stu-cell-l">План</div><div class="stu-cell-v">Pro · ₴349 / міс</div></div>
+    <div class="stu-cell"><div class="stu-cell-l">Перше списання</div><div class="stu-cell-v">28 серпня 2026 (після тріалу)</div></div>`,
+    f:[['Скасувати','b-sec','close'],['Перейти до Monobank','b-pri','toast("Відкриваємо захищену сторінку оплати")']]},
+
+  pay:{t:'Сплатити комісію',s:'Ірина К. · Англійська НМТ',b:`
+    <div class="g2" style="margin-bottom:14px">
+      <div class="stu-cell"><div class="stu-cell-l">Сума</div><div class="stu-cell-v">₴480</div></div>
+      <div class="stu-cell"><div class="stu-cell-l">Дедлайн</div><div class="stu-cell-v">18.08 (2 дні)</div></div>
+    </div>
+    <div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-exclamation"></i></div>
+      <div><div class="bn-d">Якщо не сплатити до дедлайну, акаунт ставиться на паузу: анкета зникає з каталогу, а нові заявки не приходять.</div></div></div>`,
+    f:[['Скасувати','b-sec','close'],['Сплатити ₴480','b-pri','toast("Перехід на сторінку оплати Monobank")']]},
+
+  subject:{t:'Предмет, рівень і ціна',s:'Своя ціна для кожної пари',b:`
+    <div class="f-row"><label class="f"><span class="lbl">Предмет <span class="req">*</span></span>
+      <select class="sel"><option>Англійська мова</option><option>Німецька мова</option><option>Французька мова</option></select></label>
+    <label class="f"><span class="lbl">Рівень / клас <span class="req">*</span></span>
+      <select class="sel"><option>1–4 клас</option><option>5–9 клас</option><option>10–11 клас</option><option>НМТ / ЗНО</option><option>Дорослі A1–B1</option><option>Дорослі B2–C1</option></select></label></div>
+    <div class="f-row" style="margin-bottom:0"><label class="f" style="margin-bottom:0"><span class="lbl">Тривалість</span>
+      <select class="sel"><option>40 хв</option><option>25 хв</option><option>60 хв</option></select></label>
+    <label class="f" style="margin-bottom:0"><span class="lbl">Ціна, ₴ <span class="req">*</span></span><input class="inp" type="number" value="400"></label></div>
+    <div class="hint" style="margin-top:12px">У каталозі показуємо найдешевшу ціну з позначкою «від».</div>`,
+    f:[['Видалити','b-danger','toast("Пару видалено")'],['Зберегти','b-pri','toast("Пару збережено · іде на модерацію")']]},
+
+  edu:{t:'Освіта або сертифікат',s:'Потрібен файл для верифікації',b:`
+    <label class="f"><span class="lbl">Назва закладу або сертифіката <span class="req">*</span></span><input class="inp" value="КНУ ім. Шевченка"></label>
+    <div class="f-row"><label class="f"><span class="lbl">Спеціальність / тип</span><input class="inp" value="Іноземна філологія"></label>
+    <label class="f"><span class="lbl">Роки</span><input class="inp" value="2015–2019"></label></div>
+    <div class="up" onclick="toast('Виберіть файл: PDF або JPG до 10 МБ')">
+      <div class="up-ic"><i class="fa-solid fa-file-arrow-up"></i></div>
+      <div class="up-t">Файл диплому або сертифіката</div><div class="up-d">PDF або JPG · до 10 МБ · читабельний скан</div></div>`,
+    f:[['Скасувати','b-sec','close'],['Зберегти','b-pri','toast("Запис додано · іде на верифікацію")']]},
+
+  del:{t:'Видалити матеріал?',s:'Дію не можна скасувати',b:`
+    <div class="bn bn-bad" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div><div class="bn-d">Матеріал зникне з бібліотеки. Уроки й ДЗ, у яких він уже використаний, залишаться без змін.</div></div></div>`,
+    f:[['Скасувати','b-sec','close'],['Видалити','b-danger','toast("Матеріал видалено")']]},
+
+  trialgate:{t:'AI доступний на плані Pro',s:'14 днів безкоштовно, без картки',b:`
+    <div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+      <div><div class="bn-d">Підбір матеріалів, генерація ДЗ і звіти після уроку. Тріал активується в один клік, відлік 14 днів стартує одразу.</div></div></div>
+    <div class="stu-cell"><div class="stu-cell-l">Після тріалу</div><div class="stu-cell-v" style="font-size:12.5px;font-weight:700">Без картки акаунт автоматично повернеться на Free — дані залишаться</div></div>`,
+    f:[['Не зараз','b-sec','close'],['Активувати тріал','b-violet','startTrial()']]}
+};
+
+function openM(key){
+  const m=M[key];
+  if(!m){toast('Розділ у розробці');return}
+  document.getElementById('mTitle').textContent=m.t;
+  document.getElementById('mSub').textContent=m.s||'';
+  document.getElementById('mBody').innerHTML=m.b;
+  document.getElementById('mFoot').innerHTML=(m.f||[]).map(([label,cls,act])=>{
+    const onclick = act==='close' ? 'closeM()' : (act.indexOf('(')>-1 ? act+';closeM()' : act+';closeM()');
+    return `<button class="btn ${cls}" onclick="${onclick.replace(/"/g,'&quot;')}">${label}</button>`;
+  }).join('');
+  document.getElementById('mv').classList.add('on');
+  document.body.style.overflow='hidden';
+  if(key==='slots') renderSlotEditor();
+}
+function closeM(){
+  document.getElementById('mv').classList.remove('on');
+  document.body.style.overflow='';
+}
+function pick(el){
+  el.parentElement.querySelectorAll('.cx').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+}
+function pickChip(el){
+  el.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+}
+function pickSheet(el){
+  el.parentElement.querySelectorAll('.sheet-i').forEach(x=>{x.style.borderColor='var(--border)';x.style.background='#fff'});
+  el.style.borderColor='var(--violet)';el.style.background='var(--violet-50)';
+}
+function renderSlotEditor(){
+  const days=[['Пн',['09:00','10:00','11:00','15:00','16:00','18:00','19:00']],['Вт',['10:00','11:00','15:00','19:00']],
+              ['Ср',['16:00','18:00','19:00']],['Чт',['15:00','16:00','20:00']],['Пт',['11:00','18:00','19:00']],
+              ['Сб',['10:00','11:00']],['Нд',[]]];
+  const on=['09:00','10:00','15:00','16:00','18:00','19:00','11:00'];
+  const el=document.getElementById('slotEditor');
+  if(!el) return;
+  el.innerHTML=days.map(([d,ts])=>`
+    <div style="padding:12px 0;border-bottom:1px solid var(--border)">
+      <div class="row" style="justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:900">${d}</span>
+        ${ts.length?'':'<span class="st st-mut">Вихідний</span>'}
+      </div>
+      <div class="row">${ts.map(t=>`<span class="chip${on.indexOf(t)>-1?' on':''}" onclick="tglChip(this)">${t}</span>`).join('')||'<button class="chip" onclick="toast(\'Додайте слот\')"><i class="fa-solid fa-plus"></i>Додати слот</button>'}</div>
+    </div>`).join('');
+}
+
+/* ══════════ INIT ══════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  renderWeek();renderDay();renderMonth();renderSlotsPreview();
+  setPlan('free');
+  const st=document.getElementById('streakTimer'); if(st) st.dataset.s='24135';
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();closeSb()}});
+});
+</script>
+</body>
+</html>
