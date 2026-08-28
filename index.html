@@ -360,10 +360,37 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .pk-p{display:flex;align-items:baseline;gap:6px;margin-bottom:14px}
 .pk-pv{font-family:'Fraunces',serif;font-size:26px;font-weight:900}
 .pk-pu{font-size:12px;color:var(--muted-2);font-weight:700}
-.an{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.an{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .an-c{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:11px;text-align:center}
 .an-v{font-family:'Fraunces',serif;font-size:18px;font-weight:900}
 .an-l{font-size:10px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.04em;margin-top:3px}
+/* boost buy wizard */
+.pk{position:relative}
+.pk-badge{position:absolute;top:-10px;left:20px;background:var(--amber);color:#fff;font-size:10px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:.02em;box-shadow:0 4px 12px rgba(245,158,11,.35)}
+.bpkg{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--amber-50);border:1px solid var(--amber-100);margin-bottom:16px}
+.bpkg-ic{width:40px;height:40px;border-radius:12px;background:#fff;color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.bpkg-t{font-size:14px;font-weight:800}
+.bpkg-d{font-size:11.5px;color:#92400E;margin-top:2px;line-height:1.45}
+.blbl{font-size:10px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px}
+.bsub{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;margin-bottom:8px;transition:all .15s}
+.bsub.on{border-color:var(--amber);background:var(--amber-50)}
+.bchk{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--muted-2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;transition:all .15s}
+.bchk i{opacity:0}
+.bsub.on .bchk{background:var(--amber);border-color:var(--amber)}
+.bsub.on .bchk i{opacity:1}
+.bsub-t{font-size:13.5px;font-weight:800;flex:1;min-width:0}
+.bsub-p{font-size:12.5px;font-weight:800;color:var(--muted)}
+.bdur{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bdur-o{border:1.5px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;position:relative;transition:all .15s}
+.bdur-o.on{border-color:var(--amber);background:var(--amber-50)}
+.bdur-n{font-size:15px;font-weight:900;font-family:'Fraunces',serif}
+.bdur-d{font-size:10.5px;color:var(--muted-2);font-weight:700;margin-top:3px}
+.bdur-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--amber);color:#fff;font-size:9px;font-weight:900;padding:1px 7px;border-radius:20px;white-space:nowrap}
+.bsum{border:1.5px solid var(--border);border-radius:14px;padding:14px;background:var(--bg)}
+.bsum-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:8px;color:var(--muted);gap:10px}
+.bsum-row b{color:var(--ink-2);font-weight:800}
+.bsum-row.tot{margin-bottom:0;padding-top:10px;border-top:1px solid var(--border);color:var(--ink)}
+.bsum-tot-v{font-family:'Fraunces',serif;font-size:22px;font-weight:900}
 
 /* plans */
 .pl{border:1.5px solid var(--border);border-radius:var(--r-xl);background:#fff;padding:20px;display:flex;flex-direction:column}
@@ -459,7 +486,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 @media(max-width:640px){
   .g2,.g3,.g4,.g5{grid-template-columns:1fr}
   .f-row{grid-template-columns:1fr}
-  .an{grid-template-columns:1fr 1fr}
+  .an{grid-template-columns:repeat(3,1fr)}
   .h-sec{font-size:19px}
   .met-v{font-size:24px}
   .rq-p{margin-left:0;text-align:left;width:100%}
@@ -1403,25 +1430,29 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
       <div class="g3" style="margin-bottom:16px">
         <div class="pk hot">
+          <div class="pk-badge">Рекомендовано</div>
           <div class="pk-ic"><i class="fa-solid fa-crown"></i></div>
           <div class="pk-t">Топ каталогу</div>
-          <div class="pk-d">Ваша анкета займає одну з 2 виділених топ-позицій на сторінці каталогу — на кожній сторінці пагінації.</div>
-          <div class="pk-p"><span class="pk-pv">₴499</span><span class="pk-pu">/ 7 днів</span></div>
-          <button class="btn b-amber b-block" onclick="openM('buy')">Купити «Топ»</button>
+          <div class="pk-d">Одна з 2 виділених топ-позицій каталогу на кожній сторінці — максимальна видимість і найбільше заявок.</div>
+          <div class="pk-p"><span class="pk-pv">від ₴99</span><span class="pk-pu">/ день</span></div>
+          <div style="font-size:11.5px;color:#92400E;font-weight:700;margin-bottom:14px"><i class="fa-solid fa-arrow-trend-up" style="margin-right:5px"></i>≈ у 5× більше переглядів</div>
+          <button class="btn b-amber b-block" onclick="openBuy('top')">Замовити</button>
         </div>
         <div class="pk">
           <div class="pk-ic"><i class="fa-solid fa-bullhorn"></i></div>
           <div class="pk-t">Оголошення</div>
           <div class="pk-d">Ваша картка потрапляє в рекламний слайдер після 5-ї картки видачі. До 8 оголошень у каруселі.</div>
-          <div class="pk-p"><span class="pk-pv">₴299</span><span class="pk-pu">/ 7 днів</span></div>
-          <button class="btn b-amber-soft b-block" onclick="openM('buy')">Купити «Оголошення»</button>
+          <div class="pk-p"><span class="pk-pv">від ₴59</span><span class="pk-pu">/ день</span></div>
+          <div style="font-size:11.5px;color:var(--muted);font-weight:700;margin-bottom:14px"><i class="fa-solid fa-arrow-trend-up" style="margin-right:5px;color:var(--amber)"></i>≈ +40% переглядів картки</div>
+          <button class="btn b-amber-soft b-block" onclick="openBuy('ad')">Замовити</button>
         </div>
         <div class="pk">
           <div class="pk-ic"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
           <div class="pk-t">Підняти анкету</div>
           <div class="pk-d">Тимчасовий буст видимості в каталозі: ваша анкета показується вище у звичайній видачі.</div>
-          <div class="pk-p"><span class="pk-pv">₴149</span><span class="pk-pu">/ 7 днів</span></div>
-          <button class="btn b-amber-soft b-block" onclick="openM('buy')">Купити «Підняти»</button>
+          <div class="pk-p"><span class="pk-pv">від ₴29</span><span class="pk-pu">/ день</span></div>
+          <div style="font-size:11.5px;color:var(--muted);font-weight:700;margin-bottom:14px"><i class="fa-solid fa-arrow-trend-up" style="margin-right:5px;color:var(--amber)"></i>≈ +25% у видачі на день</div>
+          <button class="btn b-amber-soft b-block" onclick="openBuy('raise')">Замовити</button>
         </div>
       </div>
 
@@ -1430,6 +1461,11 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
           <div><div class="ct"><i class="fa-solid fa-chart-line" style="color:var(--amber)"></i>Активні позиції</div><div class="ct-s">2 з 5 активних оголошень</div></div>
         </div>
         <div class="cb">
+          <div class="bn bn-ok" style="margin-bottom:14px;padding:10px 12px">
+            <div class="bn-ic" style="width:28px;height:28px;font-size:12px"><i class="fa-solid fa-circle-question"></i></div>
+            <div><div class="bn-d"><b>CTR</b> — відсоток переглядів, що перетворюються на кліки по вашій картці (кліки ÷ покази). Вищий CTR = привабливіша картка.</div></div>
+          </div>
+
           <div style="border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:12px">
             <div class="between" style="margin-bottom:13px">
               <div class="row" style="gap:10px">
@@ -1445,7 +1481,10 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
               <div class="an-c"><div class="an-v">3 412</div><div class="an-l">Покази</div></div>
               <div class="an-c"><div class="an-v">228</div><div class="an-l">Кліки</div></div>
               <div class="an-c"><div class="an-v">6,7%</div><div class="an-l">CTR</div></div>
-              <div class="an-c"><div class="an-v">5</div><div class="an-l">Днів</div></div>
+            </div>
+            <div class="row" style="justify-content:space-between;margin-top:12px;gap:10px">
+              <div style="font-size:11.5px;color:var(--muted);font-weight:700"><i class="fa-solid fa-arrow-trend-up" style="color:var(--green);margin-right:5px"></i>≈ 4 нові учні з цієї позиції</div>
+              <button class="btn b-amber-soft b-xs" onclick="openBuy('top')">Продовжити</button>
             </div>
           </div>
 
@@ -1464,10 +1503,71 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
               <div class="an-c"><div class="an-v">1 190</div><div class="an-l">Покази</div></div>
               <div class="an-c"><div class="an-v">64</div><div class="an-l">Кліки</div></div>
               <div class="an-c"><div class="an-v">5,4%</div><div class="an-l">CTR</div></div>
-              <div class="an-c"><div class="an-v">2</div><div class="an-l">Днів</div></div>
             </div>
-            <button class="btn b-amber-soft b-sm b-block" style="margin-top:12px" onclick="openM('buy')">Продовжити на 7 днів</button>
+            <div class="bn bn-warn" style="margin:12px 0 0;padding:10px 12px">
+              <div class="bn-ic" style="width:28px;height:28px;font-size:12px"><i class="fa-regular fa-clock"></i></div>
+              <div style="flex:1"><div class="bn-d">Позиція завершується за 2 дні — продовжте, щоб не втратити приведених учнів.</div></div>
+              <div class="bn-r"><button class="btn b-amber b-sm" onclick="openBuy('ad')">Продовжити</button></div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-receipt" style="color:var(--amber)"></i>Архів замовлень</div><div class="ct-s">Історія просувань та оплат</div></div>
+        </div>
+        <div class="tblw">
+          <table class="tbl">
+            <thead><tr><th>Дата</th><th>Позиція</th><th>Предмет</th><th>Термін</th><th>Сума</th><th>Статус</th><th style="text-align:right">Чек</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:800">15.08</td>
+                <td><div style="font-weight:800">Топ каталогу</div></td>
+                <td>Англійська</td>
+                <td>7 днів</td>
+                <td style="font-weight:800">₴499</td>
+                <td><span class="st st-warn"><i class="fa-regular fa-clock"></i>Активно</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Завантажуємо чек PDF')">Чек</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:800">12.08</td>
+                <td><div style="font-weight:800">Оголошення</div></td>
+                <td>Англійська</td>
+                <td>7 днів</td>
+                <td style="font-weight:800">₴299</td>
+                <td><span class="st st-warn"><i class="fa-regular fa-clock"></i>Активно</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Завантажуємо чек PDF')">Чек</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:800">05.08</td>
+                <td><div style="font-weight:800">Топ каталогу</div></td>
+                <td>Англійська, Німецька <span class="st st-ok" style="padding:1px 7px;font-size:10px">−15%</span></td>
+                <td>7 днів</td>
+                <td style="font-weight:800">₴849</td>
+                <td><span class="st st-mut"><i class="fa-solid fa-check"></i>Завершено</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Завантажуємо чек PDF')">Чек</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:800">28.07</td>
+                <td><div style="font-weight:800">Підняти анкету</div></td>
+                <td>Німецька</td>
+                <td>3 дні</td>
+                <td style="font-weight:800">₴79</td>
+                <td><span class="st st-mut"><i class="fa-solid fa-check"></i>Завершено</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Завантажуємо чек PDF')">Чек</button></td>
+              </tr>
+              <tr>
+                <td style="font-weight:800">20.07</td>
+                <td><div style="font-weight:800">Топ каталогу</div></td>
+                <td>Англійська</td>
+                <td>3 дні</td>
+                <td style="font-weight:800">₴249</td>
+                <td><span class="st st-mut"><i class="fa-solid fa-check"></i>Завершено</span></td>
+                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="toast('Завантажуємо чек PDF')">Чек</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -2433,16 +2533,6 @@ const M={
     </div>`,
     f:[['Скасувати','b-sec','close'],['Завантажити PNG','b-violet','toast("Інфографіку завантажено")']]},
 
-  buy:{t:'Оплата позиції',s:'Разова оплата через Monobank',b:`
-    <div class="stu-cell" style="margin-bottom:14px">
-      <div class="stu-cell-l">Позиція</div><div class="stu-cell-v">Топ каталогу · Англійська, Київ</div></div>
-    <div class="g2" style="margin-bottom:14px">
-      <div class="stu-cell"><div class="stu-cell-l">Термін дії</div><div class="stu-cell-v">7 днів</div></div>
-      <div class="stu-cell"><div class="stu-cell-l">До сплати</div><div class="stu-cell-v">₴499</div></div>
-    </div>
-    <div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-chart-line"></i></div>
-      <div><div class="bn-d">Аналітика позиції (покази, кліки, CTR, залишок днів) з'явиться в магазині одразу після оплати.</div></div></div>`,
-    f:[['Скасувати','b-sec','close'],['Оплатити ₴499','b-amber','toast("Перехід на сторінку оплати Monobank")']]},
 
   card:{t:'Додати картку',s:'Для підписки Pro або Expert',b:`
     <div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-lock"></i></div>
@@ -2491,6 +2581,50 @@ const M={
     <div class="stu-cell"><div class="stu-cell-l">Після тріалу</div><div class="stu-cell-v" style="font-size:12.5px;font-weight:700">Без картки акаунт автоматично повернеться на Free — дані залишаться</div></div>`,
     f:[['Не зараз','b-sec','close'],['Активувати тріал','b-violet','startTrial()']]}
 };
+
+/* ══════════ БУСТ / ПРОСУВАННЯ — конфігуратор ══════════ */
+const TUTOR_SUBJ=['Англійська','Німецька'];
+const PKG={
+  top:{name:'Топ каталогу',ic:'fa-crown',desc:'Одна з 2 виділених топ-позицій каталогу — максимальна видимість на кожній сторінці.',price:{1:99,3:249,7:499}},
+  ad:{name:'Оголошення',ic:'fa-bullhorn',desc:'Ваша картка в рекламному слайдері після 5-ї картки видачі.',price:{1:59,3:149,7:299}},
+  raise:{name:'Підняти анкету',ic:'fa-arrow-up-right-dots',desc:'Тимчасовий буст видимості — анкета показується вище у звичайній видачі.',price:{1:29,3:79,7:149}}
+};
+const DUR=[1,3,7];
+let BUY=null;
+function openBuy(pkg){
+  BUY={pkg:pkg,days:7,subs:{}};
+  TUTOR_SUBJ.forEach((s,i)=>BUY.subs[s]=(i===0));
+  renderBuy();
+  document.getElementById('mv').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function buySubs(){ return TUTOR_SUBJ.filter(s=>BUY.subs[s]); }
+function toggleSub(s){ BUY.subs[s]=!BUY.subs[s]; if(buySubs().length===0) BUY.subs[s]=true; renderBuy(); }
+function setDays(d){ BUY.days=d; renderBuy(); }
+const MULTI_DISC=0.15; /* знижка за 2 предмети */
+function dayWord(d){ return d===1?'день':(d<5?'дні':'днів'); }
+function renderBuy(){
+  const P=PKG[BUY.pkg], per=P.price[BUY.days], n=Math.max(1,buySubs().length);
+  const subtotal=per*n, multi=n>=2, disc=multi?Math.round(subtotal*MULTI_DISC):0, total=subtotal-disc;
+  document.getElementById('mTitle').textContent='Просування · '+P.name;
+  document.getElementById('mSub').textContent='Разова оплата через Monobank';
+  let b=`<div class="bpkg"><div class="bpkg-ic"><i class="fa-solid ${P.ic}"></i></div><div><div class="bpkg-t">${P.name}</div><div class="bpkg-d">${P.desc}</div></div></div>`;
+  b+=`<div class="blbl">Для яких предметів</div>`;
+  b+=TUTOR_SUBJ.map(s=>`<div class="bsub ${BUY.subs[s]?'on':''}" onclick="toggleSub('${s}')"><span class="bchk"><i class="fa-solid fa-check"></i></span><span class="bsub-t">${s} · Київ</span><span class="bsub-p">${P.price[BUY.days]} ₴</span></div>`).join('');
+  b+=`<div style="font-size:11px;color:${multi?'var(--green)':'var(--muted-2)'};margin:2px 0 16px;font-weight:${multi?'700':'400'}">${multi?'<i class="fa-solid fa-tags" style="margin-right:5px"></i>Знижка −15% за 2 предмети застосована':'Кожен предмет — окрема позиція. Додайте 2-й і отримайте −15%.'}</div>`;
+  b+=`<div class="blbl">Термін</div><div class="bdur" style="margin-bottom:16px">`+DUR.map(d=>{
+    const pd=Math.round(P.price[d]/d), sv=Math.round((1-P.price[d]/(P.price[1]*d))*100);
+    return `<div class="bdur-o ${BUY.days===d?'on':''}" onclick="setDays(${d})">${sv>0?'<span class="bdur-badge">−'+sv+'%</span>':''}<div class="bdur-n">${d} ${dayWord(d)}</div><div class="bdur-d">₴${pd}/день</div></div>`;
+  }).join('')+`</div>`;
+  b+=`<div class="bsum">
+      <div class="bsum-row"><span>${P.name} · ${BUY.days} ${dayWord(BUY.days)} × ${n}</span><b>₴${subtotal}</b></div>
+      ${multi?`<div class="bsum-row"><span>Знижка за 2 предмети (−15%)</span><b style="color:var(--green)">−₴${disc}</b></div>`:''}
+      <div class="bsum-row tot"><span>До сплати</span><span class="bsum-tot-v">₴${total}</span></div>
+    </div>`;
+  b+=`<div class="bn bn-ok" style="margin:14px 0 0"><div class="bn-ic"><i class="fa-solid fa-arrow-trend-up"></i></div><div><div class="bn-d">Один новий учень зазвичай окуповує буст. Аналітика (покази, кліки, CTR) з'явиться тут одразу після оплати.</div></div></div>`;
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML=`<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-amber" onclick="closeM();toast('Перехід на сторінку оплати Monobank · ₴${total}')">Оплатити ₴${total}</button>`;
+}
 
 function openM(key){
   const m=M[key];
