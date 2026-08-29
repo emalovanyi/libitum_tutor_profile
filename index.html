@@ -73,6 +73,11 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .sb-cnt{margin-left:auto;background:var(--teal-400);color:#06312C;border-radius:20px;padding:1px 8px;font-size:11px;font-weight:900;flex-shrink:0}
 .sb-cnt.v{background:var(--violet-100);color:#5B21B6}
 .sb-lock{margin-left:auto;font-size:10px;color:rgba(255,255,255,.4)}
+.sb-i.locked{opacity:.42;cursor:not-allowed}
+.sb-i.locked:hover{background:none;color:rgba(255,255,255,.72)}
+.sb-i.locked .sb-cnt{display:none}
+.sb-i.locked::after{content:"\f023";font-family:"Font Awesome 6 Free";font-weight:900;margin-left:auto;font-size:10px;opacity:.7}
+.ti.locked{opacity:.4;cursor:not-allowed}
 
 .sb-foot{padding:12px 14px 16px;border-top:1px solid rgba(255,255,255,.1)}
 .sb-help{border-radius:var(--r);padding:12px 13px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
@@ -219,6 +224,22 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .up-ic{width:44px;height:44px;border-radius:13px;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:var(--teal-500);font-size:17px}
 .up-t{font-size:13px;font-weight:800;color:var(--ink-2)}
 .up-d{font-size:11px;color:var(--muted-2);margin-top:4px;line-height:1.5}
+/* library cards — рівні за висотою */
+#libGrid{align-items:stretch}
+#libGrid .card{height:100%;display:flex;flex-direction:column;margin-top:0}
+#libGrid .card .cb{flex:1;display:flex;flex-direction:column}
+.lib-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.lib-title{font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+.lib-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px}
+.lib-meta{font-size:11px;color:var(--muted-2);font-weight:700;margin-bottom:11px}
+.lib-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;min-height:22px}
+.lib-act{display:flex;gap:7px;margin-top:auto}
+.lib-empty{text-align:center;padding:40px 16px;color:var(--muted)}
+.lib-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.lib-stat{background:#fff;border:1.5px solid var(--border);border-radius:var(--r-lg);padding:12px 14px;box-shadow:var(--sh-sm)}
+.lib-stat-v{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}
+.lib-stat-l{font-size:11px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.04em;margin-top:5px}
+@media(max-width:640px){.lib-stats{grid-template-columns:1fr 1fr}}
 
 /* banners */
 .bn{display:flex;align-items:flex-start;gap:12px;padding:15px 17px;border-radius:var(--r-lg);border:1.5px solid;margin-bottom:16px}
@@ -677,7 +698,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
                 <div class="rq-h">
                   <div>
                     <div class="rq-t">Англійська · 7 клас · підтягнути оцінки</div>
-                    <div class="rq-m">Ольга (мама) · Онлайн · 2 рази на тиждень · Київ</div>
+                    <div class="rq-m">Софія, 7 клас · Онлайн · 2 рази на тиждень · Київ</div>
                   </div>
                   <div class="rq-p"><div class="rq-price">₴400</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
                 </div>
@@ -785,7 +806,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
             <div class="rq-h">
               <div>
                 <div class="rq-t">Англійська · 9 клас · підготовка до НМТ</div>
-                <div class="rq-m">Ірина (мама) · Онлайн · 2 рази на тиждень · рівень B1</div>
+                <div class="rq-m">Артем, 9 клас · Онлайн · 2 рази на тиждень · рівень B1</div>
               </div>
               <div class="rq-p"><div class="rq-price">₴400</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
             </div>
@@ -806,7 +827,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
             <div class="rq-h">
               <div>
                 <div class="rq-t">Німецька · 5 клас · з нуля</div>
-                <div class="rq-m">Марина (мама) · Онлайн · 1 раз на тиждень</div>
+                <div class="rq-m">Марта, 5 клас · Онлайн · 1 раз на тиждень</div>
               </div>
               <div class="rq-p"><div class="rq-price">₴380</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
             </div>
@@ -1045,7 +1066,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
     <!-- ═════════ 6. ЖУРНАЛ І ДЗ ═════════ -->
     <section class="view" id="v-journal">
       <div class="h-sec">Журнал і ДЗ</div>
-      <p class="p-sec">Звіт після уроку впливає на рейтинг і автоматично формує лист батькам. ДЗ можна додати текстом або файлом.</p>
+      <p class="p-sec">Звіт після уроку впливає на рейтинг і надсилається учневі. ДЗ можна додати текстом або файлом.</p>
 
       <div class="card">
         <div class="ch">
@@ -1104,17 +1125,17 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
       <div class="g2">
         <div class="card" style="margin-top:16px">
-          <div class="ch"><div class="ct"><i class="fa-brands fa-telegram" style="color:var(--blue)"></i>Звіт для батьків</div></div>
+          <div class="ch"><div class="ct"><i class="fa-brands fa-telegram" style="color:var(--blue)"></i>Звіт для учня</div></div>
           <div class="cb">
             <div class="sw-row">
-              <div class="sw-tx"><div class="sw-t">Автовідправка в Telegram</div><div class="sw-d">Звіт іде батькам одразу після збереження — без вашої участі.</div></div>
+              <div class="sw-tx"><div class="sw-t">Автовідправка в Telegram</div><div class="sw-d">Звіт іде учневі одразу після збереження — без вашої участі.</div></div>
               <button class="sw on" onclick="tglSw(this)"></button>
             </div>
             <div class="sw-row">
-              <div class="sw-tx"><div class="sw-t">Додавати оцінку і ДЗ у звіт</div><div class="sw-d">Батьки бачать оцінку 1–12, тег-фідбек і дедлайн ДЗ.</div></div>
+              <div class="sw-tx"><div class="sw-t">Додавати оцінку і ДЗ у звіт</div><div class="sw-d">Учень бачить оцінку 1–12, тег-фідбек і дедлайн ДЗ.</div></div>
               <button class="sw on" onclick="tglSw(this)"></button>
             </div>
-            <div class="hint">Останній звіт надіслано 15.08 у 19:12 — доставлено 2 отримувачам.</div>
+            <div class="hint">Останній звіт надіслано 15.08 у 19:12 — доставлено учневі.</div>
           </div>
         </div>
 
@@ -1157,7 +1178,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
             <div class="g3" style="max-width:640px;margin:0 auto 24px;text-align:left">
               <div class="stu-cell"><div class="stu-cell-l">Підбір матеріалів</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">План уроку, вправи, картки, тест</div></div>
               <div class="stu-cell"><div class="stu-cell-l">Генерація ДЗ</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Тип, складність, час, дедлайн</div></div>
-              <div class="stu-cell"><div class="stu-cell-l">Звіт після уроку</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Готовий текст для батьків</div></div>
+              <div class="stu-cell"><div class="stu-cell-l">Звіт після уроку</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Готовий текст для учня</div></div>
             </div>
             <button class="btn b-violet" onclick="startTrial()"><i class="fa-solid fa-bolt"></i>Активувати тріал Pro</button>
             <div class="hint" style="margin-top:12px">Картка не потрібна. За 3 дні до завершення надішлемо нагадування в Telegram.</div>
@@ -1187,7 +1208,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
           <button class="ai-tool" onclick="aiTool(this,'Звіт після уроку')">
             <div class="ai-tool-ic"><i class="fa-solid fa-file-lines"></i></div>
             <div class="ai-tool-t">Звіт після уроку</div>
-            <div class="ai-tool-d">Текст для батьків і для журналу</div>
+            <div class="ai-tool-d">Текст для учня і для журналу</div>
           </button>
         </div>
 
@@ -1344,82 +1365,49 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
     <!-- ═════════ 9. БІБЛІОТЕКА ═════════ -->
     <section class="view" id="v-lib">
-      <div class="between" style="margin-bottom:14px">
+      <div class="between" style="margin-bottom:14px;flex-wrap:wrap;gap:10px">
         <div>
           <div class="h-sec" style="margin-bottom:2px">Бібліотека матеріалів</div>
-          <div style="font-size:13px;color:var(--muted);font-weight:600">18 матеріалів · повторне використання не витрачає AI-запит</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600">Ваші текстові та PDF-матеріали для уроків</div>
         </div>
-        <div class="row">
-          <input class="inp" placeholder="Пошук за назвою або темою…" style="width:230px;padding:9px 13px" oninput="filterLib(this.value)">
-          <button class="btn b-pri b-sm" onclick="toast('Завантаження власного матеріалу')"><i class="fa-solid fa-plus"></i>Додати матеріал</button>
-        </div>
+        <button class="btn b-pri b-sm" onclick="openAddLib()"><i class="fa-solid fa-plus"></i>Додати матеріал</button>
+      </div>
+
+      <div class="lib-stats">
+        <div class="lib-stat"><div class="lib-stat-v" id="libStAll">0</div><div class="lib-stat-l">Усього</div></div>
+        <div class="lib-stat"><div class="lib-stat-v" id="libStPdf">0</div><div class="lib-stat-l">PDF</div></div>
+        <div class="lib-stat"><div class="lib-stat-v" id="libStTxt">0</div><div class="lib-stat-l">Текстові</div></div>
+        <div class="lib-stat"><div class="lib-stat-v" id="libStUse">0</div><div class="lib-stat-l">Використань</div></div>
       </div>
 
       <div class="card" style="margin-bottom:16px">
         <div class="cb tight" style="padding-top:14px;padding-bottom:14px">
-          <div class="row">
-            <span class="chip on" onclick="tglChip(this)">Усі</span>
-            <span class="chip" onclick="tglChip(this)">Англійська</span>
-            <span class="chip" onclick="tglChip(this)">Німецька</span>
-            <span class="chip" onclick="tglChip(this)">B1</span>
-            <span class="chip" onclick="tglChip(this)">A2</span>
-            <span class="chip" onclick="tglChip(this)">НМТ</span>
-            <span class="chip" onclick="tglChip(this)">Для друку</span>
+          <div class="row" style="gap:10px;flex-wrap:wrap">
+            <input class="inp" id="libSearch" placeholder="Пошук за назвою або темою…" style="flex:1;min-width:180px;padding:9px 13px" oninput="filterLib(this.value)">
+            <select class="sel" id="libSort" onchange="setLibSort(this.value)" style="width:auto;min-width:160px">
+              <option value="recent">Спочатку нові</option>
+              <option value="used">За використанням</option>
+              <option value="name">За назвою</option>
+            </select>
+          </div>
+          <div class="row" id="libChips" style="margin-top:12px">
+            <span class="chip on" onclick="setLibChip('Усі',this)">Усі</span>
+            <span class="chip" onclick="setLibChip('Англійська',this)">Англійська</span>
+            <span class="chip" onclick="setLibChip('Німецька',this)">Німецька</span>
+            <span class="chip" onclick="setLibChip('B1',this)">B1</span>
+            <span class="chip" onclick="setLibChip('A2',this)">A2</span>
+            <span class="chip" onclick="setLibChip('НМТ',this)">НМТ</span>
+            <span class="chip" onclick="setLibChip('Для друку',this)">Для друку</span>
           </div>
         </div>
       </div>
 
-      <div class="g3" id="libGrid">
-        <div class="card" data-n="present perfect podorozhi">
-          <div class="cb">
-            <div class="row" style="justify-content:space-between;margin-bottom:11px">
-              <div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-list-ol"></i></div>
-              <span class="st st-mut">Використано 4 рази</span>
-            </div>
-            <div style="font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px">Present Perfect · подорожі</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:11px">План уроку 40 хв + 8 вправ + 10 карток</div>
-            <div class="row" style="margin-bottom:14px"><span class="tagx">Англійська</span><span class="tagx">B1</span><span class="tagx">Grammar</span></div>
-            <div class="row" style="gap:7px">
-              <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Матеріал відкрито — AI-запит не витрачено')">Використати</button>
-              <button class="btn b-ic b-sm" onclick="toast('Редагування матеріалу')"><i class="fa-solid fa-pen"></i></button>
-              <button class="btn b-ic b-sm" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" data-n="ielts speaking part 2">
-          <div class="cb">
-            <div class="row" style="justify-content:space-between;margin-bottom:11px">
-              <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-microphone"></i></div>
-              <span class="st st-mut">Використано 7 разів</span>
-            </div>
-            <div style="font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px">IELTS Speaking Part 2 · банк тем</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:11px">20 cue cards + фрази-зв'язки + критерії оцінювання</div>
-            <div class="row" style="margin-bottom:14px"><span class="tagx">Англійська</span><span class="tagx">B2–C1</span><span class="tagx">IELTS</span></div>
-            <div class="row" style="gap:7px">
-              <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Матеріал відкрито — AI-запит не витрачено')">Використати</button>
-              <button class="btn b-ic b-sm" onclick="toast('Редагування матеріалу')"><i class="fa-solid fa-pen"></i></button>
-              <button class="btn b-ic b-sm" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" data-n="modalverben a2">
-          <div class="cb">
-            <div class="row" style="justify-content:space-between;margin-bottom:11px">
-              <div class="li-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-regular fa-clone"></i></div>
-              <span class="st st-mut">Використано 2 рази</span>
-            </div>
-            <div style="font-size:14.5px;font-weight:800;line-height:1.3;margin-bottom:6px">Modalverben · картки для друку</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:11px">24 картки, A4, з прикладами речень</div>
-            <div class="row" style="margin-bottom:14px"><span class="tagx">Німецька</span><span class="tagx">A2</span><span class="tagx">Для друку</span></div>
-            <div class="row" style="gap:7px">
-              <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Матеріал відкрито — AI-запит не витрачено')">Використати</button>
-              <button class="btn b-ic b-sm" onclick="toast('Редагування матеріалу')"><i class="fa-solid fa-pen"></i></button>
-              <button class="btn b-ic b-sm" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
-          </div>
-        </div>
+      <div style="font-size:12px;color:var(--muted-2);font-weight:700;margin-bottom:10px" id="libCount"></div>
+      <div class="g3" id="libGrid"></div>
+      <div class="lib-empty" id="libEmpty" style="display:none">
+        <div class="up-ic" style="margin:0 auto 12px"><i class="fa-regular fa-folder-open"></i></div>
+        <div style="font-size:14px;font-weight:800;margin-bottom:3px">Нічого не знайдено</div>
+        <div style="font-size:12.5px">Спробуйте інший фільтр або додайте новий матеріал.</div>
       </div>
     </section>
 
@@ -1580,14 +1568,16 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
     <!-- ═════════ 1. ПРОФІЛЬ ═════════ -->
     <section class="view" id="v-profile">
-      <div class="bn bn-warn">
+      <div class="bn bn-warn" id="profBanner">
         <div class="bn-ic"><i class="fa-solid fa-hourglass-half"></i></div>
         <div style="flex:1">
-          <div class="bn-t">Статус модерації: на модерації</div>
-          <div class="bn-d">Ми перевіряємо відео-привітання та диплом. До завершення перевірки анкета не показується клієнтам.</div>
+          <div class="bn-t">Статус акаунту</div>
+          <div class="bn-d">—</div>
         </div>
         <div class="bn-r">
-          <select class="demo-sel" onchange="setMod(this.value)" title="Демо: статус модерації">
+          <button class="btn b-sm" id="accCta" style="display:none"></button>
+          <select class="demo-sel accSel" onchange="setMod(this.value)" title="Демо: статус акаунту">
+            <option value="test">Тест не пройдено</option>
             <option value="pending">На модерації</option>
             <option value="active">Активний</option>
             <option value="rejected">Відхилено</option>
@@ -1599,19 +1589,25 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
         <div class="cb">
           <div class="between" style="margin-bottom:10px">
             <div>
-              <div style="font-size:14.5px;font-weight:800">Профіль заповнено на 85%</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:3px">Заповніть до 100%, щоб отримати безкоштовний буст новачка на 10 днів</div>
+              <div style="font-size:14.5px;font-weight:800" id="profPctT">Профіль заповнено на 83%</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:3px">Заповніть <b>обов'язкові</b> поля до 100%, щоб отримати безкоштовне просування новачка</div>
             </div>
-            <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:900">85%</div>
+            <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:900" id="profPctV">83%</div>
           </div>
-          <div class="pr"><div class="pr-f" style="width:85%"></div></div>
-          <div class="row" style="margin-top:12px">
-            <span class="st st-bad"><i class="fa-solid fa-xmark"></i>Немає міст для офлайн</span>
-            <span class="st st-bad"><i class="fa-solid fa-xmark"></i>Не додано Zoom-посилання</span>
-            <span class="st st-ok"><i class="fa-solid fa-check"></i>Відео завантажено</span>
-            <span class="st st-ok"><i class="fa-solid fa-check"></i>Диплом додано</span>
+          <div class="pr"><div class="pr-f" id="profBar" style="width:83%"></div></div>
+          <div class="row" id="profReq" style="margin-top:12px"></div>
+          <div style="margin-top:10px">
+            <span class="st st-mut"><i class="fa-solid fa-circle-info"></i>Міста для офлайн — необов'язково, не впливає на %</span>
+          </div>
+          <div class="sw-row" style="margin-top:6px;padding:12px 0 0;border-top:1px solid var(--border);border-bottom:none">
+            <div class="sw-tx"><div class="sw-t">Демо: профіль заповнено на 100%</div><div class="sw-d">Увімкніть, щоб побачити нагороду для новачка</div></div>
+            <button class="sw" id="profDemoSw" onclick="toggleProfDemo(this)"></button>
           </div>
         </div>
+      </div>
+
+      <div class="card" id="promoReward" style="display:none;margin-bottom:16px;border-color:var(--amber-100);background:linear-gradient(180deg,var(--amber-50),#fff 60%)">
+        <div class="cb" id="promoRewardBody"></div>
       </div>
 
       <!-- основна інформація -->
@@ -1791,7 +1787,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
           </div>
           <div class="hr"></div>
           <div class="sw-row">
-            <div class="sw-tx"><div class="sw-t">Звіти для батьків</div><div class="sw-d">Автовідправка після кожного уроку, о 19:00 за Києвом.</div></div>
+            <div class="sw-tx"><div class="sw-t">Звіти для учня</div><div class="sw-d">Автовідправка після кожного уроку, о 19:00 за Києвом.</div></div>
             <button class="sw on" onclick="tglSw(this)"></button>
           </div>
           <div class="sw-row">
@@ -2080,6 +2076,10 @@ const TITLES = {
 };
 
 function go(v){
+  const acc=document.body.dataset.acc||'active';
+  if(acc!=='active' && v!=='profile'){ toast('Розділ стане доступним після активації кабінету'); return; }
+  const cur=document.querySelector('.view.on');
+  if(cur && cur.id==='v-profile' && profileDirty && v!=='profile'){ navTarget=v; openM('unsaved'); return; }
   document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
   const el=document.getElementById('v-'+v);
   if(el) el.classList.add('on');
@@ -2104,6 +2104,68 @@ function toast(msg){
   window._tt=setTimeout(()=>t.classList.remove('on'),2600);
 }
 function tglChip(el){el.classList.toggle('on')}
+function pickOpt(el){[].forEach.call(el.parentElement.querySelectorAll('.chip'),c=>c.classList.remove('on'));el.classList.add('on')}
+
+/* ══════════ ПРОФІЛЬ: прогрес (лише обов'язкові поля) + промо новачка ══════════ */
+const PROF_REQ=[
+  {k:'photo',label:'Фото',done:true},
+  {k:'about',label:'Про себе',done:true},
+  {k:'subjects',label:'Предмети та рівні',done:true},
+  {k:'price',label:'Ціна за урок',done:true},
+  {k:'video',label:'Відео-привітання',done:true},
+  {k:'diploma',label:'Диплом',done:true},
+  {k:'zoom',label:'Zoom-посилання',done:false}
+];
+let freePromoUsed=false;
+function renderProf(){
+  const done=PROF_REQ.filter(r=>r.done).length, pct=Math.round(done/PROF_REQ.length*100);
+  const t=document.getElementById('profPctT'); if(!t) return;
+  t.textContent='Профіль заповнено на '+pct+'%';
+  document.getElementById('profPctV').textContent=pct+'%';
+  document.getElementById('profBar').style.width=pct+'%';
+  document.getElementById('profReq').innerHTML=PROF_REQ.map(r=>r.done
+    ? `<span class="st st-ok"><i class="fa-solid fa-check"></i>${r.label}</span>`
+    : `<button class="st st-bad" style="border:none;cursor:pointer" onclick="completeReq('${r.k}')"><i class="fa-solid fa-plus"></i>Додати: ${r.label}</button>`
+  ).join('');
+  const rw=document.getElementById('promoReward');
+  if(pct===100){ rw.style.display=''; renderReward(); } else { rw.style.display='none'; }
+}
+function completeReq(k){ const r=PROF_REQ.find(x=>x.k===k); if(r){ r.done=true; renderProf(); toast('Поле додано ✓'); } }
+function toggleProfDemo(el){ const full=!el.classList.contains('on'); el.classList.toggle('on',full); PROF_REQ.forEach(r=>{ r.done = full ? true : (r.k!=='zoom'); }); renderProf(); }
+function renderReward(){
+  const body=document.getElementById('promoRewardBody');
+  if(freePromoUsed){
+    body.innerHTML=`<div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-check"></i></div><div style="flex:1"><div class="bn-t">Безкоштовне просування активовано</div><div class="bn-d">Ви обрали «${freePromoUsed}» — 3 дні безкоштовно. Статус і аналітику дивіться в розділі «Магазин і просування».</div></div></div>`;
+    return;
+  }
+  body.innerHTML=`<div class="row" style="gap:12px;flex-wrap:wrap">
+      <div class="li-ic" style="background:#fff;color:var(--amber);width:40px;height:40px;font-size:17px"><i class="fa-solid fa-gift"></i></div>
+      <div style="flex:1;min-width:180px"><div style="font-size:15px;font-weight:800">Профіль готовий на 100% 🎉</div><div style="font-size:12.5px;color:#92400E">Вам доступне <b>безкоштовне просування новачка на 3 дні</b> — оберіть один із пакетів.</div></div>
+      <button class="btn b-amber" onclick="openFreePromo()"><i class="fa-solid fa-gift"></i>Обрати просування</button>
+    </div>`;
+}
+/* модалка вибору безкоштовного промо (3 дні) */
+const FREE_OPTS=[['Топ каталогу','fa-crown','Одна з топ-позицій каталогу — максимум переглядів'],['Оголошення','fa-bullhorn','Картка в рекламному слайдері репетиторів'],['Підняти анкету','fa-arrow-up-right-dots','Тимчасовий буст у звичайній видачі']];
+let freeSel='Топ каталогу';
+function openFreePromo(){
+  freeSel='Топ каталогу';
+  document.getElementById('mTitle').textContent='Безкоштовне просування новачка';
+  document.getElementById('mSub').textContent='Оберіть один пакет — 3 дні безкоштовно';
+  renderFreePromo();
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function pickFree(n){ freeSel=n; renderFreePromo(); }
+function renderFreePromo(){
+  document.getElementById('mBody').innerHTML=FREE_OPTS.map(o=>`<div class="bsub ${freeSel===o[0]?'on':''}" onclick="pickFree('${o[0]}')"><span class="bchk"><i class="fa-solid fa-check"></i></span><div style="flex:1;min-width:0"><div class="bsub-t" style="flex:none">${o[0]}</div><div style="font-size:11.5px;color:var(--muted);margin-top:1px;line-height:1.4">${o[2]}</div></div><i class="fa-solid ${o[1]}" style="color:var(--amber);font-size:15px"></i></div>`).join('')
+    +`<div class="bn bn-ok" style="margin:6px 0 0"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">3 дні безкоштовно. Далі за бажанням можна продовжити платно. Одноразова пропозиція для новачка.</div></div></div>`;
+  document.getElementById('mFoot').innerHTML=`<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-amber" onclick="chooseFreePromo(freeSel)"><i class="fa-solid fa-check"></i>Активувати «${freeSel}»</button>`;
+}
+function chooseFreePromo(name){ freePromoUsed=name; closeM(); renderReward(); toast('Безкоштовне просування «'+name+'» активовано на 3 дні'); }
+
+/* ══════════ НЕЗБЕРЕЖЕНІ ЗМІНИ У ПРОФІЛІ ══════════ */
+let profileDirty=false, navTarget=null;
+function saveNav(){ profileDirty=false; toast('Зміни збережено'); const t=navTarget; navTarget=null; if(t) go(t); }
+function discardNav(){ profileDirty=false; const t=navTarget; navTarget=null; if(t) go(t); }
 function tglSw(el,linked){
   el.classList.toggle('on');
   if(linked){const b=document.getElementById(linked); if(b) b.style.display=el.classList.contains('on')?'block':'none'}
@@ -2142,11 +2204,119 @@ function filterStu(q){
     c.style.display=!q||c.dataset.n.includes(q)?'':'none';
   });
 }
-function filterLib(q){
-  q=(q||'').toLowerCase().trim();
-  document.querySelectorAll('#libGrid .card[data-n]').forEach(c=>{
-    c.style.display=!q||c.dataset.n.includes(q)?'':'none';
-  });
+/* ══════════ БІБЛІОТЕКА ══════════ */
+const LIB=[
+  {id:1,name:'Present Perfect · подорожі',type:'pdf',size:'2,1 МБ',subj:'Англійська',lvl:'B1',tags:['Grammar'],print:false,uses:12,date:'27.08',desc:'Конспект теми з прикладами вживання та 8 вправами.'},
+  {id:2,name:'IELTS Speaking Part 2 · банк тем',type:'text',size:'—',subj:'Англійська',lvl:'C1',tags:['IELTS','НМТ'],print:false,uses:7,date:'25.08',desc:'20 cue cards, фрази-звʼязки та критерії оцінювання.'},
+  {id:3,name:'Modalverben · картки для друку',type:'pdf',size:'1,4 МБ',subj:'Німецька',lvl:'A2',tags:['Grammar'],print:true,uses:2,date:'22.08',desc:'24 картки формату A4 з прикладами речень.'},
+  {id:4,name:'Present Simple · базові вправи',type:'pdf',size:'860 КБ',subj:'Англійська',lvl:'A2',tags:['Grammar'],print:true,uses:9,date:'20.08',desc:'15 вправ на утворення та вживання, з відповідями.'},
+  {id:5,name:'Phrasal verbs · тематичний список',type:'text',size:'—',subj:'Англійська',lvl:'B1',tags:['Vocabulary'],print:false,uses:5,date:'18.08',desc:'120 фразових дієслів за темами з прикладами.'},
+  {id:6,name:'Perfekt · пояснення і таблиці',type:'pdf',size:'1,1 МБ',subj:'Німецька',lvl:'B1',tags:['Grammar'],print:false,uses:4,date:'15.08',desc:'Правила утворення Perfekt, haben/sein, список дієслів.'},
+  {id:7,name:'НМТ Reading · тренажер',type:'pdf',size:'3,0 МБ',subj:'Англійська',lvl:'B2',tags:['НМТ','Reading'],print:false,uses:11,date:'12.08',desc:'5 текстів у форматі НМТ із завданнями та ключами.'},
+  {id:8,name:'Артиклі der/die/das · картки',type:'pdf',size:'980 КБ',subj:'Німецька',lvl:'A1',tags:['Vocabulary'],print:true,uses:3,date:'09.08',desc:'Картки з іменниками за родами для запамʼятовування.'},
+  {id:9,name:'Essay writing · структура та фрази',type:'text',size:'—',subj:'Англійська',lvl:'B2',tags:['Writing'],print:false,uses:6,date:'05.08',desc:'Шаблон есе, звʼязки та приклад на 250 слів.'},
+  {id:10,name:'Тематична лексика: Familie',type:'text',size:'—',subj:'Німецька',lvl:'A2',tags:['Vocabulary'],print:false,uses:8,date:'01.08',desc:'80 слів і виразів на тему «сімʼя» з перекладом.'}
+];
+let libFilters=new Set(), libSearch='', libSort='recent';
+const LIB_CAT={'Англійська':'subj','Німецька':'subj','B1':'lvl','A2':'lvl','НМТ':'type','Для друку':'type'};
+function libIcon(t){ return t==='pdf'?{i:'fa-file-pdf',bg:'var(--red-50)',c:'var(--red)'}:{i:'fa-file-lines',bg:'var(--teal-50)',c:'var(--teal-600)'}; }
+function chipMatch(m,f){
+  if(f==='Англійська'||f==='Німецька') return m.subj===f;
+  if(f==='B1'||f==='A2') return m.lvl===f;
+  if(f==='НМТ') return m.tags.includes('НМТ');
+  if(f==='Для друку') return m.print;
+  return true;
+}
+function libMatch(m){
+  if(libFilters.size){
+    const byCat={};
+    libFilters.forEach(f=>{ const c=LIB_CAT[f]||'x'; (byCat[c]=byCat[c]||[]).push(f); });
+    for(const c in byCat){ if(!byCat[c].some(f=>chipMatch(m,f))) return false; }
+  }
+  const q=libSearch.toLowerCase().trim();
+  return !q||(m.name+' '+m.desc+' '+m.subj+' '+m.lvl+' '+m.tags.join(' ')).toLowerCase().includes(q);
+}
+function renderLib(){
+  let rows=LIB.filter(libMatch);
+  if(libSort==='used') rows=rows.slice().sort((a,b)=>b.uses-a.uses);
+  else if(libSort==='name') rows=rows.slice().sort((a,b)=>a.name.localeCompare(b.name,'uk'));
+  else rows=rows.slice().sort((a,b)=>b.id-a.id);
+  document.getElementById('libGrid').innerHTML=rows.map(m=>{
+    const ic=libIcon(m.type);
+    const tags=[m.subj,m.lvl].concat(m.print?['Для друку']:[]).concat(m.tags).map(t=>`<span class="tagx">${t}</span>`).join('');
+    return `<div class="card">
+      <div class="cb">
+        <div class="lib-top">
+          <div class="li-ic" style="background:${ic.bg};color:${ic.c}"><i class="fa-solid ${ic.i}"></i></div>
+          <span class="st st-mut">${m.type==='pdf'?'PDF':'Текст'}</span>
+        </div>
+        <div class="lib-title">${m.name}</div>
+        <div class="lib-desc">${m.desc}</div>
+        <div class="lib-meta"><i class="fa-regular fa-clock" style="margin-right:5px"></i>${m.date} · ${m.type==='pdf'?m.size+' · ':''}використано ${m.uses} р.</div>
+        <div class="lib-tags">${tags}</div>
+        <div class="lib-act">
+          <button class="btn b-soft b-sm" style="flex:1" onclick="toast('Відкрито: ${m.name}')"><i class="fa-solid fa-arrow-up-right-from-square"></i>Відкрити</button>
+          <button class="btn b-ic b-sm" title="Редагувати" onclick="openEditLib(${m.id})"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn b-ic b-sm" title="Видалити" onclick="openM('del')"><i class="fa-regular fa-trash-can"></i></button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('libEmpty').style.display=rows.length?'none':'block';
+  document.getElementById('libCount').textContent='Показано '+rows.length+' з '+LIB.length;
+  document.getElementById('libStAll').textContent=LIB.length;
+  document.getElementById('libStPdf').textContent=LIB.filter(m=>m.type==='pdf').length;
+  document.getElementById('libStTxt').textContent=LIB.filter(m=>m.type==='text').length;
+  document.getElementById('libStUse').textContent=LIB.reduce((s,m)=>s+m.uses,0);
+}
+function setLibChip(f,el){
+  const chips=document.querySelectorAll('#libChips .chip');
+  if(f==='Усі'){ libFilters.clear(); chips.forEach(c=>c.classList.remove('on')); chips[0].classList.add('on'); }
+  else {
+    if(libFilters.has(f)){ libFilters.delete(f); if(el) el.classList.remove('on'); }
+    else { libFilters.add(f); if(el) el.classList.add('on'); }
+    chips[0].classList.toggle('on', libFilters.size===0);
+  }
+  renderLib();
+}
+function filterLib(v){ libSearch=v; renderLib(); }
+function setLibSort(v){ libSort=v; renderLib(); }
+function libForm(m){
+  const edit=!!m.id, subj=m.subj||'Англійська', lvl=m.lvl||'B1';
+  const opt=(v,cur)=>`<option ${v===cur?'selected':''}>${v}</option>`;
+  return `
+    ${edit?`<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid ${m.type==='pdf'?'fa-file-pdf':'fa-file-lines'}"></i></div><div style="flex:1"><div class="bn-t">${m.type==='pdf'?'PDF · '+m.size:'Текстовий файл'}</div><div class="bn-d">Поточний файл. За потреби замініть нижче.</div></div></div>`:''}
+    <div class="up" style="margin-bottom:14px" onclick="toast('Виберіть PDF або текстовий файл')">
+      <div class="up-ic"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <div class="up-t">${edit?'Замінити файл':'Завантажте файл'}</div>
+      <div class="up-d">PDF або TXT · до 20 МБ · перетягніть сюди або натисніть</div>
+    </div>
+    <label class="f"><span class="lbl">Назва <span class="req">*</span></span><input class="inp" value="${m.name||''}" placeholder="Напр., Present Perfect · подорожі"></label>
+    <div class="f-row">
+      <label class="f"><span class="lbl">Предмет</span><select class="sel">${opt('Англійська',subj)}${opt('Німецька',subj)}</select></label>
+      <label class="f"><span class="lbl">Рівень</span><select class="sel">${['A1','A2','B1','B2','C1'].map(v=>opt(v,lvl)).join('')}</select></label>
+    </div>
+    <label class="f"><span class="lbl">Опис</span><textarea class="ta" rows="3" placeholder="Що це за матеріал і для чого">${m.desc||''}</textarea></label>
+    <label class="f"><span class="lbl">Теги</span><input class="inp" value="${(m.tags||[]).join(', ')}" placeholder="Grammar, НМТ, Reading — через кому"></label>
+    <div class="sw-row" style="padding:4px 0 0;border:none">
+      <div class="sw-tx"><div class="sw-t">Позначити «Для друку»</div><div class="sw-d">Картки, роздатковий матеріал у форматі A4</div></div>
+      <button class="sw ${m.print?'on':''}" onclick="tglSw(this)"></button>
+    </div>`;
+}
+function openAddLib(){
+  document.getElementById('mTitle').textContent='Додати матеріал';
+  document.getElementById('mSub').textContent='Текстовий або PDF-файл';
+  document.getElementById('mBody').innerHTML=libForm({});
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="closeM();toast(\'Матеріал додано до бібліотеки\')"><i class="fa-solid fa-check"></i>Додати матеріал</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function openEditLib(id){
+  const m=LIB.find(x=>x.id===id)||{};
+  document.getElementById('mTitle').textContent='Редагувати матеріал';
+  document.getElementById('mSub').textContent=m.name||'';
+  document.getElementById('mBody').innerHTML=libForm(m);
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="closeM();toast(\'Зміни збережено\')"><i class="fa-solid fa-check"></i>Зберегти</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
 function reqTab(which,btn){
   btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
@@ -2154,26 +2324,46 @@ function reqTab(which,btn){
   document.getElementById('req-mine').style.display=which==='mine'?'block':'none';
   document.getElementById('req-market').style.display=which==='market'?'block':'none';
 }
+/* ══════════ СТАТУС АКАУНТУ (test → pending → active / rejected) ══════════ */
+const ACC={
+  test:['bn-v','fa-clipboard-question','Потрібно пройти онбординг-тест','Ви пропустили короткий тест на початку. Пройдіть його (~5 хв), щоб розблокувати кабінет і надіслати профіль на модерацію. Поки що доступний лише розділ «Профіль».'],
+  pending:['bn-warn','fa-hourglass-half','Профіль на модерації','Ми перевіряємо ваш профіль. Поки триває перевірка, кабінет заблоковано, а анкета не показується клієнтам. Зазвичай це до 24 годин.'],
+  active:['bn-ok','fa-circle-check','Кабінет активний','Анкета опублікована в каталозі й отримує заявки. Усі розділи доступні.'],
+  rejected:['bn-bad','fa-circle-xmark','Профіль відхилено','Причина: на відео-привітанні не чути звук у перші 20 секунд. Оновіть відео у профілі та надішліть повторно. Кабінет тимчасово заблоковано.']
+};
+const ACC_SUB={test:'Статус: тест не пройдено',pending:'Статус: на модерації',active:'Статус: активний',rejected:'Статус: відхилено'};
+function accGate(s){
+  const active = s==='active';
+  document.querySelectorAll('#sbNav .sb-i').forEach(b=>b.classList.toggle('locked', !active && b.dataset.view!=='profile'));
+  document.querySelectorAll('.tbar .ti').forEach(b=>b.classList.toggle('locked', !active && b.dataset.tab!=='profile' && !!b.dataset.tab));
+}
 function setMod(s){
-  const b=document.getElementById('modBanner');
-  const box=document.querySelector('#v-profile .bn');
-  const map={
-    pending:['bn-warn','fa-hourglass-half','Статус модерації: на модерації','Ми перевіряємо відео-привітання та диплом. До завершення перевірки анкета не показується клієнтам.'],
-    active:['bn-ok','fa-circle-check','Статус модерації: активний','Анкета опублікована в каталозі й отримує заявки. Нові зміни в профілі проходять швидку повторну перевірку.'],
-    rejected:['bn-bad','fa-circle-xmark','Статус модерації: відхилено','Причина: на відео не чути звук у перші 20 секунд. Перезавантажте відео-привітання та надішліть анкету повторно.']
-  };
-  const [cls,ic,t,d]=map[s];
+  document.body.dataset.acc=s;
+  const [cls,ic,t,d]=ACC[s];
+  const box=document.getElementById('profBanner');
   box.className='bn '+cls;
   box.querySelector('.bn-ic i').className='fa-solid '+ic;
   box.querySelector('.bn-t').textContent=t;
   box.querySelector('.bn-d').textContent=d;
+  // CTA у банері профілю
+  const cta=document.getElementById('accCta');
+  if(cta){
+    if(s==='test'){ cta.style.display=''; cta.className='btn b-sm b-violet'; cta.innerHTML='<i class="fa-solid fa-clipboard-question"></i>Пройти тест'; cta.onclick=()=>openM('onbtest'); }
+    else if(s==='rejected'){ cta.style.display=''; cta.className='btn b-sm b-pri'; cta.innerHTML='<i class="fa-solid fa-rotate-right"></i>Надіслати повторно'; cta.onclick=()=>{setMod('pending');toast('Профіль надіслано на повторну перевірку');}; }
+    else cta.style.display='none';
+  }
+  // дублікат банера на дашборді
+  const b=document.getElementById('modBanner');
   if(b){
     b.className='bn '+cls;
     b.querySelector('.bn-ic i').className='fa-solid '+ic;
-    b.querySelector('.bn-t').textContent = s==='active'?'Профіль активний у каталозі':(s==='rejected'?'Профіль відхилено модерацією':'Профіль на модерації');
-    b.querySelector('.bn-d').textContent = d;
+    b.querySelector('.bn-t').textContent=t;
+    b.querySelector('.bn-d').textContent=d;
   }
-  document.getElementById('tbS').textContent = s==='active'?'Статус: активний':(s==='rejected'?'Статус: відхилено':'Статус: на модерації');
+  document.querySelectorAll('.accSel').forEach(sel=>sel.value=s);
+  document.getElementById('tbS').textContent=ACC_SUB[s];
+  accGate(s);
+  if(s!=='active'){ document.querySelectorAll('.view').forEach(v=>v.classList.remove('on')); document.getElementById('v-profile').classList.add('on'); document.querySelectorAll('.sb-i,.ti').forEach(b=>b.classList.remove('on')); document.querySelectorAll('[data-view="profile"],[data-tab="profile"]').forEach(b=>b.classList.add('on')); }
 }
 
 /* ══════════ PLAN ══════════ */
@@ -2435,7 +2625,7 @@ const M={
   student:{t:'Софія Т.',s:'7 клас · Англійська B1 · 24 уроки',b:`
     <div class="g2" style="margin-bottom:16px">
       <div class="stu-cell"><div class="stu-cell-l">Телефон</div><div class="stu-cell-v">+380 67 ••• 12 34</div></div>
-      <div class="stu-cell"><div class="stu-cell-l">Telegram</div><div class="stu-cell-v">@iryna_k (мама)</div></div>
+      <div class="stu-cell"><div class="stu-cell-l">Telegram</div><div class="stu-cell-v">@sofia_t</div></div>
     </div>
     <label class="f"><span class="lbl">Цілі навчання</span><textarea class="ta" rows="2">Скласти НМТ на 170+, підтягнути reading і словниковий запас.</textarea></label>
     <div class="lbl">AI-контекст учня <span class="lk-badge" style="margin-left:6px">Pro</span></div>
@@ -2477,9 +2667,9 @@ const M={
       <textarea class="ta" rows="4" placeholder="Що робили на уроці, що вдалося, над чим працюємо далі">Розібрали Present Perfect у контексті подорожей. Софія впевнено вживає конструкцію в мовленні, залишаються помилки з for/since. На наступний урок — reading на швидкість.</textarea>
       <div class="row" style="margin-top:9px"><button class="btn b-violet-soft b-sm" onclick="aiQuick('Написати звіт')"><i class="fa-solid fa-wand-magic-sparkles"></i>Згенерувати з AI</button><span class="lk-badge">Pro</span></div></label>
     <div class="sw-row" style="border-top:1px solid var(--border)">
-      <div class="sw-tx"><div class="sw-t">Надіслати звіт батькам у Telegram</div><div class="sw-d">Одразу після збереження</div></div>
+      <div class="sw-tx"><div class="sw-t">Надіслати звіт учневі в Telegram</div><div class="sw-d">Одразу після збереження</div></div>
       <button class="sw on" onclick="tglSw(this)"></button></div>`,
-    f:[['Скасувати','b-sec','close'],['Зберегти звіт','b-pri','toast("Звіт збережено та надіслано батькам · +25 XP")']]},
+    f:[['Скасувати','b-sec','close'],['Зберегти звіт','b-pri','toast("Звіт збережено та надіслано учневі · +25 XP")']]},
 
   hw:{t:'Домашнє завдання',s:'Софія Т. · до наступного уроку',b:`
     <label class="f"><span class="lbl">Завдання <span class="req">*</span></span>
@@ -2569,6 +2759,28 @@ const M={
       <div class="up-ic"><i class="fa-solid fa-file-arrow-up"></i></div>
       <div class="up-t">Файл диплому або сертифіката</div><div class="up-d">PDF або JPG · до 10 МБ · читабельний скан</div></div>`,
     f:[['Скасувати','b-sec','close'],['Зберегти','b-pri','toast("Запис додано · іде на верифікацію")']]},
+
+  unsaved:{t:'Зберегти зміни?',s:'У профілі є незбережені зміни',b:`
+    <div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div><div class="bn-d">Ви змінили дані профілю, але не зберегли їх. Зберегти зміни перед переходом до іншого розділу?</div></div></div>`,
+    f:[['Не зберігати','b-sec','discardNav()'],['Зберегти','b-pri','saveNav()']]},
+
+  onbtest:{t:'Онбординг-тест',s:'~5 хвилин · перевірка знання правил платформи',b:`
+    <div class="bn bn-v" style="margin:0 0 16px"><div class="bn-ic"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div><div class="bn-d">Коротка перевірка, щоб ви знали ключові правила: терміни відповіді, комісію та роботу з учнями. Після проходження профіль піде на модерацію.</div></div></div>
+    <div class="lbl">1. За який час треба відповісти на приватну заявку?</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="chip on" onclick="pickOpt(this)">До 2 годин</span><span class="chip" onclick="pickOpt(this)">До 24 годин</span><span class="chip" onclick="pickOpt(this)">Коли зручно</span>
+    </div>
+    <div class="lbl">2. Коли утримується комісія платформи?</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="chip on" onclick="pickOpt(this)">Після проведеного уроку</span><span class="chip" onclick="pickOpt(this)">За реєстрацію</span><span class="chip" onclick="pickOpt(this)">Щомісяця</span>
+    </div>
+    <div class="lbl">3. Що робити, якщо учень просить перенести урок?</div>
+    <div class="row" style="margin-bottom:0">
+      <span class="chip on" onclick="pickOpt(this)">Підтвердити або запропонувати час</span><span class="chip" onclick="pickOpt(this)">Ігнорувати</span><span class="chip" onclick="pickOpt(this)">Скасувати назавжди</span>
+    </div>`,
+    f:[['Скасувати','b-sec','close'],['Завершити тест','b-violet','setMod(\'pending\');toast(\'Тест пройдено · профіль надіслано на модерацію\')']]},
 
   del:{t:'Видалити матеріал?',s:'Дію не можна скасувати',b:`
     <div class="bn bn-bad" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -2675,7 +2887,13 @@ function renderSlotEditor(){
 
 /* ══════════ INIT ══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
-  renderWeek();renderDay();renderMonth();renderSlotsPreview();
+  renderWeek();renderDay();renderMonth();renderSlotsPreview();renderLib();renderProf();
+  setMod('test');
+  const vp=document.getElementById('v-profile');
+  if(vp){
+    vp.addEventListener('input',e=>{ if(e.target.matches('input,textarea')) profileDirty=true; });
+    vp.addEventListener('change',e=>{ if(e.target.matches('select')&&!e.target.classList.contains('demo-sel')) profileDirty=true; });
+  }
   setPlan('free');
   const st=document.getElementById('streakTimer'); if(st) st.dataset.s='24135';
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();closeSb()}});
