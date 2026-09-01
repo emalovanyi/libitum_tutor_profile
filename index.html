@@ -319,6 +319,8 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .ls.done{border-left-color:var(--green)}.ls.done .ls-t{color:var(--green)}
 .ls.moved{border-left-color:var(--amber)}.ls.moved .ls-t{color:#B45309}
 .ls.cancel{border-left-color:var(--muted-2);opacity:.6}.ls.cancel .ls-n{text-decoration:line-through}
+.ls.trial{border-left-color:var(--violet);background:var(--violet-50)}.ls.trial .ls-t{color:var(--violet)}
+.ls.trialp{border-left-color:var(--violet);border-left-style:dashed;background:repeating-linear-gradient(135deg,var(--violet-50),var(--violet-50) 7px,#fff 7px,#fff 14px)}.ls.trialp .ls-t{color:var(--violet)}
 .slot{border:1.5px dashed var(--teal-100);background:#fff;border-radius:10px;padding:6px 8px;font-size:11px;font-weight:800;color:var(--teal-600);text-align:center;margin-bottom:6px;cursor:pointer}
 .slot.off{border-color:var(--border);color:var(--muted-2)}
 .mth{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
@@ -563,10 +565,10 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
   <nav class="sb-nav" id="sbNav">
     <div class="sb-lbl">Робота</div>
     <button class="sb-i on" data-view="dash"><i class="fa-solid fa-gauge-high"></i>Робочий стіл</button>
-    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки та біржа<span class="sb-cnt">3</span></button>
+    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки та біржа</button>
     <button class="sb-i" data-view="sched"><i class="fa-regular fa-calendar"></i>Розклад</button>
-    <button class="sb-i" data-view="students"><i class="fa-solid fa-user-group"></i>Мої учні<span class="sb-cnt">4</span></button>
-    <button class="sb-i" data-view="journal"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ<span class="sb-cnt">2</span></button>
+    <button class="sb-i" data-view="students"><i class="fa-solid fa-user-group"></i>Мої учні</button>
+    <button class="sb-i" data-view="journal"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ</button>
 
     <div class="sb-lbl">Інструменти</div>
     <button class="sb-i ai" data-view="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI-помічник<span class="sb-cnt v">Скоро</span></button>
@@ -657,9 +659,9 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
           <div class="met-s">48 відгуків · 88% п'ятірок</div>
         </div>
         <div class="met">
-          <div class="met-h"><div class="met-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-inbox"></i></div><div class="met-l">Заявки / конверсія</div></div>
-          <div class="met-v" data-m="11 / 64%" data-a="187 / 58%">11 / 64%</div>
-          <div class="met-s">7 з 11 дійшли до пробного</div>
+          <div class="met-h"><div class="met-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-arrow-trend-up"></i></div><div class="met-l">Конверсія пробних</div></div>
+          <div class="met-v" data-m="72%" data-a="61%">72%</div>
+          <div class="met-s"><b>8 з 11</b> учнів продовжили після пробного</div>
         </div>
       </div>
 
@@ -667,35 +669,10 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
         <div>
           <div class="card">
             <div class="ch">
-              <div><div class="ct"><i class="fa-regular fa-clock"></i>Наступні уроки</div><div class="ct-s">Сьогодні та завтра</div></div>
+              <div><div class="ct"><i class="fa-regular fa-clock"></i>Наступні уроки</div><div class="ct-s" id="upSub">Найближчі 5 уроків</div></div>
               <div class="ch-r"><button class="btn b-sec b-sm" onclick="go('sched')">Весь розклад</button></div>
             </div>
-            <div class="cb tight">
-              <div class="li">
-                <img class="li-av" src="https://i.pravatar.cc/100?u=st1" alt="">
-                <div class="li-b">
-                  <div class="li-t">Софія Т. · Англійська, B1</div>
-                  <div class="li-d">Сьогодні 15:00–15:40 <span class="dotsep"></span> Zoom <span class="st st-warn"><i class="fa-solid fa-circle"></i>За 25 хв</span></div>
-                </div>
-                <div class="li-r"><button class="btn b-pri b-sm" onclick="toast('Відкриваємо Zoom…')"><i class="fa-solid fa-video"></i>Приєднатися</button></div>
-              </div>
-              <div class="li">
-                <img class="li-av" src="https://i.pravatar.cc/100?u=st2" alt="">
-                <div class="li-b">
-                  <div class="li-t">Артем К. · Німецька, A2</div>
-                  <div class="li-d">Сьогодні 18:00–18:40 <span class="dotsep"></span> Google Meet</div>
-                </div>
-                <div class="li-r"><button class="btn b-soft b-sm" onclick="toast('Посилання відкриється за 10 хв до уроку')"><i class="fa-solid fa-video"></i>Приєднатися</button></div>
-              </div>
-              <div class="li">
-                <img class="li-av" src="https://i.pravatar.cc/100?u=st3" alt="">
-                <div class="li-b">
-                  <div class="li-t">Марта Л. · Англійська, IELTS</div>
-                  <div class="li-d">Завтра 10:00–11:00 <span class="dotsep"></span> Zoom</div>
-                </div>
-                <div class="li-r"><button class="btn b-sec b-sm" onclick="openM('lesson')">Деталі</button></div>
-              </div>
-            </div>
+            <div class="cb tight" id="upBody"></div>
           </div>
 
           <div class="card">
@@ -703,59 +680,12 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
               <div><div class="ct"><i class="fa-solid fa-bolt"></i>Активні приватні заявки</div><div class="ct-s">Відповідь у межах SLA підвищує рейтинг</div></div>
               <div class="ch-r"><button class="btn b-sec b-sm" onclick="go('req')">Усі заявки</button></div>
             </div>
-            <div class="cb">
-              <div class="rq">
-                <div class="rq-h">
-                  <div>
-                    <div class="rq-t">Англійська · 7 клас · підтягнути оцінки</div>
-                    <div class="rq-m">Софія, 7 клас · Онлайн · 2 рази на тиждень · Київ</div>
-                  </div>
-                  <div class="rq-p"><div class="rq-price">₴400</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
-                </div>
-                <div class="row" style="margin-bottom:12px"><span class="sla" data-sla="7200"><i class="fa-regular fa-clock"></i>SLA: 02:00:00</span><span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span></div>
-                <div class="rq-a">
-                  <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти</button>
-                  <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
-                </div>
-              </div>
-              <div class="rq">
-                <div class="rq-h">
-                  <div>
-                    <div class="rq-t">Німецька · дорослий · з нуля</div>
-                    <div class="rq-m">Богдан · Онлайн · вечірні слоти · Львів</div>
-                  </div>
-                  <div class="rq-p"><div class="rq-price">₴380</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
-                </div>
-                <div class="row" style="margin-bottom:12px"><span class="sla hot" data-sla="1500"><i class="fa-regular fa-clock"></i>SLA: 00:25:00</span><span class="st st-warn"><i class="fa-solid fa-circle"></i>Спливає</span></div>
-                <div class="rq-a">
-                  <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти</button>
-                  <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
-                </div>
-              </div>
-            </div>
+            <div class="cb" id="reqBody"></div>
           </div>
         </div>
 
-        <!-- right column: gamification -->
+        <!-- right column -->
         <div>
-          <div class="card">
-            <div class="ch"><div class="ct"><i class="fa-solid fa-bolt" style="color:var(--violet)"></i>Ваш рівень</div></div>
-            <div class="cb">
-              <div class="between" style="margin-bottom:10px">
-                <div>
-                  <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:900;line-height:1">Рівень 4</div>
-                  <div style="font-size:12px;color:var(--muted-2);font-weight:700;margin-top:3px">Досвідчений наставник</div>
-                </div>
-                <div style="text-align:right">
-                  <div style="font-size:13px;font-weight:900">1 240 XP</div>
-                  <div style="font-size:11px;color:var(--muted-2)">до 5 рівня: 760</div>
-                </div>
-              </div>
-              <div class="pr"><div class="pr-f v" style="width:62%"></div></div>
-              <div class="hint">XP нараховується за проведені уроки, заповнені звіти та відповіді в межах SLA.</div>
-            </div>
-          </div>
-
           <div class="card">
             <div class="ch"><div class="ct"><i class="fa-solid fa-fire" style="color:#F97316"></i>Daily Streak</div></div>
             <div class="cb">
@@ -763,30 +693,22 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
                 <div style="font-family:'Fraunces',serif;font-size:38px;font-weight:900;line-height:1;color:#F97316">12</div>
                 <div>
                   <div style="font-size:13px;font-weight:800">днів підряд</div>
-                  <div style="font-size:12px;color:var(--muted)">Бонус за серію: <b style="color:var(--violet)">+50 XP</b></div>
+                  <div style="font-size:12px;color:var(--muted)">Найдовша серія: <b>21 день</b></div>
                 </div>
               </div>
               <div class="bn bn-warn" style="margin-bottom:0;padding:11px 13px">
                 <div class="bn-ic" style="width:28px;height:28px;font-size:12px"><i class="fa-regular fa-clock"></i></div>
-                <div><div class="bn-d">Зайдіть сьогодні, щоб не втратити серію — залишилось <b id="streakTimer">06:42:15</b></div></div>
+                <div><div class="bn-d">Проведіть сьогодні хоча б 1 урок, щоб не втратити серію — залишилось <b id="streakTimer">06:42:15</b></div></div>
               </div>
             </div>
           </div>
 
           <div class="card">
             <div class="ch">
-              <div><div class="ct"><i class="fa-solid fa-list-check"></i>Цілі на сьогодні</div><div class="ct-s">Виконано <b id="goalsDone">1</b> з 4</div></div>
+              <div><div class="ct"><i class="fa-solid fa-list-check"></i>Завдання на сьогодні</div><div class="ct-s">Оновлюється щодня · виконано <b id="tDone">0</b> з <b id="tTot">0</b></div></div>
+              <div class="ch-r"><button class="btn b-soft b-sm" onclick="openAddTask()"><i class="fa-solid fa-plus"></i>Додати</button></div>
             </div>
-            <div class="cb tight">
-              <div class="cx on" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Заповнити звіт після уроку</div></div>
-              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Перевірити ДЗ (2 роботи)</div></div>
-              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Додати матеріал у бібліотеку</div></div>
-              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Додати учня</div></div>
-              <div class="hr" style="margin:10px 0"></div>
-              <div style="font-size:11px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Тиждень</div>
-              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Провести 10 уроків (7 / 10)</div></div>
-              <div class="cx" onclick="tglGoal(this)"><div class="cx-b"></div><div class="cx-t">Відповісти на всі заявки в SLA</div></div>
-            </div>
+            <div class="cb tight" id="taskBody"></div>
           </div>
         </div>
       </div>
@@ -942,6 +864,8 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
           <div class="leg">
             <span><i class="fa-solid fa-circle" style="color:var(--teal-500)"></i>Заплановано</span>
             <span><i class="fa-solid fa-circle" style="color:var(--green)"></i>Проведено (оплачено)</span>
+            <span><i class="fa-solid fa-circle" style="color:var(--violet)"></i>Пробний · прийнято</span>
+            <span><i class="fa-regular fa-circle" style="color:var(--violet)"></i>Пробний · очікує</span>
             <span><i class="fa-solid fa-circle" style="color:var(--amber)"></i>Перенесено</span>
             <span><i class="fa-solid fa-circle" style="color:var(--muted-2)"></i>Скасовано</span>
           </div>
@@ -1076,76 +1000,57 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
     <!-- ═════════ 6. ЖУРНАЛ І ДЗ ═════════ -->
     <section class="view" id="v-journal">
       <div class="h-sec">Журнал і ДЗ</div>
-      <p class="p-sec">Звіт після уроку впливає на рейтинг і надсилається учневі. ДЗ можна додати текстом або файлом.</p>
+      <p class="p-sec">Звіт (фідбек) після уроку впливає на рейтинг і надсилається учневі. ДЗ можна задати текстом або файлом і оцінити після здачі.</p>
+
+      <div class="g4" style="margin-bottom:16px">
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-chalkboard-user"></i></div><div class="met-l">Проведені уроки</div></div>
+          <div class="met-v" id="jrnMTotal">0</div>
+          <div class="met-s">За поточний місяць</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--red-50);color:var(--red)"><i class="fa-solid fa-file-circle-exclamation"></i></div><div class="met-l">Без звіту</div></div>
+          <div class="met-v" id="jrnMNoRep">0</div>
+          <div class="met-s">Впливає на рейтинг</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-solid fa-hourglass-half"></i></div><div class="met-l">ДЗ на перевірці</div></div>
+          <div class="met-v" id="jrnMReview">0</div>
+          <div class="met-s">Здані учнями роботи</div>
+        </div>
+        <div class="met">
+          <div class="met-h"><div class="met-ic" style="background:var(--green-50);color:var(--green)"><i class="fa-solid fa-circle-check"></i></div><div class="met-l">Оцінено ДЗ</div></div>
+          <div class="met-v" id="jrnMGraded">0</div>
+          <div class="met-s">Завершені завдання</div>
+        </div>
+      </div>
 
       <div class="card">
         <div class="ch">
-          <div><div class="ct"><i class="fa-solid fa-book-open"></i>Проведені уроки</div><div class="ct-s">2 уроки без звіту</div></div>
-          <div class="ch-r">
-            <span class="chip on" onclick="tglChip(this)">Усі</span>
-            <span class="chip" onclick="tglChip(this)">Без звіту</span>
-            <span class="chip" onclick="tglChip(this)">ДЗ на перевірці</span>
-          </div>
+          <div><div class="ct"><i class="fa-solid fa-book-open"></i>Проведені уроки</div><div class="ct-s" id="jrnSub">—</div></div>
+          <div class="ch-r"><button class="btn b-sec b-sm" id="jrnAllBtn" onclick="openJrnAll()">Показати всі</button></div>
         </div>
         <div class="tblw">
           <table class="tbl">
             <thead><tr><th>Дата</th><th>Учень / тема</th><th>Звіт</th><th>ДЗ</th><th style="text-align:right">Дії</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="num">16.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">15:00</div></td>
-                <td><div class="cell-n">Софія Т.</div><div style="font-size:11.5px;color:var(--muted)">Present Perfect · практика</div></td>
-                <td><span class="st st-bad"><i class="fa-solid fa-circle"></i>Немає</span></td>
-                <td><span class="st st-mut">Не задано</span></td>
-                <td style="text-align:right"><div class="row" style="justify-content:flex-end;gap:6px">
-                  <button class="btn b-pri b-xs" onclick="openM('report')">Звіт</button>
-                  <button class="btn b-sec b-xs" onclick="openM('hw')">Додати ДЗ</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td class="num">15.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">18:00</div></td>
-                <td><div class="cell-n">Артем К.</div><div style="font-size:11.5px;color:var(--muted)">Modalverben · вступ</div></td>
-                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Готовий · 10/12</span></td>
-                <td><span class="st st-warn"><i class="fa-solid fa-hourglass-half"></i>На перевірці</span></td>
-                <td style="text-align:right"><div class="row" style="justify-content:flex-end;gap:6px">
-                  <button class="btn b-pri b-xs" onclick="openM('check')">Перевірити ДЗ</button>
-                  <button class="btn b-sec b-xs" onclick="openM('report')">Звіт</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td class="num">14.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">10:00</div></td>
-                <td><div class="cell-n">Марта Л.</div><div style="font-size:11.5px;color:var(--muted)">IELTS Speaking Part 2</div></td>
-                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Готовий · 11/12</span></td>
-                <td><span class="st st-ok"><i class="fa-solid fa-check"></i>Оцінено · 11/12</span></td>
-                <td style="text-align:right"><button class="btn b-sec b-xs" onclick="openM('report')">Відкрити</button></td>
-              </tr>
-              <tr>
-                <td class="num">13.08<div style="font-size:11px;color:var(--muted-2);font-weight:600">16:00</div></td>
-                <td><div class="cell-n">Назар П.</div><div style="font-size:11.5px;color:var(--muted)">Reading · НМТ формат</div></td>
-                <td><span class="st st-bad"><i class="fa-solid fa-circle"></i>Немає</span></td>
-                <td><span class="st st-info">Здано</span></td>
-                <td style="text-align:right"><div class="row" style="justify-content:flex-end;gap:6px">
-                  <button class="btn b-pri b-xs" onclick="openM('report')">Звіт</button>
-                  <button class="btn b-sec b-xs" onclick="openM('check')">Перевірити</button>
-                </div></td>
-              </tr>
-            </tbody>
+            <tbody id="jrnBody"></tbody>
           </table>
         </div>
       </div>
 
       <div class="g2">
         <div class="card" style="margin-top:16px">
-          <div class="ch"><div class="ct"><i class="fa-brands fa-telegram" style="color:var(--blue)"></i>Звіт для учня</div></div>
+          <div class="ch"><div class="ct"><i class="fa-brands fa-telegram" style="color:var(--blue)"></i>Надсилання учневі в Telegram</div></div>
           <div class="cb">
             <div class="sw-row">
-              <div class="sw-tx"><div class="sw-t">Автовідправка в Telegram</div><div class="sw-d">Звіт іде учневі одразу після збереження — без вашої участі.</div></div>
-              <button class="sw on" onclick="tglSw(this)"></button>
+              <div class="sw-tx"><div class="sw-t">Надсилати звіт (фідбек)</div><div class="sw-d">Звіт після уроку йде учневі в Telegram одразу після натискання «Надіслати».</div></div>
+              <button class="sw on" id="tgReport" onclick="tglSw(this)"></button>
             </div>
             <div class="sw-row">
-              <div class="sw-tx"><div class="sw-t">Додавати оцінку і ДЗ у звіт</div><div class="sw-d">Учень бачить оцінку 1–12, тег-фідбек і дедлайн ДЗ.</div></div>
-              <button class="sw on" onclick="tglSw(this)"></button>
+              <div class="sw-tx"><div class="sw-t">Надсилати домашнє завдання</div><div class="sw-d">ДЗ і дедлайн приходять учневі в Telegram, коли ви його задаєте.</div></div>
+              <button class="sw on" id="tgHw" onclick="tglSw(this)"></button>
             </div>
-            <div class="hint">Останній звіт надіслано 15.08 у 19:12 — доставлено учневі.</div>
+            <div class="hint">Керуйте окремо, що саме надсилати учневі. Якщо вимкнено — учень бачить звіт і ДЗ лише в застосунку Libitum.</div>
           </div>
         </div>
 
@@ -1159,6 +1064,35 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
             <button class="btn b-violet-soft b-sm" onclick="toast('Дякуємо! Повідомимо про запуск AI')"><i class="fa-regular fa-bell"></i>Повідомити про запуск</button>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ═════════ УСІ УРОКИ (журнал) ═════════ -->
+    <section class="view" id="v-journaltx">
+      <div class="between" style="margin-bottom:14px;flex-wrap:wrap;gap:10px">
+        <div>
+          <div class="h-sec" style="margin-bottom:2px">Усі уроки</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600" id="jrnTxInfo">—</div>
+        </div>
+        <button class="btn b-sec b-sm" onclick="go('journal')"><i class="fa-solid fa-arrow-left"></i>Назад до журналу</button>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-book-open"></i>Історія уроків</div><div class="ct-s">Звіти після уроків і домашні завдання</div></div>
+          <div class="ch-r">
+            <span class="chip on" onclick="filterJrn('all',this)">Усі</span>
+            <span class="chip" onclick="filterJrn('noreport',this)">Без звіту</span>
+            <span class="chip" onclick="filterJrn('review',this)">ДЗ на перевірці</span>
+            <span class="chip" onclick="filterJrn('done',this)">Завершені</span>
+          </div>
+        </div>
+        <div class="tblw">
+          <table class="tbl">
+            <thead><tr><th>Дата</th><th>Учень / тема</th><th>Звіт</th><th>ДЗ</th><th style="text-align:right">Дії</th></tr></thead>
+            <tbody id="jrnPageBody"></tbody>
+          </table>
+        </div>
+        <div class="cb" style="display:flex;justify-content:center"><div class="pg" id="jrnPager"></div></div>
       </div>
     </section>
 
@@ -1783,7 +1717,8 @@ const TITLES = {
   req:['Заявки та біржа','3 приватні заявки · 12 на біржі'],
   sched:['Розклад','17–23 серпня 2026'],
   students:['Мої учні','4 активних · ліміт 5'],
-  journal:['Журнал і ДЗ','2 уроки без звіту'],
+  journal:['Журнал і ДЗ','Звіти після уроків та ДЗ'],
+  journaltx:['Усі уроки','Історія звітів та ДЗ'],
   ai:['AI-помічник','Скоро — у наступному релізі'],
   lib:['Бібліотека матеріалів','18 матеріалів'],
   shop:['Магазин і просування','2 активні позиції'],
@@ -1897,12 +1832,6 @@ function tglAcc(btn){
   b.classList.toggle('on');
   const ic=btn.querySelector('i');
   if(ic) ic.style.transform=b.classList.contains('on')?'rotate(180deg)':'none';
-}
-function tglGoal(el){
-  el.classList.toggle('on');
-  const done=document.querySelectorAll('#v-dash .cx.on').length;
-  const d=document.getElementById('goalsDone'); if(d) d.textContent=Math.min(done,4);
-  if(el.classList.contains('on')) toast('Ціль виконано · +25 XP');
 }
 function cnt(ta){
   const w=ta.parentElement.querySelector('.cnt');
@@ -2286,6 +2215,421 @@ function openTxDetail(id){
 }
 
 
+/* ══════════ ДАШБОРД: наступні уроки / заявки / завдання ══════════ */
+function dcell(l,v){ return '<div class="stu-cell"><div class="stu-cell-l">'+l+'</div><div class="stu-cell-v" style="font-size:12.5px">'+v+'</div></div>'; }
+function endTime(start,dur){
+  const m=parseInt(dur,10)||40, p=start.split(':'), tot=(+p[0])*60+(+p[1])+m;
+  return String(Math.floor(tot/60)%24).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
+}
+function dowLabel(day){ if(day===17) return 'Сьогодні'; if(day===18) return 'Завтра'; const w=WEEK.find(x=>x.d===day); return w?w.t:String(day); }
+
+/* ── Наступні уроки ── */
+const UP=[
+ {id:'u1',date:'17',dow:'Сьогодні',time:'15:00',dur:'40 хв',stu:'Софія Т.',subj:'Англійська',lvl:'B1',plat:'Zoom',topic:'Present Perfect · reading на швидкість',price:400,num:25,state:'soon',note:'2× на тиждень · ціль НМТ 170+'},
+ {id:'u2',date:'17',dow:'Сьогодні',time:'18:00',dur:'40 хв',stu:'Артем К.',subj:'Німецька',lvl:'A2',plat:'Google Meet',topic:'Perfekt · закріплення haben/sein',price:380,num:12,state:'plan',note:'1× на тиждень · шкільна програма'},
+ {id:'u3',date:'18',dow:'Завтра',time:'10:00',dur:'60 хв',stu:'Марта Л.',subj:'IELTS',lvl:'B2',plat:'Zoom',topic:'IELTS Speaking Part 3 · abstract topics',price:650,num:33,state:'plan',note:'2× на тиждень · ціль Band 7.0'},
+ {id:'u4',date:'19',dow:'Середа',time:'19:00',dur:'25 хв',stu:'Олег Д.',subj:'Розмовна англ.',lvl:'—',plat:'Zoom',topic:'Пробне заняття · знайомство і рівень',price:0,num:0,state:'trialp',note:'Дорослий · співбесіда англійською · очікує підтвердження'},
+ {id:'u5',date:'20',dow:'Четвер',time:'11:00',dur:'25 хв',stu:'Ірина К.',subj:'Англійська НМТ',lvl:'—',plat:'Zoom',topic:'Пробне заняття · діагностика',price:0,num:0,state:'trial',note:'9 клас · підготовка до НМТ'}
+];
+function upById(id){ return UP.find(u=>u.id===id); }
+function upSorted(){ return UP.slice().sort((a,b)=> (a.date-b.date) || a.time.localeCompare(b.time)); }
+function upBadge(u){
+  if(u.state==='soon') return '<span class="st st-warn"><i class="fa-solid fa-circle"></i>За 25 хв</span>';
+  if(u.state==='trial') return '<span class="st st-v"><i class="fa-solid fa-flask"></i>Пробний · прийнято</span>';
+  if(u.state==='trialp') return '<span class="st st-v"><i class="fa-regular fa-circle"></i>Пробний · очікує</span>';
+  return '<span class="st st-mut">Заплановано</span>';
+}
+function renderUp(){
+  const b=document.getElementById('upBody'); if(!b) return;
+  const list=upSorted().slice(0,5);
+  b.innerHTML=list.map(u=>{
+    const av='https://i.pravatar.cc/100?u='+encodeURIComponent(u.stu);
+    const btn = u.state==='soon'
+      ? '<button class="btn b-pri b-sm" onclick="toast(\'Відкриваємо Zoom…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>'
+      : '<button class="btn b-sec b-sm" onclick="openUpLesson(\''+u.id+'\')">Деталі</button>';
+    return '<div class="li"><img class="li-av" src="'+av+'" alt="">'
+      +'<div class="li-b"><div class="li-t">'+u.stu+' · '+u.subj+(u.lvl&&u.lvl!=='—'?', '+u.lvl:'')+'</div>'
+      +'<div class="li-d">'+u.dow+' '+u.time+'–'+endTime(u.time,u.dur)+' <span class="dotsep"></span> '+u.plat+' '+upBadge(u)+'</div></div>'
+      +'<div class="li-r">'+btn+'</div></div>';
+  }).join('');
+  const s=document.getElementById('upSub'); if(s) s.textContent='Найближчі '+list.length+' уроків';
+}
+function openUpLesson(id){
+  const u=upById(id); if(!u) return;
+  const trial=u.state==='trial'||u.state==='trialp';
+  document.getElementById('mTitle').textContent=(trial?'Пробний урок · ':'Урок · ')+u.stu;
+  document.getElementById('mSub').textContent=u.dow+', '+u.time+'–'+endTime(u.time,u.dur)+' · '+u.subj+(u.lvl!=='—'?' '+u.lvl:'');
+  const head = u.state==='soon'
+    ? '<div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-regular fa-clock"></i></div><div><div class="bn-t">Урок за 25 хвилин</div><div class="bn-d">Посилання активне. Приєднайтесь вчасно — пунктуальність впливає на рейтинг.</div></div></div>'
+    : (u.state==='trialp'
+      ? '<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Пробний · очікує підтвердження</div><div class="bn-d">Ви запропонували час. Щойно учень підтвердить — урок стане активним у розкладі.</div></div></div>'
+      : (u.state==='trial'
+        ? '<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Пробний · заплановано</div><div class="bn-d">Знайомство і діагностика рівня. Якщо учень продовжить — нарахується комісія за ліда.</div></div></div>'
+        : '<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-calendar-check"></i></div><div><div class="bn-t">Урок заплановано</div><div class="bn-d">Регулярне заняття з вашим учнем.</div></div></div>'));
+  let b=head+'<div class="g2" style="margin-bottom:14px">'
+    +dcell('Учень',u.stu)
+    +dcell('Предмет · рівень',u.subj+(u.lvl!=='—'?' · '+u.lvl:''))
+    +dcell('Дата й час',u.dow+', '+u.time+'–'+endTime(u.time,u.dur))
+    +dcell('Тривалість',u.dur)
+    +dcell('Формат',u.plat+' · відкриється за 10 хв')
+    +(trial?dcell('Тип','Пробний · безкоштовно для учня'):dcell('Урок № / ціна',(u.num?'№'+u.num+' · ':'')+num(u.price)))
+    +'</div>';
+  b+='<div class="lbl">Тема уроку</div><div class="rq-note" style="margin-bottom:14px">'+u.topic+'</div>';
+  b+='<div class="lbl">Нотатки</div><div class="rq-note" style="margin:0">'+u.note+'</div>';
+  document.getElementById('mBody').innerHTML=b;
+  let foot='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
+  if(u.state!=='trialp') foot+='<button class="btn b-pri" onclick="toast(\'Відкриваємо '+u.plat+'…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>';
+  else foot+='<button class="btn b-sec" onclick="openM(\'trial\')">Перенести</button>';
+  document.getElementById('mFoot').innerHTML=foot;
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+
+/* ── Приватні заявки (детально + прийняти пробне) ── */
+const REQS=[
+ {id:'r1',subj:'Англійська',lvl:'7 клас · B1',goal:'підтягнути оцінки, reading',stu:'Софія К.',mode:'Онлайн',freq:'2× на тиждень',city:'Київ',price:400,sla:7200,state:'new',
+  msg:'Доброго дня! У 7 класі, треба підтягнути англійську — особливо reading і граматику. Зручно 2 рази на тиждень, вечірні години після 17:00.',phone:'+380 67 ••• 45 21',tg:'@sofia_k'},
+ {id:'r2',subj:'Німецька',lvl:'дорослий · з нуля',goal:'базова розмовна для роботи',stu:'Богдан М.',mode:'Онлайн',freq:'вечірні слоти',city:'Львів',price:380,sla:1500,state:'expiring',
+  msg:'Потрібна німецька з нуля для роботи в австрійській компанії. Можу займатись лише ввечері після 19:00. Хочу почати якнайшвидше.',phone:'+380 63 ••• 11 08',tg:'@bohdan_m'}
+];
+function reqById(id){ return REQS.find(r=>r.id===id); }
+function reqStatusPill(r){
+  if(r.state==='trialset') return '<span class="st st-v"><i class="fa-solid fa-flask"></i>Пробний '+r.trialDate+', '+r.trialTime+'</span>';
+  if(r.state==='expiring') return '<span class="st st-warn"><i class="fa-solid fa-circle"></i>Спливає</span>';
+  return '<span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span>';
+}
+function reqCard(r){
+  const set=r.state==='trialset';
+  return '<div class="rq"><div class="rq-h"><div><div class="rq-t">'+r.subj+' · '+r.lvl+'</div><div class="rq-m">'+r.stu+' · '+r.mode+' · '+r.freq+' · '+r.city+'</div></div>'
+    +'<div class="rq-p"><div class="rq-price">'+num(r.price)+'</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div></div>'
+    +'<div class="row" style="margin-bottom:12px">'+(set?'':'<span class="sla'+(r.sla<1800?' hot':'')+'" data-sla="'+r.sla+'"><i class="fa-regular fa-clock"></i>SLA: '+fmt(r.sla)+'</span>')+reqStatusPill(r)+'</div>'
+    +'<div class="rq-a">'+(set
+      ? '<button class="btn b-pri b-sm" onclick="openReqDetail(\''+r.id+'\')"><i class="fa-regular fa-eye"></i>Деталі пробного</button><button class="btn b-sec b-sm" onclick="openM(\'trial\')">Перенести</button>'
+      : '<button class="btn b-pri b-sm" onclick="openApproveTrial(\''+r.id+'\')"><i class="fa-solid fa-check"></i>Прийняти</button><button class="btn b-sec b-sm" onclick="openReqDetail(\''+r.id+'\')">Деталі</button><button class="btn b-danger b-sm" onclick="rejectReq(\''+r.id+'\')">Відхилити</button>')
+    +'</div></div>';
+}
+function renderReqs(){
+  const b=document.getElementById('reqBody'); if(!b) return;
+  const list=REQS.filter(r=>r.state!=='rejected');
+  b.innerHTML=list.length?list.map(reqCard).join(''):'<div style="text-align:center;padding:22px;color:var(--muted)">Немає активних заявок.</div>';
+}
+function openReqDetail(id){
+  const r=reqById(id); if(!r) return;
+  const set=r.state==='trialset';
+  document.getElementById('mTitle').textContent='Заявка · '+r.subj;
+  document.getElementById('mSub').textContent=r.stu+' · '+r.lvl;
+  let b='';
+  if(set) b+='<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Пробний заплановано</div><div class="bn-d">'+r.trialDate+' о '+r.trialTime+' · Zoom. Учень отримав підтвердження, урок додано у ваш розклад.</div></div></div>';
+  b+='<div class="lbl">Повідомлення від учня</div><div class="rq-note" style="margin-bottom:14px">'+r.msg+'</div>';
+  b+='<div class="g2" style="margin-bottom:14px">'
+    +dcell('Предмет · рівень',r.subj+' · '+r.lvl)+dcell('Ціль',r.goal)
+    +dcell('Формат',r.mode)+dcell('Періодичність',r.freq)
+    +dcell('Місто',r.city)+dcell('Бюджет',num(r.price)+' / урок')+'</div>';
+  b+='<div class="lbl">Контакти учня'+(set?'':' (відкриються після прийняття)')+'</div><div class="g2">'
+    +dcell('Телефон',set?r.phone:'•••••••••••')+dcell('Telegram',set?r.tg:'••••••')+'</div>';
+  document.getElementById('mBody').innerHTML=b;
+  let foot='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
+  if(!set) foot+='<button class="btn b-pri" onclick="closeM();openApproveTrial(\''+r.id+'\')"><i class="fa-solid fa-check"></i>Прийняти й запланувати пробне</button>';
+  else foot+='<button class="btn b-pri" onclick="toast(\'Відкриваємо Zoom…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>';
+  document.getElementById('mFoot').innerHTML=foot;
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function openApproveTrial(id){
+  const r=reqById(id); if(!r) return;
+  document.getElementById('mTitle').textContent='Прийняти заявку · запланувати пробне';
+  document.getElementById('mSub').textContent=r.stu+' · '+r.subj+' '+r.lvl;
+  let b='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Після підтвердження ви побачите контакти учня, а пробний урок з’явиться у вашому розкладі та в календарі учня. Комісія — лише якщо після пробного учень продовжить регулярні заняття.</div></div></div>';
+  b+='<div class="lbl">Дані учня</div><div class="g2" style="margin-bottom:14px">'
+    +dcell('Учень',r.stu)+dcell('Предмет · рівень',r.subj+' · '+r.lvl)
+    +dcell('Формат',r.mode)+dcell('Бажана періодичність',r.freq)+'</div>';
+  b+='<div class="lbl">Дата й час пробного (25 хв)</div>'
+    +'<div class="f-row" style="margin-bottom:12px"><input class="inp" id="trialDateInp" type="date" value="2026-08-20"><select class="sel" id="trialTimeInp"><option>11:00</option><option>16:00</option><option>18:00</option><option>19:00</option></select></div>';
+  b+='<label class="f" style="margin-bottom:0"><span class="lbl">Посилання на зустріч</span><input class="inp" value="https://zoom.us/j/9812345"></label>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="approveTrial(\''+r.id+'\')"><i class="fa-solid fa-calendar-check"></i>Запланувати пробне</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function approveTrial(id){
+  const r=reqById(id); if(!r) return;
+  const iso=(document.getElementById('trialDateInp')||{}).value||'2026-08-20';
+  const time=(document.getElementById('trialTimeInp')||{}).value||'11:00';
+  const day=parseInt(iso.split('-')[2],10);
+  const col=WEEK.find(w=>w.d===day);
+  if(col){ col.items.push({time:time,n:r.stu,s:'Пробний · '+r.subj,cls:'trial'}); col.items.sort((a,b)=>a.time.localeCompare(b.time)); }
+  r.state='trialset'; r.trialDate=ddmm(iso); r.trialTime=time;
+  if(!UP.some(u=>u.id==='up_'+id)) UP.push({id:'up_'+id,date:String(day),dow:dowLabel(day),time:time,dur:'25 хв',stu:r.stu,subj:r.subj,lvl:'—',plat:'Zoom',topic:'Пробне заняття · знайомство і діагностика',price:0,num:0,state:'trial',note:r.goal});
+  renderWeek(); renderReqs(); renderUp();
+  closeM(); toast('Пробний заплановано на '+ddmm(iso)+', '+time+' · додано в розклад');
+}
+function rejectReq(id){ const r=reqById(id); if(r) r.state='rejected'; renderReqs(); toast('Заявку відхилено'); }
+
+/* ── Завдання на сьогодні (щоденний список: додати / видалити) ── */
+let TASKS=[
+ {t:'Заповнити звіт після уроку з Софією',done:true},
+ {t:'Перевірити ДЗ Артема (Modalverben)',done:false},
+ {t:'Підтвердити пробний для Олега',done:false},
+ {t:'Додати матеріал у бібліотеку',done:false}
+];
+function renderTasks(){
+  const b=document.getElementById('taskBody'); if(!b) return;
+  if(!TASKS.length){
+    b.innerHTML='<div style="text-align:center;padding:22px 8px"><div class="up-ic" style="margin:0 auto 10px"><i class="fa-regular fa-square-check"></i></div>'
+      +'<div style="font-size:13px;font-weight:800">Немає завдань на сьогодні</div>'
+      +'<div style="font-size:12px;color:var(--muted-2);margin:4px 0 12px;line-height:1.5">Додайте перше завдання — список очищається щодня опівночі.</div>'
+      +'<button class="btn b-soft b-sm" onclick="openAddTask()"><i class="fa-solid fa-plus"></i>Додати завдання</button></div>';
+  } else {
+    b.innerHTML=TASKS.map((t,i)=>'<div class="row" style="gap:11px;padding:10px 0;border-bottom:1px solid var(--border);flex-wrap:nowrap">'
+      +'<div style="width:20px;height:20px;border-radius:6px;border:1.5px solid '+(t.done?'var(--teal-500)':'var(--border)')+';background:'+(t.done?'var(--teal-500)':'#fff')+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;cursor:pointer" onclick="toggleTask('+i+')">'+(t.done?'✓':'')+'</div>'
+      +'<div style="flex:1;min-width:0;font-size:13.5px;font-weight:600;'+(t.done?'color:var(--muted-2);text-decoration:line-through':'color:var(--ink-2)')+'">'+t.t+'</div>'
+      +'<button class="btn b-ic b-sm" style="width:30px;height:30px" title="Видалити" onclick="delTask('+i+')"><i class="fa-solid fa-xmark"></i></button>'
+      +'</div>').join('');
+  }
+  const done=TASKS.filter(t=>t.done).length;
+  const dEl=document.getElementById('tDone'), tEl=document.getElementById('tTot');
+  if(dEl) dEl.textContent=done; if(tEl) tEl.textContent=TASKS.length;
+}
+function toggleTask(i){ if(TASKS[i]){ const was=TASKS[i].done; TASKS[i].done=!was; renderTasks(); if(!was) toast('Завдання виконано ✓'); } }
+function delTask(i){ TASKS.splice(i,1); renderTasks(); toast('Завдання видалено'); }
+function openAddTask(){
+  document.getElementById('mTitle').textContent='Нове завдання';
+  document.getElementById('mSub').textContent='Додайте пункт на сьогодні';
+  document.getElementById('mBody').innerHTML='<label class="f" style="margin-bottom:12px"><span class="lbl">Завдання <span class="req">*</span></span><input class="inp" id="taskInp" placeholder="Напр., Перевірити ДЗ Марти" onkeydown="if(event.key===\'Enter\'){event.preventDefault();saveTask()}"></label>'
+    +'<div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-regular fa-clock"></i></div><div><div class="bn-d">Список завдань щоденний — опівночі він автоматично очищається, і ви починаєте день з чистого аркуша.</div></div></div>';
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="saveTask()"><i class="fa-solid fa-plus"></i>Додати завдання</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+  setTimeout(function(){ const i=document.getElementById('taskInp'); if(i) i.focus(); },60);
+}
+function saveTask(){ const el=document.getElementById('taskInp'); const v=el?el.value.trim():''; if(!v){ toast('Введіть текст завдання'); return; } TASKS.push({t:v,done:false}); closeM(); renderTasks(); toast('Завдання додано'); }
+
+/* ══════════ ЖУРНАЛ І ДЗ ══════════ */
+/* report.status: none | sent   |   hw.status: none | assigned | review | graded */
+const LESSONS=[
+ {id:1,date:'2026-08-16',time:'15:00',stu:'Софія Т.',subj:'Англійська B1',topic:'Present Perfect · практика',
+   report:{status:'none'}, hw:{status:'none'}},
+ {id:2,date:'2026-08-15',time:'18:00',stu:'Артем К.',subj:'Німецька A2',topic:'Modalverben · вступ',
+   report:{status:'none'}, hw:{status:'review',task:'Впр. 3–5 стор. 42. Скласти 8 речень із müssen/können.',file:'hausaufgabe_15_08.pdf',size:'1,2 МБ',up:'16.08, 21:04',deadline:'17.08'}},
+ {id:3,date:'2026-08-14',time:'10:00',stu:'Марта Л.',subj:'IELTS',topic:'IELTS Speaking Part 2',
+   report:{status:'sent',grade:11,tags:['Активно працював','Великий прогрес'],text:'Пропрацювали cue card про подорож. Марта тримає темп 2 хв, лексика багата. Далі — робота над зв’язками між ідеями.'},
+   hw:{status:'graded',grade:11,task:'Записати аудіо-відповідь на 2 cue cards (по 2 хв).',file:'speaking_task.pdf',size:'0,8 МБ',up:'14.08, 20:10',comment:'Гарний темп і вимова. Попрацюй над висновком — завершуй думку однією фразою.'}},
+ {id:4,date:'2026-08-13',time:'16:00',stu:'Назар П.',subj:'Англійська НМТ',topic:'Reading · НМТ формат',
+   report:{status:'none'}, hw:{status:'review',task:'Тест Reading (2 тексти) у форматі НМТ, бланк відповідей.',file:'reading_nmt.pdf',size:'2,0 МБ',up:'13.08, 22:40',deadline:'15.08'}},
+ {id:5,date:'2026-08-12',time:'15:00',stu:'Софія Т.',subj:'Англійська B1',topic:'Vocabulary · travel',
+   report:{status:'sent',grade:10,tags:['Виконав ДЗ','Потрібно більше практики'],text:'Вивчили 20 слів на тему travel. Софія добре впізнає слова, але плутає прийменники руху. Закріпимо наступного разу.'},
+   hw:{status:'graded',grade:12,task:'Картки: 20 слів travel + 6 речень із новими словами.',file:'travel_cards.pdf',size:'0,5 МБ',up:'12.08, 19:30',comment:'Відмінно! Усі слова вжиті правильно.'}},
+ {id:6,date:'2026-08-11',time:'18:00',stu:'Артем К.',subj:'Німецька A2',topic:'Perfekt · haben/sein',
+   report:{status:'sent',grade:9,tags:['Активно працював'],text:'Пояснили утворення Perfekt, розібрали список дієслів із sein. Артем впорався з вправами в класі.'},
+   hw:{status:'assigned',task:'Впр. 1–4 стор. 55. Скласти 10 речень у Perfekt про минулі вихідні.',deadline:'18.08'}},
+ {id:7,date:'2026-08-10',time:'11:00',stu:'Марта Л.',subj:'IELTS',topic:'IELTS Writing Task 2',
+   report:{status:'sent',grade:10,tags:['Великий прогрес'],text:'Структура есе стала чіткішою. Вступ і висновок — на рівні Band 7. Працюємо над діапазоном граматики.'},
+   hw:{status:'graded',grade:10,task:'Написати есе Task 2 (250 слів) на тему «technology in education».',file:'essay_task2.pdf',size:'0,4 МБ',up:'11.08, 09:15',comment:'Сильні аргументи. Уникай повторів «important» — дав синоніми у коментарях.'}},
+ {id:8,date:'2026-08-09',time:'16:00',stu:'Назар П.',subj:'Англійська НМТ',topic:'Use of English · word formation',
+   report:{status:'sent',grade:8,tags:['Потрібно більше практики'],text:'Word formation дається важче за reading. Пройшли суфікси -tion/-ment, треба більше повторення.'},
+   hw:{status:'graded',grade:9,task:'40 завдань word formation + повторити суфікси.',file:'wordform.pdf',size:'1,1 МБ',up:'09.08, 20:05',comment:'Помітний прогрес порівняно з минулим тижнем. Молодець.'}},
+ {id:9,date:'2026-08-08',time:'15:00',stu:'Софія Т.',subj:'Англійська B1',topic:'Conditionals · 0 і 1 тип',
+   report:{status:'sent',grade:10,tags:['Активно працював','Виконав ДЗ'],text:'Розібрали нульовий і перший умовний. Софія впевнено будує речення, помилок майже немає.'},
+   hw:{status:'none'}},
+ {id:10,date:'2026-08-07',time:'18:00',stu:'Артем К.',subj:'Німецька A2',topic:'Wechselpräpositionen',
+   report:{status:'sent',grade:9,tags:['Потрібно більше практики'],text:'Прийменники з Akkusativ/Dativ — складна тема. Пройшли основні, дав схему для запам’ятовування.'},
+   hw:{status:'graded',grade:8,task:'Впр. на Wechselpräpositionen + намалювати схему кімнати з описом.',file:'praep.pdf',size:'0,9 МБ',up:'07.08, 21:20',comment:'Схема гарна. У 3 реченнях переплутав Akkusativ і Dativ — глянь мої правки.'}},
+ {id:11,date:'2026-08-06',time:'11:00',stu:'Марта Л.',subj:'IELTS',topic:'Listening · Section 3',
+   report:{status:'sent',grade:11,tags:['Великий прогрес'],text:'Section 3 (діалог студентів) — 9/10. Стратегія передбачення відповідей працює.'},
+   hw:{status:'graded',grade:11,task:'2 записи Listening Section 3 + перевірка бланка.',file:'listening.pdf',size:'0,6 МБ',up:'06.08, 18:45',comment:'Майже ідеально. Одна помилка через неуважність — читай питання уважніше.'}},
+ {id:12,date:'2026-08-05',time:'16:00',stu:'Назар П.',subj:'Англійська НМТ',topic:'Vocabulary · НМТ теми',
+   report:{status:'sent',grade:9,tags:['Виконав ДЗ'],text:'Пройшли лексику за темами «освіта» і «технології». Назар вивчив 30 слів, застосовує в реченнях.'},
+   hw:{status:'graded',grade:10,task:'Вивчити 30 слів + скласти міні-твір (100 слів).',file:'vocab_nmt.pdf',size:'0,7 МБ',up:'05.08, 22:00',comment:'Твір цікавий, лексика доречна. Кілька дрібних помилок з артиклями.'}}
+];
+let jrnFilter='all', jrnPage=1;
+function lessById(id){ return LESSONS.find(l=>l.id===id); }
+function jrnSorted(){ return LESSONS.slice().sort((a,b)=> a.date<b.date?1:(a.date>b.date?-1:(b.id-a.id))); }
+function jrnReportBadge(l){
+  return l.report.status==='sent'
+    ? '<span class="st st-ok"><i class="fa-solid fa-check"></i>Надіслано · '+l.report.grade+'/12</span>'
+    : '<span class="st st-bad"><i class="fa-solid fa-circle"></i>Немає</span>';
+}
+function jrnHwBadge(l){
+  const s=l.hw.status;
+  if(s==='graded') return '<span class="st st-ok"><i class="fa-solid fa-check"></i>Оцінено · '+l.hw.grade+'/12</span>';
+  if(s==='review') return '<span class="st st-warn"><i class="fa-solid fa-hourglass-half"></i>На перевірці</span>';
+  if(s==='assigned') return '<span class="st st-info"><i class="fa-solid fa-paper-plane"></i>Задано</span>';
+  return '<span class="st st-mut">Не задано</span>';
+}
+function jrnActions(l){
+  let btns=[];
+  if(l.report.status==='none') btns.push(['b-pri','Звіт','openReport('+l.id+')']);
+  if(l.hw.status==='review') btns.push([l.report.status==='none'?'b-sec':'b-pri','Перевірити ДЗ','openCheck('+l.id+')']);
+  if(l.hw.status==='none' && l.report.status==='sent') btns.push(['b-sec','Додати ДЗ','openHw('+l.id+')']);
+  if(l.report.status==='sent') btns.push(['b-sec','Переглянути','openView('+l.id+')']);
+  if(btns.length===0) btns.push(['b-sec','Деталі','openView('+l.id+')']);
+  btns=btns.slice(0,2);
+  return '<div class="row" style="justify-content:flex-end;gap:6px">'+btns.map(b=>'<button class="btn '+b[0]+' b-xs" onclick="'+b[2]+'">'+b[1]+'</button>').join('')+'</div>';
+}
+function jrnRow(l){
+  return '<tr>'
+   +'<td class="num">'+ddmm(l.date)+'<div style="font-size:11px;color:var(--muted-2);font-weight:600">'+l.time+'</div></td>'
+   +'<td><div class="cell-n">'+l.stu+'</div><div style="font-size:11.5px;color:var(--muted)">'+l.topic+'</div></td>'
+   +'<td>'+jrnReportBadge(l)+'</td>'
+   +'<td>'+jrnHwBadge(l)+'</td>'
+   +'<td style="text-align:right">'+jrnActions(l)+'</td>'
+   +'</tr>';
+}
+function renderJournal(){
+  const g=id=>document.getElementById(id);
+  if(!g('jrnBody')) return;
+  const noRep=LESSONS.filter(l=>l.report.status==='none').length;
+  const rev=LESSONS.filter(l=>l.hw.status==='review').length;
+  const graded=LESSONS.filter(l=>l.hw.status==='graded').length;
+  g('jrnMTotal').textContent=LESSONS.length;
+  g('jrnMNoRep').textContent=noRep;
+  g('jrnMReview').textContent=rev;
+  g('jrnMGraded').textContent=graded;
+  const all=jrnSorted();
+  g('jrnBody').innerHTML=all.slice(0,5).map(jrnRow).join('');
+  g('jrnSub').textContent=noRep+' без звіту · '+rev+' ДЗ на перевірці';
+  g('jrnAllBtn').textContent='Показати всі ('+all.length+')';
+}
+function jrnRefresh(){ renderJournal(); if(document.getElementById('v-journaltx').classList.contains('on')) renderJrnAll(); }
+function jrnMatch(l,f){
+  if(f==='noreport') return l.report.status==='none';
+  if(f==='review') return l.hw.status==='review';
+  if(f==='done') return l.report.status==='sent' && (l.hw.status==='graded'||l.hw.status==='none');
+  return true;
+}
+function openJrnAll(){ jrnPage=1; go('journaltx'); renderJrnAll(); }
+function filterJrn(f,el){ document.querySelectorAll('#v-journaltx .chip').forEach(c=>c.classList.remove('on')); if(el) el.classList.add('on'); jrnFilter=f; jrnPage=1; renderJrnAll(); }
+function renderJrnAll(){
+  let rows=jrnSorted().filter(l=>jrnMatch(l,jrnFilter));
+  const per=8, pages=Math.max(1,Math.ceil(rows.length/per));
+  if(jrnPage>pages) jrnPage=pages;
+  const start=(jrnPage-1)*per, page=rows.slice(start,start+per);
+  document.getElementById('jrnPageBody').innerHTML = page.length?page.map(jrnRow).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px 14px">Немає уроків за цим фільтром.</td></tr>';
+  document.getElementById('jrnTxInfo').textContent = rows.length?('Показано '+(start+1)+'–'+(start+page.length)+' з '+rows.length):'0 уроків';
+  let pg='';
+  if(pages>1){
+    pg+='<button class="pg-btn" '+(jrnPage===1?'disabled':'')+' onclick="jrnGo('+(jrnPage-1)+')"><i class="fa-solid fa-chevron-left"></i></button>';
+    for(let p=1;p<=pages;p++) pg+='<button class="pg-btn'+(p===jrnPage?' on':'')+'" onclick="jrnGo('+p+')">'+p+'</button>';
+    pg+='<button class="pg-btn" '+(jrnPage===pages?'disabled':'')+' onclick="jrnGo('+(jrnPage+1)+')"><i class="fa-solid fa-chevron-right"></i></button>';
+  }
+  document.getElementById('jrnPager').innerHTML=pg;
+}
+function jrnGo(p){ jrnPage=p; renderJrnAll(); window.scrollTo({top:0,behavior:'smooth'}); }
+const JRN_TAGS=['Активно працював','Виконав ДЗ','Потрібно більше практики','Спізнився','Великий прогрес'];
+function jrnGradeChips(rowId,sel,min){
+  min=min||1; let a='';
+  for(let n=min;n<=12;n++) a+='<span class="chip'+(n===sel?' on':'')+'" onclick="pickChip(this)">'+n+'</span>';
+  return '<div class="row" style="margin-bottom:16px" id="'+rowId+'">'+a+'</div>';
+}
+function openReport(id){
+  const l=lessById(id); if(!l) return;
+  const r=l.report, sent=r.status==='sent', g=sent?r.grade:10, tags=sent?r.tags:['Активно працював'];
+  document.getElementById('mTitle').textContent=sent?'Звіт після уроку':'Новий звіт після уроку';
+  document.getElementById('mSub').textContent=l.stu+' · '+ddmm(l.date)+', '+l.topic;
+  const tgOn=document.getElementById('tgReport')&&document.getElementById('tgReport').classList.contains('on');
+  let b='<div class="lbl">Оцінка за урок (1–12) <span class="req">*</span></div>'+jrnGradeChips('jrnGradeRow',g,1);
+  b+='<div class="lbl">Тег-фідбек</div><div class="row" style="margin-bottom:16px" id="jrnTagRow">'
+    +JRN_TAGS.map(t=>'<span class="chip'+(tags.indexOf(t)>-1?' on':'')+'" onclick="tglChip(this)">'+t+'</span>').join('')+'</div>';
+  b+='<label class="f" style="margin-bottom:0"><span class="lbl">Коментар <span class="req">*</span></span>'
+    +'<textarea class="ta" id="jrnReportText" rows="4" placeholder="Що робили на уроці, що вдалося, над чим працюємо далі">'+(sent?r.text:'')+'</textarea></label>';
+  b+='<div class="bn '+(tgOn?'bn-ok':'bn-warn')+'" style="margin:14px 0 0"><div class="bn-ic"><i class="fa-brands fa-telegram"></i></div><div><div class="bn-d">'
+    +(tgOn?'Звіт буде надіслано учневі в Telegram після натискання «Надіслати».':'Надсилання звіту в Telegram <b>вимкнено</b> — учень побачить звіт лише в застосунку. Змінити можна в налаштуваннях журналу.')+'</div></div></div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="sendReport('+id+')"><i class="fa-solid fa-paper-plane"></i>'+(sent?'Оновити звіт':'Надіслати звіт')+'</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function sendReport(id){
+  const l=lessById(id); if(!l) return;
+  const gEl=document.querySelector('#jrnGradeRow .chip.on');
+  l.report.status='sent';
+  l.report.grade=gEl?parseInt(gEl.textContent,10):10;
+  l.report.tags=[].map.call(document.querySelectorAll('#jrnTagRow .chip.on'),c=>c.textContent.trim());
+  const ta=document.getElementById('jrnReportText'); l.report.text=ta?ta.value:'';
+  const tgOn=document.getElementById('tgReport')&&document.getElementById('tgReport').classList.contains('on');
+  closeM(); jrnRefresh();
+  toast(tgOn?'Звіт надіслано учневі в Telegram':'Звіт збережено (без Telegram)');
+}
+function openHw(id){
+  const l=lessById(id); if(!l) return;
+  const h=l.hw, has=h.status!=='none';
+  document.getElementById('mTitle').textContent=has?'Редагувати ДЗ':'Домашнє завдання';
+  document.getElementById('mSub').textContent=l.stu+' · '+l.topic;
+  const tgOn=document.getElementById('tgHw')&&document.getElementById('tgHw').classList.contains('on');
+  let b='<label class="f"><span class="lbl">Завдання <span class="req">*</span></span>'
+    +'<textarea class="ta" id="jrnHwTask" rows="4" placeholder="Опишіть завдання або прикріпіть файл">'+(has?(h.task||''):'')+'</textarea></label>';
+  b+='<div class="up" style="margin-bottom:14px" onclick="toast(\'Виберіть файл: PDF, DOCX, JPG до 20 МБ\')"><div class="up-ic"><i class="fa-solid fa-paperclip"></i></div><div class="up-t">Прикріпити файл</div><div class="up-d">PDF, DOCX або фото · до 20 МБ</div></div>';
+  b+='<div class="f-row" style="margin-bottom:0"><label class="f" style="margin-bottom:0"><span class="lbl">Дедлайн <span class="req">*</span></span><input class="inp" type="date" value="2026-09-05"></label>'
+    +'<label class="f" style="margin-bottom:0"><span class="lbl">Орієнтовний час</span><select class="sel"><option>30 хв</option><option>45 хв</option><option>1 година</option></select></label></div>';
+  b+='<div class="bn '+(tgOn?'bn-ok':'bn-warn')+'" style="margin:14px 0 0"><div class="bn-ic"><i class="fa-brands fa-telegram"></i></div><div><div class="bn-d">'
+    +(tgOn?'ДЗ буде надіслано учневі в Telegram після збереження.':'Надсилання ДЗ в Telegram <b>вимкнено</b> — учень побачить завдання лише в застосунку.')+'</div></div></div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="assignHw('+id+')"><i class="fa-solid fa-check"></i>'+(has?'Зберегти ДЗ':'Задати ДЗ')+'</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function assignHw(id){
+  const l=lessById(id); if(!l) return;
+  const ta=document.getElementById('jrnHwTask');
+  l.hw.task=ta?ta.value:l.hw.task;
+  if(l.hw.status==='none') l.hw.status='assigned';
+  const tgOn=document.getElementById('tgHw')&&document.getElementById('tgHw').classList.contains('on');
+  closeM(); jrnRefresh();
+  toast(tgOn?'ДЗ надіслано учневі в Telegram':'ДЗ збережено (без Telegram)');
+}
+function openCheck(id){
+  const l=lessById(id); if(!l) return;
+  const h=l.hw;
+  document.getElementById('mTitle').textContent='Перевірка ДЗ';
+  document.getElementById('mSub').textContent=l.stu+' · '+l.topic;
+  let b='<div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-hourglass-half"></i></div><div><div class="bn-t">Робота на перевірці</div><div class="bn-d">Учень здав ДЗ. Перевірте роботу й підтвердіть оцінку — учень одразу отримає сповіщення.</div></div></div>';
+  b+='<div class="rq-note" style="margin-bottom:14px">'+(h.task||'')+'</div>';
+  if(h.file) b+='<div class="li" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:14px"><div class="li-ic" style="background:var(--bg)"><i class="fa-regular fa-file-lines"></i></div><div class="li-b"><div class="li-t">'+h.file+'</div><div class="li-d">'+(h.size||'')+(h.up?' · завантажено '+h.up:'')+'</div></div><div class="li-r"><button class="btn b-sec b-sm" onclick="toast(\'Файл відкрито\')">Відкрити</button></div></div>';
+  b+='<div class="lbl">Оцінка (1–12) <span class="req">*</span></div>'+jrnGradeChips('jrnHwGradeRow',9,1);
+  b+='<label class="f" style="margin-bottom:0"><span class="lbl">Коментар для учня</span><textarea class="ta" id="jrnHwComment" rows="3" placeholder="Що зроблено добре, де помилки"></textarea></label>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="gradeHw('+id+')"><i class="fa-solid fa-check"></i>Підтвердити оцінку</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function gradeHw(id){
+  const l=lessById(id); if(!l) return;
+  const gEl=document.querySelector('#jrnHwGradeRow .chip.on');
+  l.hw.status='graded';
+  l.hw.grade=gEl?parseInt(gEl.textContent,10):9;
+  const ta=document.getElementById('jrnHwComment'); if(ta&&ta.value) l.hw.comment=ta.value;
+  closeM(); jrnRefresh();
+  toast('ДЗ оцінено · '+l.hw.grade+'/12 · учень отримав сповіщення');
+}
+function openView(id){
+  const l=lessById(id); if(!l) return;
+  document.getElementById('mTitle').textContent='Урок · '+l.stu;
+  document.getElementById('mSub').textContent=ddmm(l.date)+', '+l.time+' · '+l.subj+' · '+l.topic;
+  let b='';
+  // звіт
+  b+='<div class="lbl">Звіт після уроку (фідбек)</div>';
+  if(l.report.status==='sent'){
+    const r=l.report;
+    b+='<div class="bn bn-ok" style="margin:0 0 10px"><div class="bn-ic"><i class="fa-solid fa-circle-check"></i></div><div style="flex:1"><div class="bn-t">Надіслано учневі · оцінка '+r.grade+'/12</div><div class="bn-d">Цей звіт учень бачить у своєму кабінеті.</div></div></div>';
+    if(r.tags&&r.tags.length) b+='<div class="row" style="margin-bottom:10px">'+r.tags.map(t=>'<span class="tagx">'+t+'</span>').join('')+'</div>';
+    b+='<div class="rq-note" style="margin-bottom:16px">'+(r.text||'')+'</div>';
+  } else {
+    b+='<div class="bn bn-bad" style="margin:0 0 16px"><div class="bn-ic"><i class="fa-solid fa-circle-exclamation"></i></div><div style="flex:1"><div class="bn-t">Звіт ще не надіслано</div><div class="bn-d">Напишіть звіт після уроку — це впливає на рейтинг.</div></div><div class="bn-r"><button class="btn b-pri b-sm" onclick="closeM();openReport('+id+')">Написати звіт</button></div></div>';
+  }
+  // домашнє завдання
+  b+='<div class="lbl">Домашнє завдання</div>';
+  const h=l.hw;
+  if(h.status==='none'){
+    b+='<div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-regular fa-circle"></i></div><div style="flex:1"><div class="bn-d">ДЗ до цього уроку не задавалося.</div></div><div class="bn-r"><button class="btn b-sec b-sm" onclick="closeM();openHw('+id+')">Додати ДЗ</button></div></div>';
+  } else {
+    b+='<div class="row" style="margin-bottom:10px">'+jrnHwBadge(l)+'</div>';
+    b+='<div class="rq-note" style="margin-bottom:'+(h.file||h.status==='graded'?'12px':'0')+'">'+(h.task||'')+'</div>';
+    if(h.file) b+='<div class="li" style="border-top:1px solid var(--border);'+(h.status==='graded'?'border-bottom:1px solid var(--border);margin-bottom:12px':'')+'"><div class="li-ic" style="background:var(--bg)"><i class="fa-regular fa-file-lines"></i></div><div class="li-b"><div class="li-t">'+h.file+'</div><div class="li-d">'+(h.size||'')+(h.up?' · здано '+h.up:'')+'</div></div><div class="li-r"><button class="btn b-sec b-sm" onclick="toast(\'Файл відкрито\')">Відкрити</button></div></div>';
+    if(h.status==='graded'){
+      b+='<div class="g2"><div class="stu-cell"><div class="stu-cell-l">Оцінка за ДЗ</div><div class="stu-cell-v">'+h.grade+'/12</div></div><div class="stu-cell"><div class="stu-cell-l">Статус</div><div class="stu-cell-v" style="font-size:12.5px;color:var(--teal-700)">Оцінено ✓</div></div></div>';
+      if(h.comment) b+='<div class="lbl" style="margin-top:14px">Ваш коментар учневі</div><div class="rq-note">'+h.comment+'</div>';
+    }
+  }
+  document.getElementById('mBody').innerHTML=b;
+  let foot='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
+  if(h.status==='review') foot+='<button class="btn b-pri" onclick="closeM();openCheck('+id+')"><i class="fa-solid fa-check"></i>Перевірити ДЗ</button>';
+  document.getElementById('mFoot').innerHTML=foot;
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+
 /* ══════════ SCHEDULE ══════════ */
 const DAYS=['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
 const WEEK=[
@@ -2295,8 +2639,10 @@ const WEEK=[
   {d:18,t:'Вт',items:[{time:'10:00',n:'Марта Л.',s:'IELTS · 60 хв',cls:''}]},
   {d:19,t:'Ср',items:[
     {time:'16:00',n:'Назар П.',s:'Англійська · НМТ',cls:''},
-    {time:'19:00',n:'Олег Д.',s:'Пробне заняття',cls:'moved'}]},
-  {d:20,t:'Чт',items:[{time:'15:00',n:'Софія Т.',s:'Англійська B1',cls:''}]},
+    {time:'19:00',n:'Олег Д.',s:'Пробний · Розмовна англ.',cls:'trialp'}]},
+  {d:20,t:'Чт',items:[
+    {time:'11:00',n:'Ірина К.',s:'Пробний · Англійська НМТ',cls:'trial'},
+    {time:'15:00',n:'Софія Т.',s:'Англійська B1',cls:''}]},
   {d:21,t:'Пт',items:[
     {time:'11:00',n:'Марта Л.',s:'IELTS Writing',cls:''},
     {time:'18:00',n:'Артем К.',s:'Німецька A2',cls:'cancel'}]},
@@ -2521,55 +2867,6 @@ const M={
       <select class="sel"><option>Пауза на прохання учня</option><option>Канікули</option><option>Завершили курс</option><option>Інше</option></select></label>`,
     f:[['Скасувати','b-sec','close'],['Призупинити','b-danger','toast("Навчання призупинено")']]},
 
-  report:{t:'Звіт після уроку',s:'Софія Т. · 16.08, Present Perfect',b:`
-    <div class="lbl">Оцінка за урок (1–12) <span class="req">*</span></div>
-    <div class="row" style="margin-bottom:16px" id="gradeRow">
-      ${[1,2,3,4,5,6,7,8,9,10,11,12].map(n=>`<span class="chip${n===10?' on':''}" onclick="pickChip(this)">${n}</span>`).join('')}
-    </div>
-    <div class="lbl">Тег-фідбек</div>
-    <div class="row" style="margin-bottom:16px">
-      <span class="chip on" onclick="tglChip(this)">Активно працював</span>
-      <span class="chip" onclick="tglChip(this)">Виконав ДЗ</span>
-      <span class="chip on" onclick="tglChip(this)">Потрібно більше практики</span>
-      <span class="chip" onclick="tglChip(this)">Спізнився</span>
-      <span class="chip" onclick="tglChip(this)">Великий прогрес</span>
-    </div>
-    <label class="f"><span class="lbl">Коментар <span class="req">*</span></span>
-      <textarea class="ta" rows="4" placeholder="Що робили на уроці, що вдалося, над чим працюємо далі">Розібрали Present Perfect у контексті подорожей. Софія впевнено вживає конструкцію в мовленні, залишаються помилки з for/since. На наступний урок — reading на швидкість.</textarea></label>
-    <div class="sw-row" style="border-top:1px solid var(--border)">
-      <div class="sw-tx"><div class="sw-t">Надіслати звіт учневі в Telegram</div><div class="sw-d">Одразу після збереження</div></div>
-      <button class="sw on" onclick="tglSw(this)"></button></div>`,
-    f:[['Скасувати','b-sec','close'],['Зберегти звіт','b-pri','toast("Звіт збережено та надіслано учневі · +25 XP")']]},
-
-  hw:{t:'Домашнє завдання',s:'Софія Т. · до наступного уроку',b:`
-    <label class="f"><span class="lbl">Завдання <span class="req">*</span></span>
-      <textarea class="ta" rows="4" placeholder="Опишіть завдання або прикріпіть файл">Впр. 4–6 стор. 78. Написати 8 речень у Present Perfect про свою останню подорож. Вивчити 10 слів із карток.</textarea></label>
-    <div class="up" style="margin-bottom:14px" onclick="toast('Виберіть файл: PDF, DOCX, JPG до 20 МБ')">
-      <div class="up-ic"><i class="fa-solid fa-paperclip"></i></div>
-      <div class="up-t">Прикріпити файл</div><div class="up-d">PDF, DOCX або фото · до 20 МБ</div></div>
-    <div class="f-row" style="margin-bottom:0">
-      <label class="f" style="margin-bottom:0"><span class="lbl">Дедлайн <span class="req">*</span></span><input class="inp" type="date" value="2026-08-20"></label>
-      <label class="f" style="margin-bottom:0"><span class="lbl">Орієнтовний час</span><select class="sel"><option>30 хв</option><option>45 хв</option><option>1 година</option></select></label></div>`,
-    f:[['Скасувати','b-sec','close'],['Задати ДЗ','b-pri','toast("ДЗ надіслано учню")']]},
-
-  check:{t:'Перевірка ДЗ',s:'Артем К. · Modalverben · здано 16.08',b:`
-    <div class="lbl">Статус</div>
-    <div class="row" style="margin-bottom:16px">
-      <span class="chip" onclick="pickChip(this)">Здано</span>
-      <span class="chip on" onclick="pickChip(this)">На перевірці</span>
-      <span class="chip" onclick="pickChip(this)">Оцінено</span>
-    </div>
-    <div class="li" style="border-top:1px solid var(--border)"><div class="li-ic" style="background:var(--bg)"><i class="fa-regular fa-file-lines"></i></div>
-      <div class="li-b"><div class="li-t">hausaufgabe_16_08.pdf</div><div class="li-d">1,2 МБ · завантажено 16.08, 21:04</div></div>
-      <div class="li-r"><button class="btn b-sec b-sm" onclick="toast('Файл відкрито')">Відкрити</button></div></div>
-    <div class="lbl" style="margin-top:16px">Оцінка (1–12) <span class="req">*</span></div>
-    <div class="row" style="margin-bottom:16px">
-      ${[6,7,8,9,10,11,12].map(n=>`<span class="chip${n===9?' on':''}" onclick="pickChip(this)">${n}</span>`).join('')}
-    </div>
-    <label class="f" style="margin-bottom:14px"><span class="lbl">Коментар для учня</span>
-      <textarea class="ta" rows="3" placeholder="Що зроблено добре, де помилки">Гарна робота з müssen/können. Помилки в порядку слів у підрядних реченнях — повторимо на уроці.</textarea></label>`,
-    f:[['Скасувати','b-sec','close'],['Зберегти оцінку','b-pri','toast("ДЗ оцінено · учень отримав повідомлення")']]},
-
   subject:{t:'Предмет, рівень і ціна',s:'Своя ціна для кожної пари',b:`
     <div class="f-row"><label class="f"><span class="lbl">Предмет <span class="req">*</span></span>
       <select class="sel"><option>Англійська мова</option><option>Німецька мова</option><option>Французька мова</option></select></label>
@@ -2711,7 +3008,7 @@ function renderSlotEditor(){
 
 /* ══════════ INIT ══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
-  renderWeek();renderDay();renderMonth();renderSlotsPreview();renderLib();renderProf();renderFin();
+  renderWeek();renderDay();renderMonth();renderSlotsPreview();renderLib();renderProf();renderFin();renderJournal();renderUp();renderReqs();renderTasks();
   setMod('test');
   const vp=document.getElementById('v-profile');
   if(vp){
