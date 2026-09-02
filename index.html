@@ -323,8 +323,16 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .ls.trialp{border-left-color:var(--violet);border-left-style:dashed;background:repeating-linear-gradient(135deg,var(--violet-50),var(--violet-50) 7px,#fff 7px,#fff 14px)}.ls.trialp .ls-t{color:var(--violet)}
 .slot{border:1.5px dashed var(--teal-100);background:#fff;border-radius:10px;padding:6px 8px;font-size:11px;font-weight:800;color:var(--teal-600);text-align:center;margin-bottom:6px;cursor:pointer}
 .slot.off{border-color:var(--border);color:var(--muted-2)}
+/* trial availability slots */
+.slotpill{display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--violet-50);border:1.5px solid var(--violet-100);color:#5B21B6;border-radius:10px;padding:6px 6px 6px 10px;font-size:12px;font-weight:800;margin-bottom:6px}
+.slotpill .x{cursor:pointer;color:var(--violet);opacity:.55;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0;font-size:11px}
+.slotpill .x:hover{opacity:1;background:#fff}
+.slot-add{width:100%;border:1.5px dashed var(--violet-100);background:#fff;color:var(--violet);border-radius:10px;padding:7px 8px;font-size:11.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s}
+.slot-add:hover{background:var(--violet-50);border-color:var(--violet)}
+.slot-empty{font-size:11px;color:var(--muted-2);text-align:center;padding:5px 0 8px;font-weight:700}
 .mth{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.mth-c{aspect-ratio:1;border:1.5px solid var(--border);border-radius:11px;padding:6px;background:#fff;display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:800}
+.mth-c{min-height:108px;min-width:0;border:1.5px solid var(--border);border-radius:11px;padding:6px;background:#fff;display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:800}
+.mth{min-width:0}
 .mth-c.dim{background:var(--bg);color:var(--muted-2)}
 .mth-c.today{border-color:var(--teal-500);background:var(--teal-50)}
 .mth-b{display:flex;gap:2px;margin-top:auto;flex-wrap:wrap}
@@ -333,6 +341,30 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .mth-b span.a{background:var(--amber)}
 .leg{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;font-weight:700;color:var(--muted)}
 .leg i{font-size:9px;margin-right:5px}
+.ls{transition:box-shadow .15s}
+.ls:hover{box-shadow:var(--sh)}
+.ls-empty{font-size:10.5px;color:var(--muted-2);text-align:center;padding:8px 0;font-weight:700}
+.mth-h{text-align:center;font-size:10px;font-weight:900;color:var(--muted-2);padding-bottom:4px}
+.mth-c{cursor:pointer}
+.mth-c.dim,.mth-c.empty{cursor:default}
+.mth-b span.v{background:var(--violet)}
+.mth-b span.x{background:var(--muted-2)}
+.mth-b span.vp{background:var(--violet);opacity:.45}
+/* month event labels (замість крапок) */
+.mth-evs{display:flex;flex-direction:column;gap:3px;margin-top:4px;overflow:hidden}
+.mth-ev{display:block;width:100%;font-size:9.5px;font-weight:800;line-height:1.3;padding:2px 5px;border-radius:5px;border-left:3px solid var(--teal-500);background:var(--bg);color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.mth-ev:hover{filter:brightness(.97)}
+.mth-ev.done{border-left-color:var(--green)}
+.mth-ev.moved{border-left-color:var(--amber);color:#B45309}
+.mth-ev.cancel{border-left-color:var(--muted-2);color:var(--muted);text-decoration:line-through}
+.mth-ev.trial{border-left-color:var(--violet);background:var(--violet-50);color:#5B21B6}
+.mth-ev.trialp{border-left-color:var(--violet);border-left-style:dashed;background:repeating-linear-gradient(135deg,var(--violet-50),var(--violet-50) 5px,#fff 5px,#fff 10px);color:#5B21B6}
+.mth-more{font-size:9px;font-weight:900;color:var(--muted-2);padding:0 4px;cursor:pointer}
+.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.cal-arrow{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.cal-arrow:hover{border-color:var(--teal-400);color:var(--teal-600)}
+.cal-range{font-family:'Fraunces',serif;font-size:18px;font-weight:900;letter-spacing:-.3px;min-width:150px}
+.cal-today{margin-left:auto}
 
 /* student card */
 .stu{border:1.5px solid var(--border);border-radius:var(--r-lg);padding:16px;background:#fff;transition:all .22s}
@@ -525,7 +557,9 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
   .rq-p{margin-left:0;text-align:left;width:100%}
   .rq-h{flex-wrap:wrap}
   .btn{padding:10px 15px}
-  .mth-c{padding:4px;font-size:10px;border-radius:9px}
+  .mth-c{padding:4px;font-size:10px;border-radius:9px;min-height:88px}
+  .mth-ev{font-size:8px;padding:1px 3px;border-left-width:2.5px}
+  .mth-evs{gap:2px;margin-top:3px}
 }
 </style>
 </head>
@@ -565,7 +599,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
   <nav class="sb-nav" id="sbNav">
     <div class="sb-lbl">Робота</div>
     <button class="sb-i on" data-view="dash"><i class="fa-solid fa-gauge-high"></i>Робочий стіл</button>
-    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки та біржа</button>
+    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки на пробний</button>
     <button class="sb-i" data-view="sched"><i class="fa-regular fa-calendar"></i>Розклад</button>
     <button class="sb-i" data-view="students"><i class="fa-solid fa-user-group"></i>Мої учні</button>
     <button class="sb-i" data-view="journal"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ</button>
@@ -716,128 +750,17 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
     <!-- ═════════ 3. ЗАЯВКИ / БІРЖА ═════════ -->
     <section class="view" id="v-req">
-      <div class="h-sec">Заявки та біржа</div>
-      <p class="p-sec">Приватні заявки приходять від клієнтів напряму. На біржі — відкриті запити, які може взяти будь-який верифікований спеціаліст.</p>
+      <div class="h-sec">Заявки на пробний</div>
+      <p class="p-sec">Учні бронюють пробний урок у ваших вільних слотах і надсилають заявку. Ви переглядаєте лід і приймаєте або відхиляєте — час призначати не потрібно, його вже обрав учень. Комісію платите лише за успішного ліда: пробний пройшов і учень продовжує.</p>
 
       <div class="card">
         <div class="tabs">
-          <button class="tab on" onclick="reqTab('mine',this)">Мої заявки<span class="n">4</span></button>
-          <button class="tab" onclick="reqTab('market',this)">Біржа<span class="n">12</span></button>
+          <button class="tab on" onclick="reqTab('new',this)">Нові<span class="n" id="cnNew">0</span></button>
+          <button class="tab" onclick="reqTab('approved',this)">Очікують пробного<span class="n" id="cnAppr">0</span></button>
+          <button class="tab" onclick="reqTab('done',this)">Пробний проведено<span class="n" id="cnDone">0</span></button>
+          <button class="tab" onclick="reqTab('declined',this)">Відхилені<span class="n" id="cnDecl">0</span></button>
         </div>
-
-        <!-- MINE -->
-        <div class="cb" id="req-mine">
-          <div class="step">
-            <span class="step-i done"><span class="step-d"><i class="fa-solid fa-check"></i></span>Нова</span><span class="step-l"></span>
-            <span class="step-i done"><span class="step-d"><i class="fa-solid fa-check"></i></span>Прийнята</span><span class="step-l"></span>
-            <span class="step-i cur"><span class="step-d">3</span>Пробне</span><span class="step-l"></span>
-            <span class="step-i"><span class="step-d">4</span>Активна</span>
-          </div>
-
-          <div class="rq">
-            <div class="rq-h">
-              <div>
-                <div class="rq-t">Англійська · 9 клас · підготовка до НМТ</div>
-                <div class="rq-m">Артем, 9 клас · Онлайн · 2 рази на тиждень · рівень B1</div>
-              </div>
-              <div class="rq-p"><div class="rq-price">₴400</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
-            </div>
-            <div class="rq-note">«Донька готується до НМТ, найбільша проблема — reading і брак словникового запасу. Хочемо почати з наступного тижня, вечірні години.»</div>
-            <div class="row" style="margin-bottom:12px">
-              <span class="st st-ok"><i class="fa-solid fa-circle"></i>Прийнята</span>
-              <span class="st st-mut"><i class="fa-solid fa-phone"></i>+380 67 ••• 12 34</span>
-              <span class="st st-mut"><i class="fa-brands fa-telegram"></i>@iryna_k</span>
-            </div>
-            <div class="rq-a">
-              <button class="btn b-pri b-sm" onclick="openM('trial')"><i class="fa-regular fa-calendar-plus"></i>Вказати дату пробного</button>
-              <button class="btn b-sec b-sm" onclick="openM('happened')">Чи відбувся урок?</button>
-              <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
-            </div>
-          </div>
-
-          <div class="rq">
-            <div class="rq-h">
-              <div>
-                <div class="rq-t">Німецька · 5 клас · з нуля</div>
-                <div class="rq-m">Марта, 5 клас · Онлайн · 1 раз на тиждень</div>
-              </div>
-              <div class="rq-p"><div class="rq-price">₴380</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
-            </div>
-            <div class="row" style="margin-bottom:12px">
-              <span class="sla" data-sla="5400"><i class="fa-regular fa-clock"></i>SLA: 01:30:00</span>
-              <span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span>
-            </div>
-            <div class="rq-a">
-              <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти</button>
-              <button class="btn b-danger b-sm" onclick="openM('reject')">Відхилити</button>
-            </div>
-          </div>
-
-          <div class="rq">
-            <div class="rq-h">
-              <div>
-                <div class="rq-t">Англійська · дорослий · співбесіда англійською</div>
-                <div class="rq-m">Олег · Онлайн · інтенсив 3 рази на тиждень</div>
-              </div>
-              <div class="rq-p"><div class="rq-price">₴550</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div>
-            </div>
-            <div class="row" style="margin-bottom:12px">
-              <span class="st st-warn"><i class="fa-solid fa-circle"></i>Пробне 19.08, 19:00</span>
-              <span class="st st-mut">Очікує підтвердження уроку</span>
-            </div>
-            <div class="rq-a">
-              <button class="btn b-pri b-sm" onclick="openM('happened')">Чи відбувся урок?</button>
-              <button class="btn b-sec b-sm" onclick="openM('trial')">Перенести пробне</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- MARKET -->
-        <div class="cb" id="req-market" style="display:none">
-          <div class="row" style="margin-bottom:16px">
-            <span style="font-size:12px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em">Фільтр за предметами</span>
-            <span class="chip on" onclick="tglChip(this)">Англійська</span>
-            <span class="chip on" onclick="tglChip(this)">Німецька</span>
-            <span class="chip" onclick="tglChip(this)">НМТ / ЗНО</span>
-            <span class="chip" onclick="tglChip(this)">Розмовна практика</span>
-          </div>
-
-          <div class="rq">
-            <div class="rq-h">
-              <div>
-                <div class="rq-t">Англійська · 11 клас · IELTS 6.5+</div>
-                <div class="rq-m">Онлайн · 2 рази на тиждень · опубліковано 18 хв тому</div>
-              </div>
-              <div class="rq-p"><div class="rq-price">₴600</div><div style="font-size:11px;color:var(--muted-2)">бюджет клієнта</div></div>
-            </div>
-            <div class="rq-note">«Потрібен викладач із досвідом підготовки до IELTS. Ціль — 6.5 до грудня. Готові займатися інтенсивно.»</div>
-            <div class="row" style="margin-bottom:12px"><span class="st st-info"><i class="fa-solid fa-users"></i>Відгукнулось 2 з 5</span><span class="st st-mut">Заявка відкрита 46 хв</span></div>
-            <div class="rq-a">
-              <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти заявку</button>
-              <button class="btn b-sec b-sm" onclick="toast('Заявку приховано з біржі')">Приховати</button>
-            </div>
-          </div>
-
-          <div class="rq">
-            <div class="rq-h">
-              <div>
-                <div class="rq-t">Німецька · 8 клас · шкільна програма</div>
-                <div class="rq-m">Онлайн або офлайн (Київ, Печерськ) · 1 раз на тиждень</div>
-              </div>
-              <div class="rq-p"><div class="rq-price">₴350</div><div style="font-size:11px;color:var(--muted-2)">бюджет клієнта</div></div>
-            </div>
-            <div class="row" style="margin-bottom:12px"><span class="st st-ok"><i class="fa-solid fa-bolt"></i>Ще ніхто не відгукнувся</span></div>
-            <div class="rq-a">
-              <button class="btn b-pri b-sm" onclick="openM('accept')"><i class="fa-solid fa-check"></i>Прийняти заявку</button>
-              <button class="btn b-sec b-sm" onclick="toast('Заявку приховано з біржі')">Приховати</button>
-            </div>
-          </div>
-
-          <div class="bn bn-ok" style="margin:16px 0 0">
-            <div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
-            <div><div class="bn-t">Ліди не обмежені</div><div class="bn-d">Ви можете брати будь-яку кількість заявок — без обмежень. Платні плани додамо згодом, зараз усі можливості безкоштовні.</div></div>
-          </div>
-        </div>
+        <div class="cb" id="reqList"></div>
       </div>
     </section>
 
@@ -854,8 +777,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
             <button class="on" onclick="schedMode('week',this)">Тиждень</button>
             <button onclick="schedMode('month',this)">Місяць</button>
           </div>
-          <button class="btn b-sec b-sm" onclick="openM('slots')"><i class="fa-regular fa-clock"></i>Слоти доступності</button>
-          <button class="btn b-pri b-sm" onclick="openM('newlesson')"><i class="fa-solid fa-plus"></i>Створити урок</button>
+          <button class="btn b-pri b-sm" onclick="openNewLesson()"><i class="fa-solid fa-plus"></i>Створити урок</button>
         </div>
       </div>
 
@@ -869,7 +791,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
             <span><i class="fa-solid fa-circle" style="color:var(--amber)"></i>Перенесено</span>
             <span><i class="fa-solid fa-circle" style="color:var(--muted-2)"></i>Скасовано</span>
           </div>
-          <div class="ch-r"><span class="st st-mut"><i class="fa-solid fa-hand-pointer"></i>Картку уроку можна перетягнути на інший день</span></div>
+          <div class="ch-r"><span class="st st-mut"><i class="fa-solid fa-hand-pointer"></i>Натисніть на урок, щоб відкрити деталі</span></div>
         </div>
         <div class="cb">
           <div id="sched-week"></div>
@@ -879,10 +801,23 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       </div>
 
       <div class="card">
-        <div class="ch"><div><div class="ct"><i class="fa-solid fa-toggle-on"></i>Мої слоти доступності</div><div class="ct-s">Клієнт бачить у профілі лише увімкнені слоти</div></div>
-          <div class="ch-r"><button class="btn b-sec b-sm" onclick="openM('slots')">Налаштувати</button></div></div>
+        <div class="ch">
+          <div><div class="ct"><i class="fa-solid fa-flask" style="color:var(--violet)"></i>Слоти для пробних уроків</div><div class="ct-s" id="slotsSub">—</div></div>
+          <div class="ch-r">
+            <button class="btn b-sec b-sm" onclick="copySlotsLastWeek()"><i class="fa-regular fa-copy"></i>Минулий тиждень</button>
+            <button class="btn b-pri b-sm" onclick="openAddSlot()"><i class="fa-solid fa-plus"></i>Додати слот</button>
+          </div>
+        </div>
         <div class="cb">
-          <div class="wk" id="slotsPreview"></div>
+          <div class="bn bn-v" style="margin-bottom:14px">
+            <div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
+            <div><div class="bn-t">Вікна для пробних уроків · тиждень 17–23 серпня</div><div class="bn-d">Учні бачать у вашій картці ці вільні вікна й бронюють у них <b>пробний урок</b> (25 хв). Розклад тижневий — щопонеділка складіть його наново або скопіюйте минулий тиждень.</div></div>
+          </div>
+          <div id="slotsGrid"></div>
+          <div class="row" style="margin-top:14px;justify-content:space-between;gap:10px">
+            <span class="hint" style="margin:0"><i class="fa-solid fa-circle-xmark" style="margin-right:5px;color:var(--violet)"></i>Натисніть ✕ на слоті, щоб прибрати вікно · «＋ Слот» — щоб додати</span>
+            <button class="btn b-danger b-sm" onclick="clearSlotsWeek()"><i class="fa-regular fa-trash-can"></i>Очистити тиждень</button>
+          </div>
         </div>
       </div>
     </section>
@@ -1714,7 +1649,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 /* ══════════ NAV ══════════ */
 const TITLES = {
   dash:['Робочий стіл','Понеділок, 17 серпня 2026'],
-  req:['Заявки та біржа','3 приватні заявки · 12 на біржі'],
+  req:['Заявки на пробний','Ліди від учнів · прийняти або відхилити'],
   sched:['Розклад','17–23 серпня 2026'],
   students:['Мої учні','4 активних · ліміт 5'],
   journal:['Журнал і ДЗ','Звіти після уроків та ДЗ'],
@@ -1964,12 +1899,6 @@ function openEditLib(id){
   document.getElementById('mBody').innerHTML=libForm(m);
   document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="closeM();toast(\'Зміни збережено\')"><i class="fa-solid fa-check"></i>Зберегти</button>';
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
-}
-function reqTab(which,btn){
-  btn.parentElement.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('req-mine').style.display=which==='mine'?'block':'none';
-  document.getElementById('req-market').style.display=which==='market'?'block':'none';
 }
 /* ══════════ СТАТУС АКАУНТУ (test → pending → active / rejected) ══════════ */
 const ACC={
@@ -2221,7 +2150,7 @@ function endTime(start,dur){
   const m=parseInt(dur,10)||40, p=start.split(':'), tot=(+p[0])*60+(+p[1])+m;
   return String(Math.floor(tot/60)%24).padStart(2,'0')+':'+String(tot%60).padStart(2,'0');
 }
-function dowLabel(day){ if(day===17) return 'Сьогодні'; if(day===18) return 'Завтра'; const w=WEEK.find(x=>x.d===day); return w?w.t:String(day); }
+function dowLabel(day){ if(day===17) return 'Сьогодні'; if(day===18) return 'Завтра'; const wd=new Date(2026,7,day).getDay(); return ['Нд','Пн','Вт','Ср','Чт','Пт','Сб'][wd]; }
 
 /* ── Наступні уроки ── */
 const UP=[
@@ -2284,83 +2213,186 @@ function openUpLesson(id){
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
 
-/* ── Приватні заявки (детально + прийняти пробне) ── */
-const REQS=[
- {id:'r1',subj:'Англійська',lvl:'7 клас · B1',goal:'підтягнути оцінки, reading',stu:'Софія К.',mode:'Онлайн',freq:'2× на тиждень',city:'Київ',price:400,sla:7200,state:'new',
-  msg:'Доброго дня! У 7 класі, треба підтягнути англійську — особливо reading і граматику. Зручно 2 рази на тиждень, вечірні години після 17:00.',phone:'+380 67 ••• 45 21',tg:'@sofia_k'},
- {id:'r2',subj:'Німецька',lvl:'дорослий · з нуля',goal:'базова розмовна для роботи',stu:'Богдан М.',mode:'Онлайн',freq:'вечірні слоти',city:'Львів',price:380,sla:1500,state:'expiring',
-  msg:'Потрібна німецька з нуля для роботи в австрійській компанії. Можу займатись лише ввечері після 19:00. Хочу почати якнайшвидше.',phone:'+380 63 ••• 11 08',tg:'@bohdan_m'}
+/* ── ЗАЯВКИ НА ПРОБНИЙ (ліди) — учень бронює слот, тьютор приймає/відхиляє ──
+   state: new | approved | done | declined ; для done: cont(true/false), commPaid */
+const LEADS=[
+ {id:'l1',subj:'Англійська',lvl:'7 клас · B1',stu:'Софія К.',goal:'підтягнути оцінки, reading',mode:'Онлайн',freq:2,city:'Київ',price:400,state:'new',sla:7200,slot:{d:'2026-08-21',t:'17:00'},msg:'Доброго дня! Треба підтягнути англійську, особливо reading і граматику. Обрала вечірній слот.',phone:'+380 67 ••• 45 21',tg:'@sofia_k'},
+ {id:'l2',subj:'Німецька',lvl:'дорослий · з нуля',stu:'Богдан М.',goal:'розмовна для роботи',mode:'Онлайн',freq:2,city:'Львів',price:380,state:'new',sla:1500,slot:{d:'2026-08-20',t:'19:00'},msg:'Німецька з нуля для роботи в австрійській компанії. Можу лише ввечері після 19:00, хочу почати якнайшвидше.',phone:'+380 63 ••• 11 08',tg:'@bohdan_m'},
+ {id:'l3',subj:'Англійська',lvl:'11 клас · IELTS',stu:'Марта Д.',goal:'IELTS 6.5 до грудня',mode:'Онлайн',freq:3,city:'Онлайн',price:600,state:'new',sla:19800,slot:{d:'2026-08-22',t:'12:00'},msg:'Готуюсь до IELTS, ціль 6.5 до грудня. Готова займатись інтенсивно 3 рази на тиждень.',phone:'+380 50 ••• 33 12',tg:'@marta_ielts'},
+ {id:'l4',subj:'Розмовна англ.',lvl:'дорослий',stu:'Олег Д.',goal:'англійська для співбесіди',mode:'Онлайн',freq:2,city:'Онлайн',price:450,state:'approved',slot:{d:'2026-08-19',t:'19:00'},msg:'Хочу підтягнути розмовну для співбесіди. Вечірні години зручніші.',phone:'+380 63 ••• 77 20',tg:'@oleg_d'},
+ {id:'l5',subj:'Англійська НМТ',lvl:'9 клас',stu:'Ірина К.',goal:'підготовка до НМТ',mode:'Онлайн',freq:2,city:'Онлайн',price:650,state:'approved',slot:{d:'2026-08-20',t:'11:00'},msg:'Дитина в 9 класі, готуємось до НМТ. Треба діагностика рівня.',phone:'+380 67 ••• 45 21',tg:'@iryna_k'},
+ {id:'l6',subj:'Англійська',lvl:'дорослий · B2',stu:'Дмитро П.',goal:'бізнес-англійська',mode:'Онлайн',freq:2,city:'Онлайн',price:500,state:'done',cont:true,trialDate:'15.08',comm:480,commPaid:false,deadline:'сьогодні',msg:'Потрібна бізнес-англійська для перемовин із партнерами.',phone:'+380 44 ••• 90 01',tg:'@dmytro_p'},
+ {id:'l7',subj:'Німецька',lvl:'5 клас · A2',stu:'Катерина Л.',goal:'шкільна програма',mode:'Онлайн',freq:1,city:'Онлайн',price:380,state:'done',cont:true,trialDate:'09.08',comm:380,commPaid:true,paidDate:'10.08',msg:'Треба допомога зі шкільною програмою з німецької.',phone:'+380 97 ••• 22 15',tg:'@kateryna_l'},
+ {id:'l8',subj:'Англійська',lvl:'7 клас',stu:'Ростислав М.',goal:'підтягнути оцінки',mode:'Онлайн',freq:0,city:'Онлайн',price:400,state:'done',cont:false,trialDate:'12.08',noCont:'Після пробного учень обрав іншого репетитора.',msg:'Треба підтягнути англійську за 7 клас.',phone:'+380 93 ••• 40 88',tg:'@rostyk_m'},
+ {id:'l9',subj:'Математика',lvl:'8 клас',stu:'Владислав С.',goal:'алгебра',mode:'Онлайн',freq:1,city:'Онлайн',price:350,state:'declined',reason:'Не мій предмет або рівень',slot:{d:'2026-08-18',t:'16:00'},msg:'Потрібна допомога з алгеброю за 8 клас.',phone:'+380 66 ••• 10 47',tg:'@vlad_s'}
 ];
-function reqById(id){ return REQS.find(r=>r.id===id); }
-function reqStatusPill(r){
-  if(r.state==='trialset') return '<span class="st st-v"><i class="fa-solid fa-flask"></i>Пробний '+r.trialDate+', '+r.trialTime+'</span>';
-  if(r.state==='expiring') return '<span class="st st-warn"><i class="fa-solid fa-circle"></i>Спливає</span>';
-  return '<span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span>';
+let reqTabState='new';
+function leadById(id){ return LEADS.find(function(l){return l.id===id}); }
+function freqTxt(n){ return n?(n+'× на тиждень'):'—'; }
+function slotFmt(s){ if(!s) return '—'; const d=parseISO(s.d); return d.getDate()+' '+MON_GEN[d.getMonth()]+', '+s.t; }
+function leadComm(l){ return l.comm || Math.round(l.price*(l.freq||1)*0.6); }
+function leadCard(l){
+  const h='<div class="rq-h"><div><div class="rq-t">'+l.subj+' · '+l.lvl+'</div><div class="rq-m">'+l.stu+' · '+l.mode+' · '+freqTxt(l.freq)+(l.city&&l.city!=='Онлайн'?' · '+l.city:'')+'</div></div>'
+    +'<div class="rq-p"><div class="rq-price">'+num(l.price)+'</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div></div>';
+  if(l.state==='new'){
+    return '<div class="rq">'+h
+      +'<div class="row" style="margin-bottom:12px"><span class="sla'+(l.sla<1800?' hot':'')+'" data-sla="'+l.sla+'"><i class="fa-regular fa-clock"></i>SLA: '+fmt(l.sla)+'</span><span class="st st-info"><i class="fa-solid fa-circle"></i>Нова</span><span class="st st-v"><i class="fa-solid fa-flask"></i>Учень обрав: '+slotFmt(l.slot)+'</span></div>'
+      +'<div class="rq-note">'+l.msg+'</div>'
+      +'<div class="rq-a"><button class="btn b-pri b-sm" onclick="openApproveLead(\''+l.id+'\')"><i class="fa-solid fa-check"></i>Прийняти</button><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button><button class="btn b-danger b-sm" onclick="openDeclineLead(\''+l.id+'\')">Відхилити</button></div></div>';
+  }
+  if(l.state==='approved'){
+    return '<div class="rq">'+h
+      +'<div class="row" style="margin-bottom:12px"><span class="st st-v"><i class="fa-solid fa-flask"></i>Прийнято · очікує пробного</span><span class="st st-mut"><i class="fa-regular fa-calendar"></i>Пробний: '+slotFmt(l.slot)+'</span><span class="st st-mut"><i class="fa-brands fa-telegram"></i>'+l.tg+'</span></div>'
+      +'<div class="rq-a"><button class="btn b-pri b-sm" onclick="openTrialHappened(\''+l.id+'\')"><i class="fa-solid fa-flag-checkered"></i>Пробний відбувся</button><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button></div></div>';
+  }
+  if(l.state==='done'){
+    if(l.cont && !l.commPaid){
+      return '<div class="rq">'+h
+        +'<div class="row" style="margin-bottom:12px"><span class="st st-ok"><i class="fa-solid fa-check"></i>Пробний пройдено ✓</span><span class="st st-info">Учень продовжує '+freqTxt(l.freq)+'</span><span class="st st-bad"><i class="fa-regular fa-clock"></i>Комісія · '+(l.deadline==='сьогодні'?'сьогодні':'до '+l.deadline)+'</span></div>'
+        +'<div class="rq-a"><button class="btn b-pri b-sm" onclick="openLeadPay(\''+l.id+'\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити комісію '+num(leadComm(l))+'</button><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button></div></div>';
+    }
+    if(l.cont && l.commPaid){
+      return '<div class="rq">'+h
+        +'<div class="row" style="margin-bottom:12px"><span class="st st-ok"><i class="fa-solid fa-check"></i>Пробний пройдено ✓</span><span class="st st-ok"><i class="fa-solid fa-circle-check"></i>Комісію сплачено · '+(l.paidDate||'')+'</span></div>'
+        +'<div class="rq-a"><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button></div></div>';
+    }
+    return '<div class="rq" style="opacity:.85">'+h
+      +'<div class="row" style="margin-bottom:12px"><span class="st st-mut"><i class="fa-solid fa-check"></i>Пробний пройдено</span><span class="st st-mut">Учень не продовжив · комісія не потрібна</span></div>'
+      +(l.noCont?'<div class="rq-note">'+l.noCont+'</div>':'')
+      +'<div class="rq-a"><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button></div></div>';
+  }
+  return '<div class="rq" style="opacity:.8">'+h
+    +'<div class="row" style="margin-bottom:12px"><span class="st st-bad"><i class="fa-solid fa-xmark"></i>Відхилено</span><span class="st st-mut">'+(l.reason||'')+'</span></div>'
+    +'<div class="rq-a"><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button></div></div>';
 }
-function reqCard(r){
-  const set=r.state==='trialset';
-  return '<div class="rq"><div class="rq-h"><div><div class="rq-t">'+r.subj+' · '+r.lvl+'</div><div class="rq-m">'+r.stu+' · '+r.mode+' · '+r.freq+' · '+r.city+'</div></div>'
-    +'<div class="rq-p"><div class="rq-price">'+num(r.price)+'</div><div style="font-size:11px;color:var(--muted-2)">за урок</div></div></div>'
-    +'<div class="row" style="margin-bottom:12px">'+(set?'':'<span class="sla'+(r.sla<1800?' hot':'')+'" data-sla="'+r.sla+'"><i class="fa-regular fa-clock"></i>SLA: '+fmt(r.sla)+'</span>')+reqStatusPill(r)+'</div>'
-    +'<div class="rq-a">'+(set
-      ? '<button class="btn b-pri b-sm" onclick="openReqDetail(\''+r.id+'\')"><i class="fa-regular fa-eye"></i>Деталі пробного</button><button class="btn b-sec b-sm" onclick="openM(\'trial\')">Перенести</button>'
-      : '<button class="btn b-pri b-sm" onclick="openApproveTrial(\''+r.id+'\')"><i class="fa-solid fa-check"></i>Прийняти</button><button class="btn b-sec b-sm" onclick="openReqDetail(\''+r.id+'\')">Деталі</button><button class="btn b-danger b-sm" onclick="rejectReq(\''+r.id+'\')">Відхилити</button>')
-    +'</div></div>';
+function reqTab(state,btn){
+  if(btn){ btn.parentElement.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on')}); btn.classList.add('on'); }
+  reqTabState=state; renderReqPage();
 }
-function renderReqs(){
+const REQ_INTRO={
+  new:['bn-ok','fa-circle-info','Нові заявки на пробний','Учень сам обрав вільний слот у вашому розкладі. Перегляньте лід і прийміть або відхиліть — час призначати не треба.'],
+  approved:['bn-v','fa-flask','Прийняті · очікують пробного','Пробний заброньовано на обраний учнем час. Проведіть його, а потім позначте результат.'],
+  done:['bn-warn','fa-hryvnia-sign','Пробний проведено','Якщо учень продовжує — сплатіть комісію за ліда (20%). Якщо ні — заявка закривається без комісії.'],
+  declined:['bn-bad','fa-xmark','Відхилені заявки','Ліди, які ви відхилили, із зазначеною причиною.']
+};
+function renderReqPage(){
+  const box=document.getElementById('reqList'); if(!box) return;
+  const list=LEADS.filter(function(l){return l.state===reqTabState});
+  const intro=REQ_INTRO[reqTabState];
+  let h='<div class="bn '+intro[0]+'"><div class="bn-ic"><i class="fa-solid '+intro[1]+'"></i></div><div><div class="bn-t">'+intro[2]+'</div><div class="bn-d">'+intro[3]+'</div></div></div>';
+  h+=list.length?list.map(leadCard).join(''):'<div style="text-align:center;padding:30px 16px;color:var(--muted)">Немає заявок у цьому статусі.</div>';
+  box.innerHTML=h;
+  renderReqCounts();
+}
+function renderReqCounts(){
+  const c=function(s){return LEADS.filter(function(l){return l.state===s}).length;};
+  const set=function(id,n){var e=document.getElementById(id); if(e) e.textContent=n;};
+  set('cnNew',c('new')); set('cnAppr',c('approved')); set('cnDone',c('done')); set('cnDecl',c('declined'));
+}
+function renderReqs(){ /* дашборд: тільки нові */
   const b=document.getElementById('reqBody'); if(!b) return;
-  const list=REQS.filter(r=>r.state!=='rejected');
-  b.innerHTML=list.length?list.map(reqCard).join(''):'<div style="text-align:center;padding:22px;color:var(--muted)">Немає активних заявок.</div>';
+  const list=LEADS.filter(function(l){return l.state==='new'}).slice(0,2);
+  b.innerHTML=list.length?list.map(leadCard).join(''):'<div style="text-align:center;padding:22px;color:var(--muted)">Немає нових заявок.</div>';
 }
-function openReqDetail(id){
-  const r=reqById(id); if(!r) return;
-  const set=r.state==='trialset';
-  document.getElementById('mTitle').textContent='Заявка · '+r.subj;
-  document.getElementById('mSub').textContent=r.stu+' · '+r.lvl;
-  let b='';
-  if(set) b+='<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Пробний заплановано</div><div class="bn-d">'+r.trialDate+' о '+r.trialTime+' · Zoom. Учень отримав підтвердження, урок додано у ваш розклад.</div></div></div>';
-  b+='<div class="lbl">Повідомлення від учня</div><div class="rq-note" style="margin-bottom:14px">'+r.msg+'</div>';
+function reqRefresh(){ renderReqs(); renderReqPage(); }
+function openLeadDetail(id){
+  const l=leadById(id); if(!l) return;
+  const showC=l.state!=='new';
+  document.getElementById('mTitle').textContent='Заявка · '+l.subj;
+  document.getElementById('mSub').textContent=l.stu+' · '+l.lvl;
+  let head='';
+  if(l.state==='approved') head='<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Прийнято · очікує пробного</div><div class="bn-d">Пробний заброньовано учнем на '+slotFmt(l.slot)+' · Zoom.</div></div></div>';
+  else if(l.state==='done' && l.cont && !l.commPaid) head='<div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-hryvnia-sign"></i></div><div><div class="bn-t">Пробний пройдено · учень продовжує</div><div class="bn-d">Успішний лід — сплатіть комісію '+num(leadComm(l))+' до '+l.deadline+'.</div></div></div>';
+  else if(l.state==='done' && l.cont) head='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-check"></i></div><div><div class="bn-t">Успішний лід</div><div class="bn-d">Пробний пройдено, комісію сплачено '+(l.paidDate||'')+'.</div></div></div>';
+  else if(l.state==='done') head='<div class="bn bn-bad" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-minus"></i></div><div><div class="bn-t">Учень не продовжив</div><div class="bn-d">'+(l.noCont||'Комісія не потрібна.')+'</div></div></div>';
+  else if(l.state==='declined') head='<div class="bn bn-bad" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-xmark"></i></div><div><div class="bn-t">Заявку відхилено</div><div class="bn-d">Причина: '+(l.reason||'—')+'</div></div></div>';
+  let b=head+'<div class="lbl">Повідомлення від учня</div><div class="rq-note" style="margin-bottom:14px">'+l.msg+'</div>';
   b+='<div class="g2" style="margin-bottom:14px">'
-    +dcell('Предмет · рівень',r.subj+' · '+r.lvl)+dcell('Ціль',r.goal)
-    +dcell('Формат',r.mode)+dcell('Періодичність',r.freq)
-    +dcell('Місто',r.city)+dcell('Бюджет',num(r.price)+' / урок')+'</div>';
-  b+='<div class="lbl">Контакти учня'+(set?'':' (відкриються після прийняття)')+'</div><div class="g2">'
-    +dcell('Телефон',set?r.phone:'•••••••••••')+dcell('Telegram',set?r.tg:'••••••')+'</div>';
+    +dcell('Предмет · рівень',l.subj+' · '+l.lvl)+dcell('Ціль',l.goal||'—')
+    +dcell('Формат',l.mode)+dcell('Періодичність',freqTxt(l.freq))
+    +dcell('Бюджет',num(l.price)+' / урок')
+    +dcell(l.state==='done'?'Пробний':'Обраний слот', l.state==='done'?('Пройдено ✓ '+(l.trialDate||'')):slotFmt(l.slot))
+    +'</div>';
+  b+='<div class="lbl">Контакти учня'+(showC?'':' (відкриються після прийняття)')+'</div><div class="g2">'
+    +dcell('Телефон',showC?l.phone:'•••••••••••')+dcell('Telegram',showC?l.tg:'••••••')+'</div>';
   document.getElementById('mBody').innerHTML=b;
   let foot='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
-  if(!set) foot+='<button class="btn b-pri" onclick="closeM();openApproveTrial(\''+r.id+'\')"><i class="fa-solid fa-check"></i>Прийняти й запланувати пробне</button>';
-  else foot+='<button class="btn b-pri" onclick="toast(\'Відкриваємо Zoom…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>';
+  if(l.state==='new') foot+='<button class="btn b-pri" onclick="closeM();openApproveLead(\''+l.id+'\')"><i class="fa-solid fa-check"></i>Прийняти заявку</button>';
+  else if(l.state==='approved') foot+='<button class="btn b-pri" onclick="closeM();openTrialHappened(\''+l.id+'\')"><i class="fa-solid fa-flag-checkered"></i>Пробний відбувся</button>';
+  else if(l.state==='done' && l.cont && !l.commPaid) foot+='<button class="btn b-pri" onclick="closeM();openLeadPay(\''+l.id+'\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити комісію</button>';
   document.getElementById('mFoot').innerHTML=foot;
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
-function openApproveTrial(id){
-  const r=reqById(id); if(!r) return;
-  document.getElementById('mTitle').textContent='Прийняти заявку · запланувати пробне';
-  document.getElementById('mSub').textContent=r.stu+' · '+r.subj+' '+r.lvl;
-  let b='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Після підтвердження ви побачите контакти учня, а пробний урок з’явиться у вашому розкладі та в календарі учня. Комісія — лише якщо після пробного учень продовжить регулярні заняття.</div></div></div>';
-  b+='<div class="lbl">Дані учня</div><div class="g2" style="margin-bottom:14px">'
-    +dcell('Учень',r.stu)+dcell('Предмет · рівень',r.subj+' · '+r.lvl)
-    +dcell('Формат',r.mode)+dcell('Бажана періодичність',r.freq)+'</div>';
-  b+='<div class="lbl">Дата й час пробного (25 хв)</div>'
-    +'<div class="f-row" style="margin-bottom:12px"><input class="inp" id="trialDateInp" type="date" value="2026-08-20"><select class="sel" id="trialTimeInp"><option>11:00</option><option>16:00</option><option>18:00</option><option>19:00</option></select></div>';
-  b+='<label class="f" style="margin-bottom:0"><span class="lbl">Посилання на зустріч</span><input class="inp" value="https://zoom.us/j/9812345"></label>';
+function openApproveLead(id){
+  const l=leadById(id); if(!l) return;
+  document.getElementById('mTitle').textContent='Прийняти заявку';
+  document.getElementById('mSub').textContent=l.stu+' · '+l.subj+' '+l.lvl;
+  let b='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Учень уже обрав час пробного у ваших слотах — призначати нічого не треба. Після прийняття ви побачите контакти, а пробний зʼявиться у вашому розкладі. Комісія — лише якщо після пробного учень продовжить.</div></div></div>';
+  b+='<div class="g2">'
+    +dcell('Учень',l.stu)+dcell('Обраний слот',slotFmt(l.slot))
+    +dcell('Предмет · рівень',l.subj+' · '+l.lvl)+dcell('Ціль',l.goal||'—')
+    +dcell('Періодичність',freqTxt(l.freq))+dcell('Бюджет',num(l.price)+' / урок')
+    +'</div>';
   document.getElementById('mBody').innerHTML=b;
-  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="approveTrial(\''+r.id+'\')"><i class="fa-solid fa-calendar-check"></i>Запланувати пробне</button>';
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="approveLead(\''+l.id+'\')"><i class="fa-solid fa-check"></i>Прийняти заявку</button>';
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
-function approveTrial(id){
-  const r=reqById(id); if(!r) return;
-  const iso=(document.getElementById('trialDateInp')||{}).value||'2026-08-20';
-  const time=(document.getElementById('trialTimeInp')||{}).value||'11:00';
-  const day=parseInt(iso.split('-')[2],10);
-  const col=WEEK.find(w=>w.d===day);
-  if(col){ col.items.push({time:time,n:r.stu,s:'Пробний · '+r.subj,cls:'trial'}); col.items.sort((a,b)=>a.time.localeCompare(b.time)); }
-  r.state='trialset'; r.trialDate=ddmm(iso); r.trialTime=time;
-  if(!UP.some(u=>u.id==='up_'+id)) UP.push({id:'up_'+id,date:String(day),dow:dowLabel(day),time:time,dur:'25 хв',stu:r.stu,subj:r.subj,lvl:'—',plat:'Zoom',topic:'Пробне заняття · знайомство і діагностика',price:0,num:0,state:'trial',note:r.goal});
-  renderWeek(); renderReqs(); renderUp();
-  closeM(); toast('Пробний заплановано на '+ddmm(iso)+', '+time+' · додано в розклад');
+function approveLead(id){
+  const l=leadById(id); if(!l) return;
+  l.state='approved';
+  if(l.slot && typeof TLESSONS!=='undefined'){
+    const iso=l.slot.d;
+    TLESSONS[iso]=(TLESSONS[iso]||[]).concat([LT(l.slot.t,l.stu,l.subj,'—','Zoom','trial','Пробне заняття · знайомство',{goal:l.goal,freq:freqTxt(l.freq),city:l.city,phone:l.phone,tg:l.tg,msg:l.msg})]);
+    TLESSONS[iso].sort(function(a,b){return a.time.localeCompare(b.time)});
+    if(typeof calRefresh==='function') calRefresh();
+  }
+  closeM(); reqRefresh(); toast('Заявку прийнято · пробний '+slotFmt(l.slot)+' у розкладі');
 }
-function rejectReq(id){ const r=reqById(id); if(r) r.state='rejected'; renderReqs(); toast('Заявку відхилено'); }
+function openDeclineLead(id){
+  const l=leadById(id); if(!l) return;
+  document.getElementById('mTitle').textContent='Відхилити заявку';
+  document.getElementById('mSub').textContent=l.stu+' · '+l.subj+' '+l.lvl;
+  document.getElementById('mBody').innerHTML='<div class="bn bn-bad" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div><div><div class="bn-d">Учень отримає сповіщення з причиною відмови, а слот звільниться для інших. Заявка перейде в «Відхилені».</div></div></div>'+reasonListHTML();
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-danger" onclick="confirmDeclineLead(\''+id+'\')"><i class="fa-solid fa-xmark"></i>Відхилити заявку</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function confirmDeclineLead(id){ const reason=pickedReason(); if(!reason){ toast('Оберіть причину відмови'); return; } const l=leadById(id); if(l){ l.state='declined'; l.reason=reason; } closeM(); reqRefresh(); toast('Заявку відхилено · '+reason); }
+function openTrialHappened(id){
+  const l=leadById(id); if(!l) return;
+  document.getElementById('mTitle').textContent='Чи відбувся пробний?';
+  document.getElementById('mSub').textContent=l.stu+' · '+l.subj+' · '+slotFmt(l.slot);
+  document.getElementById('mBody').innerHTML='<div class="cx" data-r="cont" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Відбувся · учень продовжує</b> — успішний лід, потрібно сплатити комісію</div></div>'
+    +'<div class="cx" data-r="nocont" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Відбувся · учень не продовжує</b> — комісія не потрібна</div></div>'
+    +'<div class="cx" data-r="noshow" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Не відбувся</b> — учень не прийшов, заявка лишається в очікуванні</div></div>';
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="applyTrialHappened(\''+id+'\')"><i class="fa-solid fa-check"></i>Підтвердити</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function applyTrialHappened(id){
+  const l=leadById(id); if(!l) return;
+  const sel=document.querySelector('#mBody .cx.on'); if(!sel){ toast('Оберіть результат пробного'); return; }
+  const r=sel.dataset.r, td=l.slot?ddmm(l.slot.d):'сьогодні';
+  if(r==='cont'){ l.state='done'; l.cont=true; l.commPaid=false; l.trialDate=td; l.comm=leadComm(l); l.deadline='через 3 дні'; closeM(); reqRefresh(); toast('Пробний успішний · сплатіть комісію за ліда'); }
+  else if(r==='nocont'){ l.state='done'; l.cont=false; l.trialDate=td; l.noCont='Учень не продовжив після пробного.'; closeM(); reqRefresh(); toast('Позначено: учень не продовжує · комісія не потрібна'); }
+  else { closeM(); toast('Пробний не відбувся · заявка лишається в очікуванні'); }
+}
+function openLeadPay(id){
+  const l=leadById(id); if(!l) return;
+  const c=leadComm(l);
+  document.getElementById('mTitle').textContent='Сплатити комісію за ліда';
+  document.getElementById('mSub').textContent=l.stu+' · '+l.subj;
+  let b='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-check"></i></div><div><div class="bn-d">Комісія нараховується лише за успішного ліда: пробний пройдено, учень продовжує регулярні заняття.</div></div></div>'
+    +'<div class="g2" style="margin-bottom:14px">'
+    +dcell('Лід',l.stu+' · '+l.subj)
+    +dcell('Пробний урок','Пройдено ✓ '+(l.trialDate||''))
+    +dcell('Учень продовжує',freqTxt(l.freq))
+    +dcell('Комісія (20%)',num(c))
+    +'</div>'
+    +'<div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-exclamation"></i></div><div><div class="bn-d">Дедлайн: '+(l.deadline||'3 дні')+'. Якщо не сплатити — акаунт стане на паузу: анкета зникне з каталогу.</div></div></div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Пізніше</button><button class="btn b-pri" onclick="payLead(\''+l.id+'\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити '+num(c)+'</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function payLead(id){ const l=leadById(id); if(l){ l.commPaid=true; l.paidDate='сьогодні'; } closeM(); reqRefresh(); toast('Комісію сплачено · Monobank'); }
 
 /* ── Завдання на сьогодні (щоденний список: додати / видалити) ── */
 let TASKS=[
@@ -2630,107 +2662,346 @@ function openView(id){
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
 
-/* ══════════ SCHEDULE ══════════ */
-const DAYS=['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
-const WEEK=[
-  {d:17,t:'Пн',today:true,items:[
-    {time:'15:00',n:'Софія Т.',s:'Англійська B1 · Zoom',cls:''},
-    {time:'18:00',n:'Артем К.',s:'Німецька A2 · Meet',cls:''}]},
-  {d:18,t:'Вт',items:[{time:'10:00',n:'Марта Л.',s:'IELTS · 60 хв',cls:''}]},
-  {d:19,t:'Ср',items:[
-    {time:'16:00',n:'Назар П.',s:'Англійська · НМТ',cls:''},
-    {time:'19:00',n:'Олег Д.',s:'Пробний · Розмовна англ.',cls:'trialp'}]},
-  {d:20,t:'Чт',items:[
-    {time:'11:00',n:'Ірина К.',s:'Пробний · Англійська НМТ',cls:'trial'},
-    {time:'15:00',n:'Софія Т.',s:'Англійська B1',cls:''}]},
-  {d:21,t:'Пт',items:[
-    {time:'11:00',n:'Марта Л.',s:'IELTS Writing',cls:''},
-    {time:'18:00',n:'Артем К.',s:'Німецька A2',cls:'cancel'}]},
-  {d:22,t:'Сб',items:[{time:'10:00',n:'Група A2',s:'Парне заняття',cls:'done'}]},
-  {d:23,t:'Нд',items:[]}
-];
+/* ══════════ SCHEDULE (кален­дар як у студента) ══════════ */
+const DOW=['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
+const MON_GEN=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+const MON_NOM=['Січень','Лютий','Березень','Квітень','Травень','Червень','Липень','Серпень','Вересень','Жовтень','Листопад','Грудень'];
+const DAY_NOM=['Неділя','Понеділок','Вівторок','Середа','Четвер','Пʼятниця','Субота'];
+const TODAYT=new Date(2026,7,17);
+const TAV={'Софія Т.':'st1','Артем К.':'st2','Марта Л.':'st3','Назар П.':'st4','Група A2':'grp'};
+function tAv(stu){ return 'https://i.pravatar.cc/100?u='+(TAV[stu]||encodeURIComponent(stu)); }
+const TPRICE={'Англійська':400,'Німецька':380,'IELTS':650,'Англійська НМТ':650,'Розмовна англ.':450};
+function tPrice(s){ return TPRICE[s]||400; }
+function LT(time,stu,subj,lvl,plat,st,topic,x){ x=x||{}; return Object.assign({time:time,stu:stu,subj:subj,lvl:lvl||'—',plat:plat||'Zoom',st:st,topic:topic||'—',av:tAv(stu)},x); }
+const TLESSONS={
+ '2026-07-28':[LT('15:00','Софія Т.','Англійська','B1','Zoom','done','Past Simple',{num:18})],
+ '2026-07-30':[LT('18:00','Артем К.','Німецька','A2','Meet','done','Artikel',{num:8})],
+ '2026-08-03':[LT('15:00','Софія Т.','Англійська','B1','Zoom','done','Present Continuous',{num:19})],
+ '2026-08-05':[LT('11:00','Марта Л.','IELTS','B2','Zoom','done','Writing Task 1',{num:30})],
+ '2026-08-07':[LT('18:00','Артем К.','Німецька','A2','Meet','cancel','Perfekt',{})],
+ '2026-08-10':[LT('16:00','Назар П.','Англійська НМТ','—','Zoom','done','Reading',{num:14})],
+ '2026-08-12':[LT('15:00','Софія Т.','Англійська','B1','Zoom','moved','Reading · НМТ',{})],
+ '2026-08-14':[LT('10:00','Марта Л.','IELTS','B2','Zoom','done','Speaking Part 2',{num:31}),LT('18:00','Артем К.','Німецька','A2','Meet','done','Modalverben',{num:9})],
+ '2026-08-16':[LT('15:00','Софія Т.','Англійська','B1','Zoom','done','Present Perfect',{num:20})],
+ '2026-08-17':[LT('15:00','Софія Т.','Англійська','B1','Zoom','plan','Reading · швидкість',{num:21}),LT('18:00','Артем К.','Німецька','A2','Meet','plan','Perfekt · закріплення',{num:13})],
+ '2026-08-18':[LT('10:00','Марта Л.','IELTS','B2','Zoom','plan','Speaking Part 3',{num:33})],
+ '2026-08-19':[LT('16:00','Назар П.','Англійська НМТ','—','Zoom','plan','Use of English',{num:15}),LT('19:00','Олег Д.','Розмовна англ.','—','Zoom','trialp','Пробне заняття · знайомство',{goal:'розмовна для співбесіди',freq:'2× на тиждень',city:'Онлайн',phone:'+380 63 ••• 77 20',tg:'@oleg_d',msg:'Хочу підтягнути розмовну англійську для співбесіди. Вечірні години зручніші. Почнемо з пробного?'})],
+ '2026-08-20':[LT('11:00','Ірина К.','Англійська НМТ','—','Zoom','trial','Пробне заняття · діагностика',{goal:'підготовка до НМТ',freq:'2× на тиждень',city:'Онлайн',phone:'+380 67 ••• 45 21',tg:'@iryna_k',msg:'Дитина в 9 класі, готуємось до НМТ. Треба діагностика рівня.'}),LT('15:00','Софія Т.','Англійська','B1','Zoom','plan','Conditionals',{num:22})],
+ '2026-08-21':[LT('11:00','Марта Л.','IELTS','B2','Zoom','plan','Writing Task 2',{num:34}),LT('18:00','Артем К.','Німецька','A2','Meet','cancel','Wechselpräpositionen',{})],
+ '2026-08-22':[LT('10:00','Група A2','Німецька','A2','Meet','done','Парне заняття',{num:5})],
+ '2026-08-24':[LT('15:00','Софія Т.','Англійська','B1','Zoom','plan','Reading',{num:23}),LT('18:00','Артем К.','Німецька','A2','Meet','plan','Trennbare Verben',{num:14})],
+ '2026-08-26':[LT('10:00','Марта Л.','IELTS','B2','Zoom','plan','Listening',{num:35})],
+ '2026-08-28':[LT('16:00','Назар П.','Англійська НМТ','—','Zoom','plan','Vocabulary',{num:16})],
+ '2026-08-31':[LT('15:00','Софія Т.','Англійська','B1','Zoom','plan','Grammar review',{num:24})],
+ '2026-09-02':[LT('18:00','Артем К.','Німецька','A2','Meet','plan','Повторення',{num:15})],
+ '2026-09-04':[LT('10:00','Марта Л.','IELTS','B2','Zoom','plan','Mock test',{num:36})]
+};
+const TST_LBL={plan:['Заплановано','st-warn'],done:['Проведено','st-ok'],moved:['Перенесено','st-warn'],cancel:['Скасовано','st-mut'],trial:['Пробний · прийнято','st-v'],trialp:['Пробний · очікує','st-v']};
+const TST_LS={plan:'',done:'done',moved:'moved',cancel:'cancel',trial:'trial',trialp:'trialp'};
+const TST_DOT={plan:'',done:'g',moved:'a',cancel:'x',trial:'v',trialp:'vp'};
+function pad2(n){return String(n).padStart(2,'0')}
+function isoOf(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate())}
+function parseISO(s){const p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function mondayOf(d){const x=new Date(d);const off=(x.getDay()+6)%7;x.setDate(x.getDate()-off);x.setHours(0,0,0,0);return x}
+function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
+function fval(id){var e=document.getElementById(id);return e?e.value:''}
+let weekStart=mondayOf(TODAYT), calY=TODAYT.getFullYear(), calM=TODAYT.getMonth();
+function tLsName(x){ return (x.st==='trial'||x.st==='trialp')?'Пробний · '+x.subj : x.stu; }
+function tLsSub(x){
+  if(x.st==='trialp') return x.stu+' · очікує';
+  if(x.st==='trial') return x.stu;
+  return x.stu+' · '+(x.lvl&&x.lvl!=='—'?x.lvl:x.plat);
+}
+function calRefresh(){ renderWeek(); renderMonth(); renderDay(); }
 
 function renderWeek(){
-  document.getElementById('sched-week').innerHTML='<div class="wk">'+WEEK.map(c=>`
-    <div class="wk-col${c.today?' today':''}" data-day="${c.d}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropLesson(event)">
-      <div class="wk-d">${c.t}<b>${c.d}</b></div>
-      ${c.items.map(i=>`
-        <div class="ls ${i.cls}" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" onclick="openM('lesson')">
-          <div class="ls-t">${i.time}</div>
-          <div class="ls-n">${i.n}</div>
-          <div class="ls-s">${i.s}</div>
-        </div>`).join('')}
-      ${c.items.length?'':'<div class="slot off" onclick="openM(\'newlesson\')">+ урок</div>'}
-    </div>`).join('')+'</div>';
+  const days=[]; for(let i=0;i<7;i++) days.push(addDays(weekStart,i));
+  const end=days[6], range=days[0].getDate()+'–'+end.getDate()+' '+MON_GEN[end.getMonth()]+' '+end.getFullYear();
+  let h='<div class="cal-nav">'
+    +'<button class="cal-arrow" onclick="weekShift(-1)" aria-label="Попередній тиждень"><i class="fa-solid fa-chevron-left"></i></button>'
+    +'<div class="cal-range">'+range+'</div>'
+    +'<button class="cal-arrow" onclick="weekShift(1)" aria-label="Наступний тиждень"><i class="fa-solid fa-chevron-right"></i></button>'
+    +'<button class="btn b-sec b-xs cal-today" onclick="weekToday()">Цей тиждень</button></div>';
+  h+='<div class="wk">'+days.map(function(d,i){
+    const key=isoOf(d), items=TLESSONS[key]||[], today=sameDay(d,TODAYT);
+    return '<div class="wk-col'+(today?' today':'')+'">'
+      +'<div class="wk-d">'+DOW[i]+'<b>'+d.getDate()+'</b></div>'
+      +(items.map(function(x,ix){return '<div class="ls '+TST_LS[x.st]+'" onclick="openLesson(\''+key+'\','+ix+')"><div class="ls-t">'+x.time+'</div><div class="ls-n">'+tLsName(x)+'</div><div class="ls-s">'+tLsSub(x)+'</div></div>';}).join('')||'<div class="ls-empty">—</div>')
+      +'</div>';
+  }).join('')+'</div>';
+  document.getElementById('sched-week').innerHTML=h;
 }
-function renderDay(){
-  document.getElementById('sched-day').innerHTML=`
-    <div class="row" style="justify-content:space-between;margin-bottom:14px">
-      <div style="font-family:'Fraunces',serif;font-size:19px;font-weight:900">Понеділок, 17 серпня</div>
-      <span class="st st-ok">2 уроки · ₴800</span>
-    </div>
-    <div class="li"><div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)">15<sup style="font-size:8px">00</sup></div>
-      <div class="li-b"><div class="li-t">Софія Т. · Англійська B1</div><div class="li-d">40 хв · Zoom <span class="st st-warn">Заплановано</span></div></div>
-      <div class="li-r"><button class="btn b-pri b-sm" onclick="toast('Відкриваємо Zoom…')">Приєднатися</button><button class="btn b-sec b-sm" onclick="openM('lesson')">Деталі</button></div></div>
-    <div class="li"><div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)">18<sup style="font-size:8px">00</sup></div>
-      <div class="li-b"><div class="li-t">Артем К. · Німецька A2</div><div class="li-d">40 хв · Google Meet <span class="st st-warn">Заплановано</span></div></div>
-      <div class="li-r"><button class="btn b-soft b-sm" onclick="toast('Посилання відкриється за 10 хв до уроку')">Приєднатися</button><button class="btn b-sec b-sm" onclick="openM('lesson')">Деталі</button></div></div>
-    <div class="hr"></div>
-    <div class="lbl">Вільні слоти, які бачить клієнт</div>
-    <div class="row">
-      <span class="chip on" onclick="tglChip(this)">09:00</span><span class="chip on" onclick="tglChip(this)">10:00</span>
-      <span class="chip" onclick="tglChip(this)">11:00</span><span class="chip on" onclick="tglChip(this)">16:00</span>
-      <span class="chip on" onclick="tglChip(this)">19:00</span><span class="chip" onclick="tglChip(this)">20:00</span>
-    </div>`;
-}
+function weekShift(n){weekStart=addDays(weekStart,n*7);renderWeek()}
+function weekToday(){weekStart=mondayOf(TODAYT);renderWeek()}
+
 function renderMonth(){
-  let h='<div class="row" style="justify-content:space-between;margin-bottom:12px"><div style="font-family:\'Fraunces\',serif;font-size:19px;font-weight:900">Серпень 2026</div>'
-   +'<div class="leg"><span><i class="fa-solid fa-circle" style="color:var(--teal-500)"></i>Заплановано</span><span><i class="fa-solid fa-circle" style="color:var(--green)"></i>Проведено</span><span><i class="fa-solid fa-circle" style="color:var(--amber)"></i>Перенесено</span></div></div>';
-  h+='<div class="mth">'+DAYS.map(d=>`<div style="text-align:center;font-size:10px;font-weight:900;color:var(--muted-2);padding-bottom:4px">${d}</div>`).join('')+'</div>';
+  const first=new Date(calY,calM,1), startOff=(first.getDay()+6)%7, dim=new Date(calY,calM+1,0).getDate();
+  let h='<div class="cal-nav">'
+    +'<button class="cal-arrow" onclick="monthShift(-1)" aria-label="Попередній місяць"><i class="fa-solid fa-chevron-left"></i></button>'
+    +'<div class="cal-range">'+MON_NOM[calM]+' '+calY+'</div>'
+    +'<button class="cal-arrow" onclick="monthShift(1)" aria-label="Наступний місяць"><i class="fa-solid fa-chevron-right"></i></button>'
+    +'<button class="btn b-sec b-xs cal-today" onclick="monthToday()">Цей місяць</button></div>';
+  h+='<div class="mth">'+DOW.map(function(d){return '<div class="mth-h">'+d+'</div>';}).join('')+'</div>';
   h+='<div class="mth">';
-  for(let i=0;i<5;i++) h+='<div class="mth-c dim"></div>';   // 1 серпня 2026 = субота
-  for(let d=1;d<=31;d++){
-    const today=d===17;
-    let dots='';
-    if(d%7===1) dots='<span class="g"></span><span class="g"></span>';
-    else if(d%5===0) dots='<span></span><span></span><span class="a"></span>';
-    else if(d%3===0) dots='<span></span>';
-    h+=`<div class="mth-c${today?' today':''}" onclick="openM('newlesson')">${d}<div class="mth-b">${dots}</div></div>`;
+  for(let i=0;i<startOff;i++) h+='<div class="mth-c dim"></div>';
+  for(let d=1;d<=dim;d++){
+    const key=calY+'-'+pad2(calM+1)+'-'+pad2(d), day=TLESSONS[key], today=sameDay(new Date(calY,calM,d),TODAYT);
+    let evs='';
+    if(day){
+      day.forEach(function(x,ix){
+        if(ix<2){
+          const nm=(x.st==='trial'||x.st==='trialp')?('Пробний · '+x.subj):x.stu;
+          evs+='<div class="mth-ev '+TST_LS[x.st]+'" title="'+x.time+' · '+nm+'" onclick="event.stopPropagation();openLesson(\''+key+'\','+ix+')">'+x.time+' '+nm+'</div>';
+        }
+      });
+      if(day.length>2) evs+='<div class="mth-more" onclick="event.stopPropagation();openDay(\''+key+'\')">+'+(day.length-2)+' ще</div>';
+    }
+    h+='<div class="mth-c'+(today?' today':'')+(day?'':' empty')+'" '+(day?'onclick="openDay(\''+key+'\')"':'')+'>'+d+(evs?'<div class="mth-evs">'+evs+'</div>':'')+'</div>';
   }
   h+='</div>';
   document.getElementById('sched-month').innerHTML=h;
 }
-function schedMode(m,btn){
-  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  ['day','week','month'].forEach(x=>document.getElementById('sched-'+x).style.display = x===m?'block':'none');
+function monthShift(n){calM+=n; if(calM<0){calM=11;calY--} if(calM>11){calM=0;calY++} renderMonth()}
+function monthToday(){calY=TODAYT.getFullYear();calM=TODAYT.getMonth();renderMonth()}
+
+function renderDay(){
+  const key=isoOf(TODAYT), items=TLESSONS[key]||[];
+  let h='<div class="row" style="justify-content:space-between;margin-bottom:14px">'
+    +'<div style="font-family:\'Fraunces\',serif;font-size:19px;font-weight:900">'+DAY_NOM[TODAYT.getDay()]+', '+TODAYT.getDate()+' '+MON_GEN[TODAYT.getMonth()]+'</div>'
+    +'<span class="st st-ok">'+items.length+' '+plUr(items.length)+'</span></div>';
+  h+=items.map(function(x,ix){
+    const t=TST_LBL[x.st], join=x.st==='plan'||x.st==='trial';
+    return '<div class="li"><img class="li-av" src="'+x.av+'" alt="">'
+      +'<div class="li-b"><div class="li-t">'+x.time+' · '+(x.st==='trial'||x.st==='trialp'?'Пробний · '+x.subj:x.stu)+'</div><div class="li-d">'+(x.st==='trial'||x.st==='trialp'?x.stu:x.subj+(x.lvl!=='—'?' '+x.lvl:''))+' · '+x.plat+' <span class="st '+t[1]+'">'+t[0]+'</span></div></div>'
+      +'<div class="li-r">'+(join?'<button class="btn b-pri b-sm" onclick="toast(\'Відкриваємо '+x.plat+'…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>':'')+'<button class="btn b-sec b-sm" onclick="openLesson(\''+key+'\','+ix+')">Деталі</button></div></div>';
+  }).join('')||'<div class="ls-empty" style="padding:24px 0">Сьогодні уроків немає</div>';
+  h+='<div class="hr"></div><button class="btn b-pri b-sm" onclick="openNewLesson()"><i class="fa-solid fa-plus"></i>Створити урок</button>';
+  document.getElementById('sched-day').innerHTML=h;
 }
-function renderSlotsPreview(){
-  const on=[['Пн','09:00','15:00','18:00'],['Вт','10:00','11:00'],['Ср','16:00','19:00'],['Чт','15:00','20:00'],['Пт','11:00','18:00'],['Сб','10:00'],['Нд']];
-  document.getElementById('slotsPreview').innerHTML=on.map(([d,...ts])=>`
-    <div class="wk-col" style="min-height:auto">
-      <div class="wk-d">${d}</div>
-      ${ts.length?ts.map(t=>`<div class="slot" onclick="openM('slots')">${t}</div>`).join(''):'<div class="slot off" onclick="openM(\'slots\')">вихідний</div>'}
-    </div>`).join('');
+function schedMode(m,btn){
+  btn.parentElement.querySelectorAll('button').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  ['day','week','month'].forEach(function(x){document.getElementById('sched-'+x).style.display = x===m?'block':'none';});
 }
 
-/* drag & drop */
-let dragEl=null;
-function dragStart(e){dragEl=e.currentTarget;dragEl.classList.add('dragging');e.dataTransfer.effectAllowed='move'}
-function dragEnd(e){if(dragEl)dragEl.classList.remove('dragging');document.querySelectorAll('.wk-col.drop').forEach(c=>c.classList.remove('drop'))}
-function dragOver(e){e.preventDefault();e.currentTarget.classList.add('drop')}
-function dragLeave(e){e.currentTarget.classList.remove('drop')}
-function dropLesson(e){
-  e.preventDefault();
-  const col=e.currentTarget;
-  col.classList.remove('drop');
-  if(!dragEl) return;
-  const ph=col.querySelector('.slot');
-  if(ph) ph.remove();
-  col.appendChild(dragEl);
-  const name=dragEl.querySelector('.ls-n').textContent;
-  toast('Урок «'+name+'» перенесено на '+col.dataset.day+' серпня');
-  dragEl=null;
+/* модалка дня — всі уроки цього дня */
+function openDay(key){
+  const day=TLESSONS[key]||[], d=parseISO(key);
+  const rows=day.map(function(x,ix){
+    const t=TST_LBL[x.st]||['',''];
+    return '<div class="li"><img class="li-av" src="'+x.av+'" alt="">'
+      +'<div class="li-b"><div class="li-t">'+x.time+' · '+(x.st==='trial'||x.st==='trialp'?'Пробний · '+x.subj:x.stu)+'</div><div class="li-d">'+(x.st==='trial'||x.st==='trialp'?x.stu:x.subj)+' <span class="st '+t[1]+'">'+t[0]+'</span></div></div>'
+      +'<div class="li-r"><button class="btn '+(x.st==='plan'||x.st==='trialp'?'b-pri':'b-sec')+' b-sm" onclick="openLesson(\''+key+'\','+ix+')">Деталі</button></div></div>';
+  }).join('');
+  document.getElementById('mTitle').textContent=d.getDate()+' '+MON_GEN[d.getMonth()]+' '+d.getFullYear();
+  document.getElementById('mSub').textContent=day.length+' '+plUr(day.length);
+  document.getElementById('mBody').innerHTML=rows||'<div style="text-align:center;color:var(--muted);padding:20px 0">Немає уроків цього дня</div>';
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+
+/* детальна модалка уроку */
+function openLesson(key,ix){
+  const x=(TLESSONS[key]||[])[ix]; if(!x) return;
+  const d=parseISO(key), t=TST_LBL[x.st];
+  const isTrial=x.st==='trial'||x.st==='trialp', pending=x.st==='trialp';
+  const upcoming=(x.st==='plan'||x.st==='trial') && !(d<TODAYT);
+  const dur=isTrial?25:(x.subj==='IELTS'?60:40);
+  document.getElementById('mTitle').textContent=(isTrial?'Пробний урок · ':'Урок · ')+x.subj;
+  document.getElementById('mSub').textContent=d.getDate()+' '+MON_GEN[d.getMonth()]+', '+x.time+' · '+x.stu;
+  let b='<div class="row" style="gap:12px;margin-bottom:16px">'
+    +'<img src="'+x.av+'" style="width:46px;height:46px;border-radius:13px;object-fit:cover" alt="">'
+    +'<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:800">'+x.stu+'</div><div style="font-size:11.5px;color:var(--muted-2)">'+x.subj+(x.lvl!=='—'?' · '+x.lvl:'')+'</div></div>'
+    +'<span class="st '+t[1]+'">'+t[0]+'</span></div>';
+  if(isTrial){
+    b+=(pending
+      ? '<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Пробний · очікує вашого підтвердження</div><div class="bn-d">Учень забронював пробний урок. Перегляньте деталі та <b>прийміть або відхиліть</b>. Комісія нараховується тільки якщо після пробного учень продовжить.</div></div></div>'
+      : '<div class="bn bn-v" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-t">Пробний · прийнято</div><div class="bn-d">Знайомство і діагностика рівня (25 хв). Якщо учень продовжить — нарахується комісія за ліда.</div></div></div>');
+    b+='<div class="g2" style="margin-bottom:14px">'
+      +dcell('Дата й час',d.getDate()+' '+MON_GEN[d.getMonth()]+', '+x.time)
+      +dcell('Тривалість','25 хв')
+      +dcell('Предмет',x.subj)
+      +dcell('Ціль',x.goal||'—')
+      +dcell('Періодичність',x.freq||'—')
+      +dcell('Формат',(x.city||'Онлайн')+' · '+x.plat)
+      +dcell('Телефон',x.phone||'—')
+      +dcell('Telegram',x.tg||'—')
+      +'</div>';
+    if(x.msg) b+='<div class="lbl">Повідомлення учня</div><div class="rq-note" style="margin:0">'+x.msg+'</div>';
+  } else {
+    b+='<div class="g2" style="margin-bottom:14px">'
+      +dcell('Дата й час',d.getDate()+' '+MON_GEN[d.getMonth()]+', '+x.time)
+      +dcell('Тривалість',dur+' хв')
+      +dcell('Формат',x.plat)
+      +dcell('Тема',x.topic)
+      +dcell(x.num?'Урок №':'Тип',x.num?'№'+x.num:'Урок')
+      +dcell('Ціна',num(tPrice(x.subj)))
+      +'</div>';
+    if(x.st==='moved') b+='<div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-arrows-rotate"></i></div><div><div class="bn-d">Урок перенесено. Узгодьте новий час з учнем.</div></div></div>';
+    else if(x.st==='cancel') b+='<div class="bn bn-bad" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-ban"></i></div><div><div class="bn-d">Урок скасовано — оплата не потрібна.</div></div></div>';
+    else if(x.st==='done') b+='<div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-check"></i></div><div><div class="bn-d">Урок проведено. Звіт і ДЗ — у розділі «Журнал і ДЗ».</div></div></div>';
+    else if(upcoming) b+='<div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Урок ще не відбувся. Ви можете приєднатися в час уроку або перенести його на інший день.</div></div></div>';
+  }
+  document.getElementById('mBody').innerHTML=b;
+  let foot;
+  if(pending) foot='<button class="btn b-danger" onclick="openDeclineTrialCal(\''+key+'\','+ix+')"><i class="fa-solid fa-xmark"></i>Відхилити</button><button class="btn b-pri" onclick="openApproveTrialCal(\''+key+'\','+ix+')"><i class="fa-solid fa-check"></i>Прийняти пробний</button>';
+  else if(upcoming) foot='<button class="btn b-sec" onclick="openReschedule(\''+key+'\','+ix+')"><i class="fa-regular fa-calendar"></i>Перенести</button><button class="btn b-pri" onclick="toast(\'Відкриваємо '+x.plat+'…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>';
+  else if(x.st==='done') foot='<button class="btn b-sec" onclick="closeM()">Закрити</button><button class="btn b-pri" onclick="closeM();go(\'journal\')"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ</button>';
+  else foot='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
+  document.getElementById('mFoot').innerHTML=foot;
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+/* причини відмови (спільні для заявок і календаря) */
+const TRIAL_DECLINE_REASONS=['Немає вільних слотів на цей час','Не мій предмет або рівень','Не підходить розклад учня','Учень не виходить на звʼязок','Інше'];
+function reasonListHTML(){
+  return '<div class="lbl">Причина відмови <span class="req">*</span></div>'
+    +TRIAL_DECLINE_REASONS.map(function(r){return '<div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">'+r+'</div></div>';}).join('')
+    +'<label class="f" style="margin-top:12px;margin-bottom:0"><span class="lbl">Коментар для учня</span><textarea class="ta" rows="3" placeholder="Опишіть причину, якщо обрали «Інше»"></textarea></label>';
+}
+function pickedReason(){ const el=document.querySelector('#mBody .cx.on .cx-t'); return el?el.textContent.replace(/\s+/g,' ').trim():''; }
+
+/* ── ПРИЙНЯТИ пробний (підтвердження з усією інформацією) ── */
+function openApproveTrialCal(key,ix){
+  const x=(TLESSONS[key]||[])[ix]; if(!x) return; const d=parseISO(key);
+  document.getElementById('mTitle').textContent='Прийняти пробний';
+  document.getElementById('mSub').textContent=x.stu+' · '+x.subj;
+  let b='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Після підтвердження пробний залишиться в розкладі як <b>прийнятий</b>, і ви побачите контакти учня. Комісію платите лише якщо після пробного учень продовжить регулярні заняття.</div></div></div>';
+  b+='<div class="g2">'
+    +dcell('Учень',x.stu)
+    +dcell('Дата й час',d.getDate()+' '+MON_GEN[d.getMonth()]+', '+x.time)
+    +dcell('Предмет',x.subj)
+    +dcell('Ціль',x.goal||'—')
+    +dcell('Періодичність',x.freq||'—')
+    +dcell('Формат',(x.city||'Онлайн')+' · '+x.plat)
+    +dcell('Телефон',x.phone||'—')
+    +dcell('Telegram',x.tg||'—')
+    +'</div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="approveTrialCal(\''+key+'\','+ix+')"><i class="fa-solid fa-check"></i>Прийняти пробний</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function approveTrialCal(key,ix){ const x=(TLESSONS[key]||[])[ix]; if(x) x.st='trial'; closeM(); calRefresh(); toast('Пробний прийнято · залишається у розкладі'); }
+
+/* ── ВІДХИЛИТИ пробний (з причиною, як на заявках) ── */
+function openDeclineTrialCal(key,ix){
+  const x=(TLESSONS[key]||[])[ix]; if(!x) return;
+  document.getElementById('mTitle').textContent='Відхилити пробний';
+  document.getElementById('mSub').textContent=x.stu+' · '+x.subj;
+  let b='<div class="bn bn-bad" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div><div><div class="bn-d">Учень отримає сповіщення з причиною відмови, а пробний зникне з вашого розкладу. Комісія не нараховується.</div></div></div>'+reasonListHTML();
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-danger" onclick="confirmDeclineTrialCal(\''+key+'\','+ix+')"><i class="fa-solid fa-xmark"></i>Відхилити пробний</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function confirmDeclineTrialCal(key,ix){
+  const reason=pickedReason(); if(!reason){ toast('Оберіть причину відмови'); return; }
+  const arr=TLESSONS[key]||[]; arr.splice(ix,1); if(!arr.length) delete TLESSONS[key];
+  closeM(); calRefresh(); toast('Пробний відхилено · '+reason);
+}
+
+/* перенесення уроку на інший день */
+function openReschedule(key,ix){
+  const x=(TLESSONS[key]||[])[ix]; if(!x) return;
+  const d=parseISO(key), next=isoOf(addDays(d,1));
+  document.getElementById('mTitle').textContent='Перенести урок';
+  document.getElementById('mSub').textContent=x.stu+' · '+x.subj+(x.lvl!=='—'?' '+x.lvl:'');
+  let b='<div class="bn bn-ok" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Оберіть новий день і час. Урок переміститься на нову дату, а учень отримає сповіщення про зміну.</div></div></div>';
+  b+='<div class="stu-cell" style="margin-bottom:14px"><div class="stu-cell-l">Поточний час</div><div class="stu-cell-v">'+d.getDate()+' '+MON_GEN[d.getMonth()]+', '+x.time+'</div></div>';
+  b+='<div class="lbl">Новий день і час</div><div class="f-row" style="margin-bottom:0"><input class="inp" type="date" id="rsDate" value="'+next+'"><select class="sel" id="rsTime">'+slotTimeOptions()+'</select></div>';
+  document.getElementById('mBody').innerHTML=b;
+  const sel=document.getElementById('rsTime'); if(sel) sel.value=x.time;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="doReschedule(\''+key+'\','+ix+')"><i class="fa-solid fa-check"></i>Перенести урок</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function doReschedule(key,ix){
+  const arr=TLESSONS[key]||[], x=arr[ix]; if(!x) return;
+  const iso=fval('rsDate')||key, time=fval('rsTime')||x.time;
+  arr.splice(ix,1); if(!arr.length) delete TLESSONS[key];
+  x.time=time;
+  TLESSONS[iso]=(TLESSONS[iso]||[]).concat([x]);
+  TLESSONS[iso].sort(function(a,b){return a.time.localeCompare(b.time)});
+  const nd=parseISO(iso);
+  closeM(); calRefresh(); toast('Урок перенесено на '+nd.getDate()+' '+MON_GEN[nd.getMonth()]+', '+time);
+}
+
+/* створення уроку — покращений UI */
+const TSTUDENTS=[['Софія Т.','Англійська','B1'],['Артем К.','Німецька','A2'],['Марта Л.','IELTS','B2'],['Назар П.','Англійська НМТ','—']];
+function openNewLesson(){
+  document.getElementById('mTitle').textContent='Створити урок';
+  document.getElementById('mSub').textContent='Урок з’явиться у вашому розкладі та в розкладі учня';
+  let b='<div class="lbl">Учень <span class="req">*</span></div>'
+    +'<select class="sel" id="nlStu" style="margin-bottom:16px">'+TSTUDENTS.map(function(s,i){return '<option value="'+i+'">'+s[0]+' · '+s[1]+(s[2]!=='—'?' '+s[2]:'')+'</option>';}).join('')+'</select>';
+  b+='<div class="lbl">Тип уроку</div><div class="row" id="nlType" style="margin-bottom:16px">'
+    +'<span class="chip on" data-t="reg" onclick="pickOpt(this)"><i class="fa-solid fa-chalkboard-user"></i>Звичайний · 40 хв</span>'
+    +'<span class="chip" data-t="trial" onclick="pickOpt(this)"><i class="fa-solid fa-flask"></i>Пробний · 25 хв</span></div>';
+  b+='<div class="lbl">Дата й час <span class="req">*</span></div><div class="f-row" style="margin-bottom:16px"><input class="inp" type="date" id="nlDate" value="2026-08-18"><select class="sel" id="nlTime">'+slotTimeOptions()+'</select></div>';
+  b+='<div class="f-row" style="margin-bottom:16px">'
+    +'<label class="f" style="margin:0"><span class="lbl">Платформа</span><select class="sel" id="nlPlat"><option>Zoom</option><option>Google Meet</option></select></label>'
+    +'<label class="f" style="margin:0"><span class="lbl">Тема уроку</span><input class="inp" id="nlTopic" placeholder="Напр., Present Perfect"></label></div>';
+  b+='<div class="sw-row" style="border-top:1px solid var(--border);border-bottom:none;padding-bottom:0"><div class="sw-tx"><div class="sw-t">Повторюваний урок</div><div class="sw-d">Щотижня в цей самий день і час</div></div><button class="sw on" onclick="tglSw(this)"></button></div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="createLesson()"><i class="fa-solid fa-plus"></i>Створити урок</button>';
+  const tsel=document.getElementById('nlTime'); if(tsel) tsel.value='15:00';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function createLesson(){
+  const s=TSTUDENTS[+fval('nlStu')]||TSTUDENTS[0];
+  const typeEl=document.querySelector('#nlType .chip.on'), type=typeEl?typeEl.dataset.t:'reg';
+  const iso=fval('nlDate')||isoOf(TODAYT), time=fval('nlTime')||'15:00', topic=fval('nlTopic')||(type==='trial'?'Пробне заняття':'—'), plat=fval('nlPlat')||'Zoom';
+  const st=type==='trial'?'trial':'plan';
+  const extra=type==='trial'?{goal:'—',freq:'—',city:'Онлайн',phone:'—',tg:'—'}:{};
+  TLESSONS[iso]=(TLESSONS[iso]||[]).concat([LT(time,s[0],s[1],s[2],plat,st,topic,extra)]);
+  TLESSONS[iso].sort(function(a,b){return a.time.localeCompare(b.time)});
+  const nd=parseISO(iso);
+  closeM(); calRefresh(); toast('Урок створено: '+s[0]+' · '+nd.getDate()+' '+MON_GEN[nd.getMonth()]+', '+time);
+}
+/* ══════════ СЛОТИ ДЛЯ ПРОБНИХ УРОКІВ (тижневі) ══════════ */
+const SLOT_DAYS=[['Пн',17],['Вт',18],['Ср',19],['Чт',20],['Пт',21],['Сб',22],['Нд',23]];
+let SLOTS={'Пн':['09:00','15:00','18:00'],'Вт':['10:00','11:00'],'Ср':['16:00','19:00'],'Чт':['15:00','20:00'],'Пт':['11:00','18:00'],'Сб':['10:00'],'Нд':[]};
+const SLOTS_DEFAULT={'Пн':['09:00','15:00','18:00'],'Вт':['10:00','11:00'],'Ср':['16:00','19:00'],'Чт':['15:00','20:00'],'Пт':['11:00','18:00'],'Сб':['10:00'],'Нд':[]};
+function slotDayWord(n){ return n===1?'день':(n<5?'дні':'днів'); }
+function renderSlots(){
+  const g=document.getElementById('slotsGrid'); if(!g) return;
+  g.innerHTML='<div class="wk">'+SLOT_DAYS.map(function(dd){
+    const d=dd[0], dt=dd[1], ts=(SLOTS[d]||[]).slice().sort();
+    return '<div class="wk-col" style="min-height:auto">'
+      +'<div class="wk-d">'+d+'<b>'+dt+'</b></div>'
+      +(ts.length?ts.map(function(t){return '<div class="slotpill">'+t+'<span class="x" title="Прибрати слот" onclick="delSlot(\''+d+'\',\''+t+'\')"><i class="fa-solid fa-xmark"></i></span></div>';}).join(''):'<div class="slot-empty">Немає вікон</div>')
+      +'<button class="slot-add" onclick="openAddSlot(\''+d+'\')"><i class="fa-solid fa-plus"></i>Слот</button>'
+      +'</div>';
+  }).join('')+'</div>';
+  const total=SLOT_DAYS.reduce(function(s,dd){return s+(SLOTS[dd[0]]||[]).length;},0);
+  const days=SLOT_DAYS.filter(function(dd){return (SLOTS[dd[0]]||[]).length;}).length;
+  const sub=document.getElementById('slotsSub');
+  if(sub) sub.textContent = total ? (total+' відкритих вікон · '+days+' '+slotDayWord(days)) : 'Немає відкритих вікон — складіть розклад на тиждень';
+}
+function delSlot(d,t){ SLOTS[d]=(SLOTS[d]||[]).filter(function(x){return x!==t;}); renderSlots(); toast('Слот '+d+' '+t+' прибрано'); }
+function clearSlotsWeek(){ SLOT_DAYS.forEach(function(dd){SLOTS[dd[0]]=[];}); renderSlots(); toast('Тиждень очищено — додайте нові вікна'); }
+function copySlotsLastWeek(){ SLOT_DAYS.forEach(function(dd){SLOTS[dd[0]]=(SLOTS_DEFAULT[dd[0]]||[]).slice();}); renderSlots(); toast('Слоти минулого тижня скопійовано'); }
+function slotTimeOptions(){
+  let o=''; for(let h=8;h<=21;h++){ ['00','30'].forEach(function(m){ const t=(h<10?'0'+h:h)+':'+m; o+='<option>'+t+'</option>'; }); } return o;
+}
+function openAddSlot(day){
+  const dsel=day||'Пн';
+  document.getElementById('mTitle').textContent='Додати слот для пробного';
+  document.getElementById('mSub').textContent='День і час, коли учень зможе забронювати пробний урок';
+  let b='<div class="lbl">День тижня</div><div class="row" id="slotDayRow" style="margin-bottom:16px">'
+    +SLOT_DAYS.map(function(dd){return '<span class="chip'+(dd[0]===dsel?' on':'')+'" data-d="'+dd[0]+'" onclick="pickOpt(this)">'+dd[0]+' '+dd[1]+'</span>';}).join('')+'</div>';
+  b+='<label class="f" style="margin-bottom:14px"><span class="lbl">Час початку</span><select class="sel" id="slotTimeSel">'+slotTimeOptions()+'</select></label>';
+  b+='<div class="bn bn-v" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-flask"></i></div><div><div class="bn-d">Це вікно для <b>пробного уроку</b> (25 хв). Учень зможе забронювати пробне заняття в цей час. Слоти тижневі — оновлюються щопонеділка.</div></div></div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="addSlotSave()"><i class="fa-solid fa-plus"></i>Додати слот</button>';
+  const sel=document.getElementById('slotTimeSel'); if(sel) sel.value='16:00';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function addSlotSave(){
+  const dEl=document.querySelector('#slotDayRow .chip.on'); const day=dEl?dEl.dataset.d:'Пн';
+  const time=(document.getElementById('slotTimeSel')||{}).value;
+  if(!time) return;
+  SLOTS[day]=SLOTS[day]||[];
+  if(SLOTS[day].indexOf(time)>-1){ toast('Слот '+day+' '+time+' уже додано'); return; }
+  SLOTS[day].push(time); SLOTS[day].sort();
+  closeM(); renderSlots(); toast('Слот додано: '+day+' '+time);
 }
 
 /* ══════════ TIMERS ══════════ */
@@ -2764,73 +3035,6 @@ const M={
     <div class="li"><div class="li-ic" style="background:var(--red-50);color:var(--red)"><i class="fa-solid fa-hryvnia-sign"></i></div>
       <div class="li-b"><div class="li-t">Комісія ₴480 — залишилось 2 дні</div><div class="li-d">Інакше акаунт стане на паузу</div></div></div>`,
     f:[['Позначити прочитаними','b-sec','toast("Усі сповіщення прочитано")']]},
-
-  accept:{t:'Прийняти заявку',s:'Контакти клієнта відкриються одразу',b:`
-    <div class="bn bn-ok" style="margin-bottom:16px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
-      <div><div class="bn-d">Після прийняття ви бачите телефон і Telegram клієнта. Комісія списується лише після пробного заняття.</div></div></div>
-    <label class="f"><span class="lbl">Коментар клієнту (необов'язково)</span>
-      <textarea class="ta" rows="3" placeholder="Напишіть, коли вам зручно провести пробне заняття"></textarea></label>
-    <label class="f" style="margin-bottom:0"><span class="lbl">Запропонувати дату пробного</span>
-      <div class="f-row"><input class="inp" type="date" value="2026-08-19"><select class="sel"><option>19:00</option><option>18:00</option><option>10:00</option></select></div></label>`,
-    f:[['Скасувати','b-sec','close'],['Прийняти заявку','b-pri','toast("Заявку прийнято · контакти відкриті")']]},
-
-  reject:{t:'Відхилити заявку',s:'Причина допомагає нам краще підбирати заявки',b:`
-    <div class="lbl">Причина відмови <span class="req">*</span></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Немає вільних слотів</div></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Не мій предмет або рівень</div></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Не підходить бюджет клієнта</div></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Незручний формат або місто</div></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">Інше</div></div>
-    <label class="f" style="margin-top:12px;margin-bottom:0"><span class="lbl">Коментар</span>
-      <textarea class="ta" rows="3" placeholder="Опишіть причину, якщо вибрали «Інше»"></textarea></label>`,
-    f:[['Скасувати','b-sec','close'],['Відхилити','b-danger','toast("Заявку відхилено")']]},
-
-  trial:{t:'Дата пробного заняття',s:'Клієнт отримає підтвердження в Telegram',b:`
-    <div class="f-row"><label class="f"><span class="lbl">Дата <span class="req">*</span></span><input class="inp" type="date" value="2026-08-19"></label>
-    <label class="f"><span class="lbl">Час <span class="req">*</span></span><select class="sel"><option>19:00</option><option>18:00</option><option>16:00</option><option>10:00</option></select></label></div>
-    <label class="f"><span class="lbl">Тривалість</span><select class="sel"><option>25 хв (пробне)</option><option>40 хв</option></select></label>
-    <label class="f" style="margin-bottom:0"><span class="lbl">Посилання на зустріч</span><input class="inp" placeholder="https://zoom.us/j/…" value="https://zoom.us/j/9812345"></label>`,
-    f:[['Скасувати','b-sec','close'],['Зберегти дату','b-pri','toast("Дату пробного надіслано клієнту")']]},
-
-  happened:{t:'Чи відбувся урок?',s:'Софія Т. · пробне 19.08, 19:00',b:`
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Відбувся успішно</b> — переводимо заявку в «активна», нараховуємо комісію</div></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Клієнт відмовився</b> — комісія не нараховується</div></div>
-    <div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone"><b>Не відбувся</b> — перенесемо або закриємо заявку</div></div>
-    <label class="f" style="margin-top:14px;margin-bottom:0"><span class="lbl">Причина (для відмови або якщо не відбувся)</span>
-      <select class="sel"><option>Клієнт не прийшов</option><option>Не влаштувала ціна</option><option>Обрали іншого спеціаліста</option><option>Технічні проблеми</option><option>Інше</option></select></label>`,
-    f:[['Скасувати','b-sec','close'],['Підтвердити','b-pri','toast("Статус заявки оновлено")']]},
-
-  newlesson:{t:'Створити урок',s:'Урок з’явиться у розкладі й у клієнта',b:`
-    <label class="f"><span class="lbl">Учень <span class="req">*</span></span>
-      <select class="sel"><option>Софія Т. · Англійська B1</option><option>Артем К. · Німецька A2</option><option>Марта Л. · IELTS</option><option>Назар П. · Англійська НМТ</option></select></label>
-    <div class="f-row"><label class="f"><span class="lbl">Дата <span class="req">*</span></span><input class="inp" type="date" value="2026-08-18"></label>
-    <label class="f"><span class="lbl">Час <span class="req">*</span></span><select class="sel"><option>15:00</option><option>16:00</option><option>18:00</option><option>19:00</option></select></label></div>
-    <label class="f"><span class="lbl">Тривалість</span><select class="sel"><option>40 хв</option><option>25 хв</option><option>60 хв</option></select></label>
-    <div class="sw-row" style="border-top:1px solid var(--border)">
-      <div class="sw-tx"><div class="sw-t">Повторюваний урок</div><div class="sw-d">Щотижня в цей самий день і час</div></div>
-      <button class="sw on" onclick="tglSw(this)"></button></div>
-    <label class="f" style="margin:14px 0 0"><span class="lbl">Тема уроку</span><input class="inp" placeholder="Present Perfect · reading"></label>`,
-    f:[['Скасувати','b-sec','close'],['Створити урок','b-pri','toast("Урок додано до розкладу")']]},
-
-  lesson:{t:'Урок · Софія Т.',s:'16.08, 15:00 · Англійська B1 · 40 хв',b:`
-    <div class="lbl">Статус уроку</div>
-    <div class="row" style="margin-bottom:16px">
-      <span class="chip" onclick="pickChip(this)">Заплановано</span>
-      <span class="chip on" onclick="pickChip(this)">Проведено</span>
-      <span class="chip" onclick="pickChip(this)">Перенесено</span>
-      <span class="chip" onclick="pickChip(this)">Скасовано</span>
-    </div>
-    <div class="sw-row" style="border-top:1px solid var(--border)">
-      <div class="sw-tx"><div class="sw-t">Урок оплачено</div><div class="sw-d">Проведений урок за замовчуванням вважається оплаченим. Знімайте позначку, якщо оплати не було — тоді він не потрапить у статистику заробітку.</div></div>
-      <button class="sw on" onclick="tglSw(this)"></button></div>
-    <div class="stu-cell" style="margin-top:14px"><div class="stu-cell-l">Сума уроку</div><div class="stu-cell-v">₴400</div></div>`,
-    f:[['Видалити','b-danger','toast("Урок видалено")'],['Зберегти','b-pri','toast("Урок оновлено")']]},
-
-  slots:{t:'Слоти доступності',s:'Клієнт бачить у профілі лише увімкнені слоти',b:`
-    <div class="hint" style="margin-bottom:14px">Натисніть на час, щоб увімкнути або вимкнути слот. Слоти можна копіювати на весь тиждень.</div>
-    <div id="slotEditor"></div>
-    <div class="row" style="margin-top:14px"><button class="btn b-sec b-sm" onclick="toast('Пн скопійовано на всі робочі дні')"><i class="fa-regular fa-copy"></i>Копіювати Пн на всі дні</button></div>`,
-    f:[['Скасувати','b-sec','close'],['Зберегти слоти','b-pri','toast("Слоти доступності збережено")']]},
 
   addstudent:{t:'Додати учня',s:'Власний учень або учень з платформи',b:`
     <div class="lbl">Тип учня</div>
@@ -2971,7 +3175,6 @@ function openM(key){
   }).join('');
   document.getElementById('mv').classList.add('on');
   document.body.style.overflow='hidden';
-  if(key==='slots') renderSlotEditor();
 }
 function closeM(){
   document.getElementById('mv').classList.remove('on');
@@ -2989,26 +3192,9 @@ function pickSheet(el){
   el.parentElement.querySelectorAll('.sheet-i').forEach(x=>{x.style.borderColor='var(--border)';x.style.background='#fff'});
   el.style.borderColor='var(--violet)';el.style.background='var(--violet-50)';
 }
-function renderSlotEditor(){
-  const days=[['Пн',['09:00','10:00','11:00','15:00','16:00','18:00','19:00']],['Вт',['10:00','11:00','15:00','19:00']],
-              ['Ср',['16:00','18:00','19:00']],['Чт',['15:00','16:00','20:00']],['Пт',['11:00','18:00','19:00']],
-              ['Сб',['10:00','11:00']],['Нд',[]]];
-  const on=['09:00','10:00','15:00','16:00','18:00','19:00','11:00'];
-  const el=document.getElementById('slotEditor');
-  if(!el) return;
-  el.innerHTML=days.map(([d,ts])=>`
-    <div style="padding:12px 0;border-bottom:1px solid var(--border)">
-      <div class="row" style="justify-content:space-between;margin-bottom:8px">
-        <span style="font-size:13px;font-weight:900">${d}</span>
-        ${ts.length?'':'<span class="st st-mut">Вихідний</span>'}
-      </div>
-      <div class="row">${ts.map(t=>`<span class="chip${on.indexOf(t)>-1?' on':''}" onclick="tglChip(this)">${t}</span>`).join('')||'<button class="chip" onclick="toast(\'Додайте слот\')"><i class="fa-solid fa-plus"></i>Додати слот</button>'}</div>
-    </div>`).join('');
-}
-
 /* ══════════ INIT ══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
-  renderWeek();renderDay();renderMonth();renderSlotsPreview();renderLib();renderProf();renderFin();renderJournal();renderUp();renderReqs();renderTasks();
+  renderWeek();renderDay();renderMonth();renderSlots();renderLib();renderProf();renderFin();renderJournal();renderUp();reqRefresh();renderTasks();
   setMod('test');
   const vp=document.getElementById('v-profile');
   if(vp){
