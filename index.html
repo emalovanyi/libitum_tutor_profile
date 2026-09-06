@@ -169,6 +169,11 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .tab{padding:14px 14px;border:none;background:none;border-bottom:2.5px solid transparent;margin-bottom:-1px;font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;white-space:nowrap}
 .tab.on{color:var(--teal-600);border-bottom-color:var(--teal-500)}
 .tab .n{background:var(--bg);color:var(--muted);border-radius:20px;padding:1px 7px;font-size:10px;font-weight:900;margin-left:5px}
+.tab-mkt{color:var(--violet);background:var(--violet-50);border-radius:10px 10px 0 0}
+.tab-mkt i{margin-right:6px}
+.tab-mkt .n{background:#fff;color:var(--violet)}
+.tab-mkt.on{color:var(--violet);border-bottom-color:var(--violet)}
+.tab-mkt.on .n{background:var(--violet-100);color:#5B21B6}
 .tab.on .n{background:var(--teal-50);color:var(--teal-600)}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:50px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .18s}
 .chip:hover{border-color:var(--teal-400);color:var(--teal-600)}
@@ -606,10 +611,13 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
   #v-req .tabs{flex-wrap:wrap;overflow-x:visible;padding:8px 12px;gap:6px;border-bottom:none}
   #v-req .tab{padding:7px 11px;font-size:12px;border:1.5px solid var(--border);border-radius:50px;margin-bottom:0}
   #v-req .tab.on{border-color:var(--teal-500);background:var(--teal-50)}
+  #v-req .tab-mkt{border-color:var(--violet-100);background:var(--violet-50);color:var(--violet);border-radius:50px}
+  #v-req .tab-mkt.on{border-color:var(--violet);background:var(--violet-50)}
   #v-req .tab .n{margin-left:4px}
   /* дашборд: метрики компактні, по 2 в ряд */
   #v-dash .g5{grid-template-columns:repeat(2,1fr);gap:10px}
-  #v-dash .g5 .met:nth-child(5){grid-column:1 / -1}
+  #v-dash .g5 .met:first-child{display:none}
+  #v-dash .g5 .met:nth-child(5){grid-column:auto}
   #v-dash .met{padding:12px}
   #v-dash .met-h{gap:7px;margin-bottom:7px}
   #v-dash .met-ic{width:26px;height:26px;font-size:11px}
@@ -658,7 +666,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
   <nav class="sb-nav" id="sbNav">
     <div class="sb-lbl">Робота</div>
     <button class="sb-i on" data-view="dash"><i class="fa-solid fa-gauge-high"></i>Робочий стіл</button>
-    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки на пробний</button>
+    <button class="sb-i" data-view="req"><i class="fa-solid fa-inbox"></i>Заявки / Біржа</button>
     <button class="sb-i" data-view="sched"><i class="fa-regular fa-calendar"></i>Розклад</button>
     <button class="sb-i" data-view="students"><i class="fa-solid fa-user-group"></i>Мої учні</button>
     <button class="sb-i" data-view="journal"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ</button>
@@ -809,16 +817,13 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
     <!-- ═════════ 3. ЗАЯВКИ / БІРЖА ═════════ -->
     <section class="view" id="v-req">
-      <div class="h-sec">Заявки на пробний</div>
-      <p class="p-sec">Прямі заявки: учні бронюють пробний у ваших вільних слотах — ви приймаєте або відхиляєте. На <b>біржі</b> — відкриті замовлення від адміністратора: відгукуєтесь, а адміністратор обирає спеціаліста серед тих, хто відгукнувся. Комісію платите лише за успішного ліда.</p>
-
       <div class="card">
         <div class="tabs">
-          <button class="tab on" onclick="reqTab('new',this)">Нові<span class="n" id="cnNew">0</span></button>
-          <button class="tab" onclick="reqTab('market',this)">Біржа<span class="n" id="cnMarket">0</span></button>
-          <button class="tab" onclick="reqTab('approved',this)">Очікують пробного<span class="n" id="cnAppr">0</span></button>
-          <button class="tab" onclick="reqTab('done',this)">Пробний проведено<span class="n" id="cnDone">0</span></button>
-          <button class="tab" onclick="reqTab('declined',this)">Відхилені<span class="n" id="cnDecl">0</span></button>
+          <button class="tab tab-mkt" data-t="market" onclick="reqTab('market',this)"><i class="fa-solid fa-store"></i>Біржа<span class="n" id="cnMarket">0</span></button>
+          <button class="tab on" data-t="new" onclick="reqTab('new',this)">Нові<span class="n" id="cnNew">0</span></button>
+          <button class="tab" data-t="approved" onclick="reqTab('approved',this)">Очікують пробного<span class="n" id="cnAppr">0</span></button>
+          <button class="tab" data-t="done" onclick="reqTab('done',this)">Пробний проведено<span class="n" id="cnDone">0</span></button>
+          <button class="tab" data-t="declined" onclick="reqTab('declined',this)">Відхилені<span class="n" id="cnDecl">0</span></button>
         </div>
         <div class="cb" id="reqList"></div>
       </div>
@@ -934,7 +939,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       <div class="card">
         <div class="ch">
           <div><div class="ct"><i class="fa-solid fa-book-open"></i>Проведені уроки</div><div class="ct-s" id="jrnSub">—</div></div>
-          <div class="ch-r"><button class="btn b-sec b-sm" id="jrnAllBtn" onclick="openJrnAll()">Показати всі</button></div>
+          <div class="ch-r"><select class="demo-sel" id="jrnStu" onchange="setJrnStu(this.value)" title="Фільтр за учнем"><option value="">Усі учні</option></select><button class="btn b-sec b-sm" id="jrnAllBtn" onclick="openJrnAll()">Показати всі</button></div>
         </div>
         <div class="tblw">
           <table class="tbl">
@@ -986,6 +991,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
         <div class="ch">
           <div><div class="ct"><i class="fa-solid fa-book-open"></i>Історія уроків</div><div class="ct-s">Звіти після уроків і домашні завдання</div></div>
           <div class="ch-r">
+            <select class="demo-sel" id="jrnStuTx" onchange="setJrnStu(this.value)" title="Фільтр за учнем"><option value="">Усі учні</option></select>
             <span class="chip on" onclick="filterJrn('all',this)">Усі</span>
             <span class="chip" onclick="filterJrn('noreport',this)">Без звіту</span>
             <span class="chip" onclick="filterJrn('review',this)">ДЗ на перевірці</span>
@@ -1227,6 +1233,17 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
     <!-- ═════════ 1. ПРОФІЛЬ ═════════ -->
     <section class="view" id="v-profile">
+      <div class="bn bn-v" style="margin-bottom:16px">
+        <div class="bn-ic"><i class="fa-solid fa-user-gear"></i></div>
+        <div style="flex:1"><div class="bn-t">Демо: тип спеціаліста</div><div class="bn-d">Перемкніть роль — розділи «Напрямки/предмети» та «Освіта» змінять логіку під репетитора, психолога чи логопеда.</div></div>
+        <div class="bn-r">
+          <select class="demo-sel specSel" onchange="setSpecType(this.value)" title="Демо: тип спеціаліста">
+            <option value="rep">Репетитор</option>
+            <option value="psy">Психолог</option>
+            <option value="logo">Логопед</option>
+          </select>
+        </div>
+      </div>
       <div class="bn bn-warn" id="profBanner">
         <div class="bn-ic"><i class="fa-solid fa-hourglass-half"></i></div>
         <div style="flex:1">
@@ -1286,7 +1303,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
           <div class="f-row">
             <label class="f"><span class="lbl">Ім'я та прізвище <span class="req">*</span></span><input class="inp" value="Олена І."></label>
-            <label class="f"><span class="lbl">Стаж викладання <span class="req">*</span></span>
+            <label class="f"><span class="lbl"><span id="specExpLbl">Стаж викладання</span> <span class="req">*</span></span>
               <select class="sel"><option>7 років</option><option>1 рік</option><option>3 роки</option><option>5 років</option><option>10+ років</option></select>
             </label>
           </div>
@@ -1335,31 +1352,22 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
         </div>
       </div>
 
-      <!-- предмети + ціни -->
+      <!-- предмети / напрямки + ціни -->
       <div class="card">
         <div class="ch">
-          <div><div class="ct"><i class="fa-solid fa-book"></i>Предмети, рівні та ціни</div><div class="ct-s">Своя ціна для кожної пари «предмет + рівень»</div></div>
-          <div class="ch-r"><button class="btn b-pri b-sm" onclick="openM('subject')"><i class="fa-solid fa-plus"></i>Додати пару</button></div>
+          <div><div class="ct"><i class="fa-solid fa-book"></i><span id="specSubjTitle">Предмети, рівні та ціни</span></div><div class="ct-s" id="specSubjSub">—</div></div>
+          <div class="ch-r"><button class="btn b-pri b-sm" id="specSubjAdd" onclick="openSubjectModal()"><i class="fa-solid fa-plus"></i>Додати пару</button></div>
         </div>
         <div class="tblw">
           <table class="tbl">
-            <thead><tr><th>Предмет</th><th>Рівень / клас</th><th>Тривалість</th><th>Ціна</th><th style="text-align:right">Дії</th></tr></thead>
-            <tbody>
-              <tr><td class="cell-n">Англійська мова</td><td>1–4 клас</td><td>40 хв</td><td class="num">₴350</td>
-                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
-              <tr><td class="cell-n">Англійська мова</td><td>5–9 клас</td><td>40 хв</td><td class="num">₴400</td>
-                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
-              <tr><td class="cell-n">Англійська мова</td><td>НМТ / ЗНО</td><td>60 хв</td><td class="num">₴650</td>
-                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
-              <tr><td class="cell-n">Німецька мова</td><td>A1–B1</td><td>40 хв</td><td class="num">₴380</td>
-                <td style="text-align:right"><button class="btn b-ic b-sm" onclick="openM('subject')"><i class="fa-solid fa-pen"></i></button></td></tr>
-            </tbody>
+            <thead><tr id="specSubjHead"></tr></thead>
+            <tbody id="specSubjBody"></tbody>
           </table>
         </div>
         <div class="cb tight" style="padding-top:14px;padding-bottom:16px">
           <div class="bn bn-ok" style="margin:0">
             <div class="bn-ic"><i class="fa-solid fa-tag"></i></div>
-            <div><div class="bn-t">У каталозі показуємо ціну «від ₴350»</div><div class="bn-d">Це найдешевша пара з вашого списку — «Англійська, 1–4 клас». Ціна оновлюється автоматично.</div></div>
+            <div><div class="bn-t" id="specPriceT">—</div><div class="bn-d" id="specPriceD">—</div></div>
           </div>
         </div>
       </div>
@@ -1367,26 +1375,10 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       <!-- освіта -->
       <div class="card">
         <div class="ch">
-          <div><div class="ct"><i class="fa-solid fa-graduation-cap"></i>Освіта та сертифікати</div><div class="ct-s">Мінімум 1 запис із файлом диплому</div></div>
-          <div class="ch-r"><button class="btn b-pri b-sm" onclick="openM('edu')"><i class="fa-solid fa-plus"></i>Додати запис</button></div>
+          <div><div class="ct"><i class="fa-solid fa-graduation-cap"></i><span id="specEduTitle">Освіта та сертифікати</span></div><div class="ct-s" id="specEduSub">—</div></div>
+          <div class="ch-r"><button class="btn b-pri b-sm" id="specEduAdd" onclick="openM('edu')"><i class="fa-solid fa-plus"></i>Додати запис</button></div>
         </div>
-        <div class="cb tight" style="padding-top:8px;padding-bottom:16px">
-          <div class="li">
-            <div class="li-ic" style="background:var(--blue-50);color:var(--blue)"><i class="fa-solid fa-graduation-cap"></i></div>
-            <div class="li-b"><div class="li-t">КНУ ім. Шевченка · Іноземна філологія</div><div class="li-d">Бакалавр · 2015–2019 <span class="dotsep"></span> diploma_knu.pdf</div></div>
-            <div class="li-r"><span class="st st-ok"><i class="fa-solid fa-check"></i>Підтверджено</span><button class="btn b-ic b-sm" onclick="openM('edu')"><i class="fa-solid fa-pen"></i></button></div>
-          </div>
-          <div class="li">
-            <div class="li-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-certificate"></i></div>
-            <div class="li-b"><div class="li-t">Cambridge CELTA</div><div class="li-d">Сертифікат викладача · 2020 <span class="dotsep"></span> celta.pdf</div></div>
-            <div class="li-r"><span class="st st-ok"><i class="fa-solid fa-check"></i>Підтверджено</span><button class="btn b-ic b-sm" onclick="openM('edu')"><i class="fa-solid fa-pen"></i></button></div>
-          </div>
-          <div class="li">
-            <div class="li-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-award"></i></div>
-            <div class="li-b"><div class="li-t">Goethe-Zertifikat C1</div><div class="li-d">Goethe-Institut · 2022 <span class="dotsep"></span> goethe_c1.pdf</div></div>
-            <div class="li-r"><span class="st st-warn"><i class="fa-solid fa-hourglass-half"></i>На перевірці</span><button class="btn b-ic b-sm" onclick="openM('edu')"><i class="fa-solid fa-pen"></i></button></div>
-          </div>
-        </div>
+        <div class="cb tight" style="padding-top:8px;padding-bottom:16px" id="specEduBody"></div>
       </div>
 
       <!-- формати -->
@@ -1659,7 +1651,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 /* ══════════ NAV ══════════ */
 const TITLES = {
   dash:['Робочий стіл','Понеділок, 17 серпня 2026'],
-  req:['Заявки на пробний','Ліди від учнів · прийняти або відхилити'],
+  req:['Заявки / Біржа','Прямі заявки та біржа замовлень'],
   sched:['Розклад','17–23 серпня 2026'],
   students:['Мої учні','4 активних · ліміт 5'],
   journal:['Журнал і ДЗ','Звіти після уроків та ДЗ'],
@@ -1686,6 +1678,7 @@ function go(v){
   const t=TITLES[v]||['',''];
   document.getElementById('tbT').textContent=t[0];
   document.getElementById('tbS').textContent=t[1];
+  if(v==='req' && typeof reqResetToNew==='function') reqResetToNew();
   closeSb();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1750,6 +1743,91 @@ function renderProf(){
   if(pct===100){ rw.style.display=''; renderReward(); } else { rw.style.display='none'; }
 }
 function completeReq(k){ const r=PROF_REQ.find(x=>x.k===k); if(r){ r.done=true; renderProf(); toast('Поле додано ✓'); } }
+
+/* ══════════ ДЕМО: тип спеціаліста (репетитор / психолог / логопед) ══════════ */
+const SPEC={
+  rep:{sub:'Кабінет репетитора',badge:'Репетитор',btn:'b-pri',exp:'Стаж викладання',
+    subjTitle:'Предмети, рівні та ціни',subjSub:'Своя ціна для кожної пари «предмет + рівень»',col1:'Предмет',col2:'Рівень / клас',addLbl:'Додати пару',unit:'урок',unitAcc:'урок',
+    rows:[['Англійська мова','1–4 клас','40 хв',350],['Англійська мова','5–9 клас','40 хв',400],['Англійська мова','НМТ / ЗНО','60 хв',650],['Німецька мова','A1–B1','40 хв',380]],
+    priceNote:'Це найдешевша пара з вашого списку. Ціна оновлюється автоматично.',
+    eduTitle:'Освіта та сертифікати',eduSub:'Мінімум 1 запис із файлом диплому',eduHint:'',
+    edu:[['fa-graduation-cap','blue','КНУ ім. Шевченка · Іноземна філологія','Бакалавр · 2015–2019 · diploma_knu.pdf','ok','Підтверджено'],
+         ['fa-certificate','teal','Cambridge CELTA','Сертифікат викладача · 2020 · celta.pdf','ok','Підтверджено'],
+         ['fa-award','violet','Goethe-Zertifikat C1','Goethe-Institut · 2022 · goethe_c1.pdf','warn','На перевірці']]},
+  psy:{sub:'Кабінет психолога',badge:'Психолог',btn:'b-amber',exp:'Стаж практики',
+    subjTitle:'Напрямки та ціни',subjSub:'Своя ціна для кожного напрямку роботи',col1:'Напрямок',col2:'Категорія',addLbl:'Додати напрямок',unit:'сесія',unitAcc:'сесію',
+    rows:[['Тривожність та стрес','Дорослі','60 хв',800],['Депресія','Дорослі','60 хв',800],['Сімейна терапія','Пари / сімʼї','90 хв',1200],['Дитяча психологія','Діти 6–12','50 хв',700]],
+    priceNote:'Це найдешевший напрямок із вашого списку. Ціна оновлюється автоматично.',
+    eduTitle:'Освіта та сертифікація методів',eduSub:'Диплом психолога + підтвердження методів — обовʼязково',
+    eduHint:'Для психолога обовʼязковий диплом за напрямком «Психологія» та сертифікати методів терапії (КПТ, гештальт, схема-терапія тощо). Без цього профіль не проходить модерацію.',
+    edu:[['fa-graduation-cap','blue','КНУ ім. Шевченка · Психологія','Магістр · 2013–2018 · diploma_psy.pdf','ok','Підтверджено'],
+         ['fa-certificate','teal','Сертифікат КПТ','Когнітивно-поведінкова терапія · 2020 · kpt.pdf','ok','Підтверджено'],
+         ['fa-user-shield','violet','Супервізія (200 год)','Супервізійні години · 2022 · supervision.pdf','warn','На перевірці']]},
+  logo:{sub:'Кабінет логопеда',badge:'Логопед',btn:'b-violet',exp:'Стаж роботи',
+    subjTitle:'Напрямки корекції та ціни',subjSub:'Своя ціна для кожного напрямку корекції',col1:'Напрямок',col2:'Категорія',addLbl:'Додати напрямок',unit:'заняття',unitAcc:'заняття',
+    rows:[['Постановка звуків','Діти 4–7','40 хв',500],['Затримка мовлення (ЗНМ)','Діти 3–6','40 хв',550],['Дислексія / дисграфія','Школярі','45 хв',550],['Корекція заїкання','Діти / підлітки','45 хв',600]],
+    priceNote:'Це найдешевший напрямок із вашого списку. Ціна оновлюється автоматично.',
+    eduTitle:'Освіта та кваліфікація',eduSub:'Диплом логопеда / дефектолога — обовʼязково',
+    eduHint:'Для логопеда обовʼязковий диплом за напрямком «Логопедія» або «Дефектологія» та курси з корекції мовлення.',
+    edu:[['fa-graduation-cap','blue','НПУ ім. Драгоманова · Логопедія','Магістр дефектології · 2014–2019 · diploma_logo.pdf','ok','Підтверджено'],
+         ['fa-certificate','teal','Курс «Корекція звуковимови»','2021 · zvuk.pdf','ok','Підтверджено'],
+         ['fa-award','violet','Робота з ЗНМ / ФФН','2022 · znm.pdf','warn','На перевірці']]}
+};
+const SPEC_DIRS={
+  psy:['Тривожність та стрес','Депресія','Сімейна терапія','Дитяча психологія','Травма та ПТСР','Самооцінка','Стосунки','Горе та втрата','Панічні атаки','Вигорання','➕ Інший напрямок…'],
+  logo:['Постановка звуків','Затримка мовлення (ЗНМ)','Дислексія / дисграфія','Корекція заїкання','ФФН / ФНМ','Аутизм (мовлення)','Підготовка до школи','Відновлення після інсульту','➕ Інший напрямок…']
+};
+const SPEC_CAT={ psy:['Дорослі','Підлітки','Діти 6–12','Пари / сімʼї'], logo:['Діти 3–6','Діти 4–7','Школярі','Підлітки','Дорослі'] };
+const REP_SUBJ_OPTS='<optgroup label="Мови"><option>Англійська мова</option><option>Німецька мова</option><option>Французька мова</option><option>Іспанська мова</option><option>Польська мова</option><option>Українська мова та література</option></optgroup>'
+ +'<optgroup label="Точні науки"><option>Математика</option><option>Фізика</option><option>Хімія</option><option>Інформатика</option><option>Програмування</option></optgroup>'
+ +'<optgroup label="Природничі та гуманітарні"><option>Біологія</option><option>Географія</option><option>Історія України</option></optgroup>'
+ +'<optgroup label="Підготовка"><option>НМТ / ЗНО</option><option>IELTS / TOEFL</option></optgroup><option value="other">➕ Інший предмет…</option>';
+let specType='rep';
+function specCfg(){ return SPEC[specType]; }
+function renderSpec(){
+  const c=specCfg(), g=function(id){return document.getElementById(id)};
+  if(!g('specSubjBody')) return;
+  g('specSubjTitle').textContent=c.subjTitle;
+  g('specSubjSub').textContent=c.subjSub;
+  g('specSubjHead').innerHTML='<th>'+c.col1+'</th><th>'+c.col2+'</th><th>Тривалість</th><th>Ціна</th><th style="text-align:right">Дії</th>';
+  g('specSubjBody').innerHTML=c.rows.map(function(r){return '<tr><td class="cell-n">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="num">'+num(r[3])+'</td><td style="text-align:right"><button class="btn b-ic b-sm" onclick="openSubjectModal()"><i class="fa-solid fa-pen"></i></button></td></tr>';}).join('');
+  const aB=g('specSubjAdd'); aB.className='btn '+c.btn+' b-sm'; aB.innerHTML='<i class="fa-solid fa-plus"></i>'+c.addLbl;
+  const minP=Math.min.apply(null,c.rows.map(function(r){return r[3]}));
+  g('specPriceT').textContent='У каталозі показуємо ціну «від '+num(minP)+'»';
+  g('specPriceD').textContent=c.priceNote+' Ціна вказується за '+c.unitAcc+'.';
+  g('specEduTitle').textContent=c.eduTitle;
+  g('specEduSub').textContent=c.eduSub;
+  const aE=g('specEduAdd'); aE.className='btn '+c.btn+' b-sm';
+  const COL={blue:['var(--blue-50)','var(--blue)'],teal:['var(--teal-50)','var(--teal-600)'],violet:['var(--violet-50)','var(--violet)']};
+  g('specEduBody').innerHTML=c.edu.map(function(e){var cc=COL[e[1]]||COL.blue,stx=e[4]==='ok'?'st-ok':'st-warn',ic=e[4]==='ok'?'fa-check':'fa-hourglass-half';
+    return '<div class="li"><div class="li-ic" style="background:'+cc[0]+';color:'+cc[1]+'"><i class="fa-solid '+e[0]+'"></i></div><div class="li-b"><div class="li-t">'+e[2]+'</div><div class="li-d">'+e[3]+'</div></div><div class="li-r"><span class="st '+stx+'"><i class="fa-solid '+ic+'"></i>'+e[5]+'</span><button class="btn b-ic b-sm" onclick="openM(\'edu\')"><i class="fa-solid fa-pen"></i></button></div></div>';
+  }).join('')+(c.eduHint?'<div class="bn bn-warn" style="margin:12px 0 0"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">'+c.eduHint+'</div></div></div>':'');
+  const el=document.getElementById('specExpLbl'); if(el) el.textContent=c.exp;
+  const sb=document.querySelector('.sb-logo-sub'); if(sb) sb.textContent=c.sub;
+}
+function setSpecType(t){ specType=t; document.querySelectorAll('.specSel').forEach(function(s){s.value=t}); renderSpec(); toast('Тип спеціаліста: '+SPEC[t].badge); }
+function openSubjectModal(){
+  const c=specCfg();
+  document.getElementById('mTitle').textContent = specType==='rep'?'Предмет, рівень і ціна':(specType==='psy'?'Напрямок і ціна':'Напрямок корекції і ціна');
+  document.getElementById('mSub').textContent = specType==='rep'?'Своя ціна для кожної пари':'Своя ціна для кожного напрямку';
+  let b='';
+  if(specType==='rep'){
+    b+='<label class="f"><span class="lbl">Предмет <span class="req">*</span></span><select class="sel">'+REP_SUBJ_OPTS+'</select></label>';
+    b+='<div class="f-row"><label class="f"><span class="lbl">Рівень / клас <span class="req">*</span></span><select class="sel"><option>1–4 клас</option><option>5–9 клас</option><option>10–11 клас</option><option>НМТ / ЗНО</option><option>Дорослі A1–B1</option><option>Дорослі B2–C1</option></select></label>'
+      +'<label class="f"><span class="lbl">Тривалість</span><select class="sel"><option>40 хв</option><option>60 хв</option><option>25 хв</option><option>90 хв</option></select></label></div>';
+  } else {
+    const dirs=SPEC_DIRS[specType], cats=SPEC_CAT[specType];
+    b+='<label class="f"><span class="lbl">Напрямок <span class="req">*</span></span><select class="sel">'+dirs.map(function(d){return '<option'+(d.indexOf('➕')===0?' value="other"':'')+'>'+d+'</option>';}).join('')+'</select></label>';
+    b+='<div class="f-row"><label class="f"><span class="lbl">Категорія <span class="req">*</span></span><select class="sel">'+cats.map(function(x){return '<option>'+x+'</option>';}).join('')+'</select></label>'
+      +'<label class="f"><span class="lbl">Тривалість</span><select class="sel">'+(specType==='psy'?'<option>60 хв</option><option>50 хв</option><option>90 хв</option><option>45 хв</option>':'<option>40 хв</option><option>45 хв</option><option>30 хв</option><option>60 хв</option>')+'</select></label></div>';
+  }
+  b+='<div class="lbl">Формат</div><div class="row" style="margin-bottom:14px"><span class="chip on" onclick="tglChip(this)"><i class="fa-solid fa-video"></i>Онлайн</span><span class="chip" onclick="tglChip(this)"><i class="fa-solid fa-house"></i>Офлайн</span>'+(specType==='rep'?'<span class="chip" onclick="tglChip(this)"><i class="fa-solid fa-user-group"></i>Групові</span>':(specType==='psy'?'<span class="chip" onclick="tglChip(this)"><i class="fa-solid fa-user-group"></i>Парні</span>':''))+'</div>';
+  b+='<label class="f" style="margin-bottom:0"><span class="lbl">Ціна за '+c.unitAcc+', ₴ <span class="req">*</span></span><input class="inp" type="number" value="'+c.rows[0][3]+'"></label>';
+  b+='<div class="hint" style="margin-top:12px">У каталозі показуємо найдешевшу ціну з позначкою «від».</div>';
+  document.getElementById('mBody').innerHTML=b;
+  document.getElementById('mFoot').innerHTML='<button class="btn b-danger" onclick="closeM();toast(\'Видалено\')">Видалити</button><button class="btn '+c.btn+'" onclick="closeM();toast(\'Збережено · іде на модерацію\')"><i class="fa-solid fa-check"></i>Зберегти</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
 function toggleProfDemo(el){ const full=!el.classList.contains('on'); el.classList.toggle('on',full); PROF_REQ.forEach(r=>{ r.done = full ? true : (r.k!=='zoom'); }); renderProf(); }
 function renderReward(){
   const body=document.getElementById('promoRewardBody');
@@ -2288,8 +2366,8 @@ function dowLabel(day){ if(day===17) return 'Сьогодні'; if(day===18) ret
 
 /* ── Наступні уроки ── */
 const UP=[
- {id:'u1',date:'17',dow:'Сьогодні',time:'15:00',dur:'40 хв',stu:'Софія Т.',subj:'Англійська',lvl:'B1',plat:'Zoom',topic:'Present Perfect · reading на швидкість',price:400,num:25,state:'soon',note:'2× на тиждень · ціль НМТ 170+'},
- {id:'u2',date:'17',dow:'Сьогодні',time:'18:00',dur:'40 хв',stu:'Артем К.',subj:'Німецька',lvl:'A2',plat:'Google Meet',topic:'Perfekt · закріплення haben/sein',price:380,num:12,state:'plan',note:'1× на тиждень · шкільна програма'},
+ {id:'u1',date:'17',dow:'Сьогодні',time:'15:00',dur:'60 хв',stu:'Софія Т.',subj:'Англійська',lvl:'B1',plat:'Zoom',topic:'Present Perfect · reading на швидкість',price:400,num:25,state:'soon',note:'2× на тиждень · ціль НМТ 170+'},
+ {id:'u2',date:'17',dow:'Сьогодні',time:'18:00',dur:'60 хв',stu:'Артем К.',subj:'Німецька',lvl:'A2',plat:'Google Meet',topic:'Perfekt · закріплення haben/sein',price:380,num:12,state:'plan',note:'1× на тиждень · шкільна програма'},
  {id:'u3',date:'18',dow:'Завтра',time:'10:00',dur:'60 хв',stu:'Марта Л.',subj:'IELTS',lvl:'B2',plat:'Zoom',topic:'IELTS Speaking Part 3 · abstract topics',price:650,num:33,state:'plan',note:'2× на тиждень · ціль Band 7.0'},
  {id:'u4',date:'19',dow:'Середа',time:'19:00',dur:'25 хв',stu:'Олег Д.',subj:'Розмовна англ.',lvl:'—',plat:'Zoom',topic:'Пробне заняття · знайомство і рівень',price:0,num:0,state:'trialp',note:'Дорослий · співбесіда англійською · очікує підтвердження'},
  {id:'u5',date:'20',dow:'Четвер',time:'11:00',dur:'25 хв',stu:'Ірина К.',subj:'Англійська НМТ',lvl:'—',plat:'Zoom',topic:'Пробне заняття · діагностика',price:0,num:0,state:'trial',note:'9 клас · підготовка до НМТ'}
@@ -2399,10 +2477,19 @@ function leadCard(l){
     +'<div class="row" style="margin-bottom:12px"><span class="st st-bad"><i class="fa-solid fa-xmark"></i>Відхилено</span><span class="st st-mut">'+(l.reason||'')+'</span></div>'
     +'<div class="rq-a"><button class="btn b-sec b-sm" onclick="openLeadDetail(\''+l.id+'\')">Деталі</button></div></div>';
 }
+let showHiddenMkt=false;
+function myMarket(){ var subj=(typeof TUTOR_SUBJ!=='undefined')?TUTOR_SUBJ:['Англійська','Німецька']; return MARKET.filter(function(m){return subj.indexOf(m.subj)>-1;}); }
 function reqTab(state,btn){
   if(btn){ btn.parentElement.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on')}); btn.classList.add('on'); }
   reqTabState=state; renderReqPage();
 }
+function reqResetToNew(){
+  reqTabState='new';
+  var tabs=document.querySelectorAll('#v-req .tabs .tab');
+  tabs.forEach(function(t){ t.classList.toggle('on', t.dataset.t==='new'); });
+  renderReqPage();
+}
+function toggleHiddenMkt(){ showHiddenMkt=!showHiddenMkt; renderReqPage(); }
 const REQ_INTRO={
   new:['bn-ok','fa-circle-info','Нові заявки на пробний','Учень сам обрав вільний слот у вашому розкладі. Перегляньте лід і прийміть або відхиліть — час призначати не треба.'],
   market:['bn-v','fa-store','Біржа · відкриті заявки від адміністратора','Адміністратор публікує відкриті замовлення. Відгукніться на ті, що вам підходять — <b>адміністратор обере спеціаліста серед тих, хто відгукнувся</b>, і призначить на замовлення. Якщо оберуть вас — заявка перейде у «Нові».'],
@@ -2415,8 +2502,15 @@ function renderReqPage(){
   const intro=REQ_INTRO[reqTabState];
   let h='<div class="bn '+intro[0]+'"><div class="bn-ic"><i class="fa-solid '+intro[1]+'"></i></div><div><div class="bn-t">'+intro[2]+'</div><div class="bn-d">'+intro[3]+'</div></div></div>';
   if(reqTabState==='market'){
-    const list=MARKET.filter(function(m){return m.state!=='hidden'});
-    h+=list.length?list.map(marketCard).join(''):'<div style="text-align:center;padding:30px 16px;color:var(--muted)">Немає відкритих заявок на біржі.</div>';
+    const mine=myMarket();
+    const hiddenCnt=mine.filter(function(m){return m.state==='hidden'}).length;
+    const offCnt=MARKET.length-mine.length;
+    let list=showHiddenMkt?mine:mine.filter(function(m){return m.state!=='hidden'});
+    h+='<div class="row" style="justify-content:space-between;margin:-4px 0 12px;gap:10px">'
+      +'<span class="st st-mut"><i class="fa-solid fa-filter"></i>Лише ваші предмети'+(offCnt?' · '+offCnt+' з інших приховано':'')+'</span>'
+      +(hiddenCnt?'<button class="btn b-sec b-xs" onclick="toggleHiddenMkt()"><i class="fa-solid fa-eye'+(showHiddenMkt?'-slash':'')+'"></i>'+(showHiddenMkt?'Сховати приховані':'Приховані ('+hiddenCnt+')')+'</button>':'')
+      +'</div>';
+    h+=list.length?list.map(marketCard).join(''):'<div style="text-align:center;padding:30px 16px;color:var(--muted)">Немає відкритих заявок на біржі з ваших предметів.</div>';
   } else {
     const list=LEADS.filter(function(l){return l.state===reqTabState});
     h+=list.length?list.map(leadCard).join(''):'<div style="text-align:center;padding:30px 16px;color:var(--muted)">Немає заявок у цьому статусі.</div>';
@@ -2428,7 +2522,7 @@ function renderReqCounts(){
   const c=function(s){return LEADS.filter(function(l){return l.state===s}).length;};
   const set=function(id,n){var e=document.getElementById(id); if(e) e.textContent=n;};
   set('cnNew',c('new')); set('cnAppr',c('approved')); set('cnDone',c('done')); set('cnDecl',c('declined'));
-  set('cnMarket',MARKET.filter(function(m){return m.state==='open'}).length);
+  set('cnMarket',myMarket().filter(function(m){return m.state==='open'}).length);
 }
 function renderReqs(){ /* дашборд: тільки нові */
   const b=document.getElementById('reqBody'); if(!b) return;
@@ -2444,7 +2538,9 @@ const MARKET=[
  {id:'m3',subj:'Англійська',lvl:'дорослий · Beginner',goal:'англійська з нуля для подорожей',mode:'Онлайн',freq:2,city:'Онлайн',price:450,posted:'1 год тому',responders:4,cap:5,state:'open',msg:'Хочу вивчити англійську з нуля для подорожей і базового спілкування. Вечірні години.'},
  {id:'m4',subj:'Англійська',lvl:'5 клас',goal:'розмовна практика + школа',mode:'Онлайн',freq:2,city:'Онлайн',price:400,posted:'3 год тому',responders:3,cap:5,state:'applied',msg:'Донька, 5 клас, треба розмовна практика і підтримка зі школи.'},
  {id:'m5',subj:'Німецька',lvl:'дорослий · B1',goal:'підготовка до співбесіди',mode:'Онлайн',freq:3,city:'Онлайн',price:500,posted:'учора',responders:5,cap:5,state:'won',msg:'Готуюсь до співбесіди в німецькій компанії, треба інтенсив.'},
- {id:'m6',subj:'Англійська',lvl:'9 клас · НМТ',goal:'підготовка до НМТ',mode:'Онлайн',freq:2,city:'Онлайн',price:550,posted:'учора',responders:5,cap:5,state:'lost',msg:'Підготовка до НМТ з англійської, дитина у 9 класі.'}
+ {id:'m6',subj:'Англійська',lvl:'9 клас · НМТ',goal:'підготовка до НМТ',mode:'Онлайн',freq:2,city:'Онлайн',price:550,posted:'учора',responders:5,cap:5,state:'lost',msg:'Підготовка до НМТ з англійської, дитина у 9 класі.'},
+ {id:'m7',subj:'Математика',lvl:'8 клас',goal:'алгебра',mode:'Онлайн',freq:2,city:'Онлайн',price:400,posted:'25 хв тому',responders:1,cap:5,state:'open',msg:'Не ваш предмет — не показується на біржі.'},
+ {id:'m8',subj:'Французька',lvl:'дорослий',goal:'з нуля',mode:'Онлайн',freq:1,city:'Онлайн',price:420,posted:'2 год тому',responders:0,cap:5,state:'open',msg:'Не ваш предмет — не показується на біржі.'}
 ];
 function marketById(id){ return MARKET.find(function(m){return m.id===id}); }
 function marketRespLine(m){ return '<span class="st st-info"><i class="fa-solid fa-users"></i>Відгукнулось '+m.responders+' з '+m.cap+'</span>'; }
@@ -2468,13 +2564,19 @@ function marketCard(m){
       +'<div class="rq-note">Замовлення додано до вкладки «Нові» — узгодьте пробний з учнем.</div>'
       +'<div class="rq-a"><button class="btn b-sec b-sm" onclick="openMarketDetail(\''+m.id+'\')">Деталі</button></div></div>';
   }
+  if(m.state==='hidden'){
+    return '<div class="rq" style="opacity:.7;background:var(--bg)">'+h
+      +'<div class="row" style="margin-bottom:12px"><span class="st st-mut"><i class="fa-solid fa-eye-slash"></i>Приховано з біржі</span></div>'
+      +'<div class="rq-a"><button class="btn b-pri b-sm" onclick="unhideMarket(\''+m.id+'\')"><i class="fa-solid fa-rotate-left"></i>Повернути</button><button class="btn b-sec b-sm" onclick="openMarketDetail(\''+m.id+'\')">Деталі</button></div></div>';
+  }
   return '<div class="rq" style="opacity:.8">'+h
     +'<div class="row" style="margin-bottom:12px"><span class="st st-mut"><i class="fa-solid fa-user-xmark"></i>Адміністратор обрав іншого спеціаліста</span></div>'
     +'<div class="rq-a"><button class="btn b-sec b-sm" onclick="openMarketDetail(\''+m.id+'\')">Деталі</button></div></div>';
 }
 function applyMarket(id){ const m=marketById(id); if(m){ m.state='applied'; m.responders=Math.min(m.cap,m.responders+1); } renderReqPage(); toast('Ви відгукнулись · адміністратор обере спеціаліста серед відгуків'); }
 function withdrawMarket(id){ const m=marketById(id); if(m){ m.state='open'; m.responders=Math.max(0,m.responders-1); } renderReqPage(); toast('Відгук відкликано'); }
-function hideMarket(id){ const m=marketById(id); if(m) m.state='hidden'; renderReqPage(); toast('Заявку приховано з біржі'); }
+function hideMarket(id){ const m=marketById(id); if(m) m.state='hidden'; renderReqPage(); toast('Заявку приховано · повернути можна кнопкою «Приховані»'); }
+function unhideMarket(id){ const m=marketById(id); if(m) m.state='open'; renderReqPage(); toast('Заявку повернено на біржу'); }
 function openMarketDetail(id){
   const m=marketById(id); if(!m) return;
   document.getElementById('mTitle').textContent='Заявка з біржі · '+m.subj;
@@ -2671,7 +2773,13 @@ const LESSONS=[
    report:{status:'sent',grade:9,tags:['Виконав ДЗ'],text:'Пройшли лексику за темами «освіта» і «технології». Назар вивчив 30 слів, застосовує в реченнях.'},
    hw:{status:'graded',grade:10,task:'Вивчити 30 слів + скласти міні-твір (100 слів).',file:'vocab_nmt.pdf',size:'0,7 МБ',up:'05.08, 22:00',comment:'Твір цікавий, лексика доречна. Кілька дрібних помилок з артиклями.'}}
 ];
-let jrnFilter='all', jrnPage=1;
+let jrnFilter='all', jrnPage=1, jrnStuFilter='';
+function jrnStudents(){ const set={}; LESSONS.forEach(function(l){set[l.stu]=1}); return Object.keys(set).sort(function(a,b){return a.localeCompare(b,'uk')}); }
+function renderJrnStuFilter(){
+  const opts='<option value="">Усі учні</option>'+jrnStudents().map(function(n){return '<option'+(n===jrnStuFilter?' selected':'')+'>'+n+'</option>';}).join('');
+  ['jrnStu','jrnStuTx'].forEach(function(id){ var s=document.getElementById(id); if(s){ s.innerHTML=opts; s.value=jrnStuFilter; } });
+}
+function setJrnStu(v){ jrnStuFilter=v; jrnPage=1; renderJrnStuFilter(); renderJournal(); if(document.getElementById('v-journaltx').classList.contains('on')) renderJrnAll(); }
 function lessById(id){ return LESSONS.find(l=>l.id===id); }
 function jrnSorted(){ return LESSONS.slice().sort((a,b)=> a.date<b.date?1:(a.date>b.date?-1:(b.id-a.id))); }
 function jrnReportBadge(l){
@@ -2715,10 +2823,11 @@ function renderJournal(){
   g('jrnMNoRep').textContent=noRep;
   g('jrnMReview').textContent=rev;
   g('jrnMGraded').textContent=graded;
-  const all=jrnSorted();
-  g('jrnBody').innerHTML=all.slice(0,5).map(jrnRow).join('');
-  g('jrnSub').textContent=noRep+' без звіту · '+rev+' ДЗ на перевірці';
+  const all=jrnSorted().filter(l=>!jrnStuFilter||l.stu===jrnStuFilter);
+  g('jrnBody').innerHTML=all.length?all.slice(0,5).map(jrnRow).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:26px 14px">У цього учня немає проведених уроків.</td></tr>';
+  g('jrnSub').textContent = jrnStuFilter ? (jrnStuFilter+' · '+all.length+' '+plUr(all.length)) : (noRep+' без звіту · '+rev+' ДЗ на перевірці');
   g('jrnAllBtn').textContent='Показати всі ('+all.length+')';
+  renderJrnStuFilter();
 }
 function jrnRefresh(){ renderJournal(); if(document.getElementById('v-journaltx').classList.contains('on')) renderJrnAll(); }
 function jrnMatch(l,f){
@@ -2730,7 +2839,8 @@ function jrnMatch(l,f){
 function openJrnAll(){ jrnPage=1; go('journaltx'); renderJrnAll(); }
 function filterJrn(f,el){ document.querySelectorAll('#v-journaltx .chip').forEach(c=>c.classList.remove('on')); if(el) el.classList.add('on'); jrnFilter=f; jrnPage=1; renderJrnAll(); }
 function renderJrnAll(){
-  let rows=jrnSorted().filter(l=>jrnMatch(l,jrnFilter));
+  renderJrnStuFilter();
+  let rows=jrnSorted().filter(l=>jrnMatch(l,jrnFilter) && (!jrnStuFilter||l.stu===jrnStuFilter));
   const per=8, pages=Math.max(1,Math.ceil(rows.length/per));
   if(jrnPage>pages) jrnPage=pages;
   const start=(jrnPage-1)*per, page=rows.slice(start,start+per);
@@ -2915,7 +3025,17 @@ function tLsSub(x){
   if(x.st==='trial') return x.stu;
   return x.stu+' · '+(x.lvl&&x.lvl!=='—'?x.lvl:'Онлайн');
 }
-function calRefresh(){ renderWeek(); renderMonth(); renderDay(); }
+let calStuFilter='';
+function calMatch(x){ return !calStuFilter || x.stu===calStuFilter; }
+function calStudents(){ const set={}; Object.keys(TLESSONS).forEach(function(k){(TLESSONS[k]||[]).forEach(function(x){set[x.stu]=1});}); return Object.keys(set).sort(function(a,b){return a.localeCompare(b,'uk')}); }
+function renderCalStuFilter(){
+  const sel=document.getElementById('calStu'); if(!sel) return;
+  if(calStuFilter && calStudents().indexOf(calStuFilter)===-1) calStuFilter='';
+  sel.innerHTML='<option value="">Усі учні</option>'+calStudents().map(function(n){return '<option'+(n===calStuFilter?' selected':'')+'>'+n+'</option>';}).join('');
+  sel.value=calStuFilter;
+}
+function setCalStu(v){ calStuFilter=v; calRefresh(); }
+function calRefresh(){ renderCalStuFilter(); renderWeek(); renderMonth(); renderDay(); }
 
 function fmtWeekRange(a,b){
   const sameM=a.getMonth()===b.getMonth(), sameY=a.getFullYear()===b.getFullYear();
@@ -2936,6 +3056,7 @@ function renderWeek(){
     return '<div class="wk-col'+(today?' today':'')+'" data-key="'+key+'" ondragover="wkDragOver(event)" ondragleave="wkDragLeave(event)" ondrop="wkDrop(event)">'
       +'<div class="wk-d">'+DOW[i]+'<b>'+d.getDate()+'</b></div>'
       +(items.map(function(x,ix){
+          if(!calMatch(x)) return '';
           const drag=(x.st==='plan'||x.st==='trial'||x.st==='trialp');
           return '<div class="ls '+TST_LS[x.st]+'" '+(drag?'draggable="true" data-k="'+key+'" data-i="'+ix+'" ondragstart="lsDragStart(event)" ondragend="lsDragEnd(event)"':'style="cursor:pointer"')+' onclick="openLesson(\''+key+'\','+ix+')"><div class="ls-t">'+x.time+'</div><div class="ls-n">'+tLsName(x)+'</div><div class="ls-s">'+tLsSub(x)+'</div></div>';
         }).join('')||'<div class="ls-empty">—</div>')
@@ -2976,18 +3097,18 @@ function renderMonth(){
   h+='<div class="mth">';
   for(let i=0;i<startOff;i++) h+='<div class="mth-c dim"></div>';
   for(let d=1;d<=dim;d++){
-    const key=calY+'-'+pad2(calM+1)+'-'+pad2(d), day=TLESSONS[key], today=sameDay(new Date(calY,calM,d),TODAYT);
+    const key=calY+'-'+pad2(calM+1)+'-'+pad2(d), today=sameDay(new Date(calY,calM,d),TODAYT);
+    const day=(TLESSONS[key]||[]).map(function(x,ix){return {x:x,ix:ix};}).filter(function(o){return calMatch(o.x);});
+    const has=day.length>0;
     let evs='';
-    if(day){
-      day.forEach(function(x,ix){
-        if(ix<2){
-          const nm=(x.st==='trial'||x.st==='trialp')?('Пробний · '+x.subj):x.stu;
-          evs+='<div class="mth-ev '+TST_LS[x.st]+'" title="'+x.time+' · '+nm+'" onclick="event.stopPropagation();openLesson(\''+key+'\','+ix+')">'+x.time+' '+nm+'</div>';
-        }
-      });
-      if(day.length>2) evs+='<div class="mth-more" onclick="event.stopPropagation();openDay(\''+key+'\')">+'+(day.length-2)+' ще</div>';
-    }
-    h+='<div class="mth-c'+(today?' today':'')+(day?'':' empty')+'" '+(day?'onclick="openDay(\''+key+'\')"':'')+'>'+d+(evs?'<div class="mth-evs">'+evs+'</div>':'')+'</div>';
+    day.forEach(function(o,i){
+      if(i<2){
+        const x=o.x, nm=(x.st==='trial'||x.st==='trialp')?('Пробний · '+x.subj):x.stu;
+        evs+='<div class="mth-ev '+TST_LS[x.st]+'" title="'+x.time+' · '+nm+'" onclick="event.stopPropagation();openLesson(\''+key+'\','+o.ix+')">'+x.time+' '+nm+'</div>';
+      }
+    });
+    if(day.length>2) evs+='<div class="mth-more" onclick="event.stopPropagation();openDay(\''+key+'\')">+'+(day.length-2)+' ще</div>';
+    h+='<div class="mth-c'+(today?' today':'')+(has?'':' empty')+'" '+(has?'onclick="openDay(\''+key+'\')"':'')+'>'+d+(evs?'<div class="mth-evs">'+evs+'</div>':'')+'</div>';
   }
   h+='</div>';
   document.getElementById('sched-month').innerHTML=h;
@@ -2996,16 +3117,17 @@ function monthShift(n){calM+=n; if(calM<0){calM=11;calY--} if(calM>11){calM=0;ca
 function monthToday(){calY=TODAYT.getFullYear();calM=TODAYT.getMonth();renderMonth()}
 
 function renderDay(){
-  const key=isoOf(TODAYT), items=TLESSONS[key]||[];
+  const key=isoOf(TODAYT), all=TLESSONS[key]||[], items=all.filter(calMatch);
   let h='<div class="row" style="justify-content:space-between;margin-bottom:14px">'
     +'<div style="font-family:\'Fraunces\',serif;font-size:19px;font-weight:900">'+DAY_NOM[TODAYT.getDay()]+', '+TODAYT.getDate()+' '+MON_GEN[TODAYT.getMonth()]+'</div>'
     +'<span class="st st-ok">'+items.length+' '+plUr(items.length)+'</span></div>';
-  h+=items.map(function(x,ix){
+  h+=all.map(function(x,ix){
+    if(!calMatch(x)) return '';
     const t=TST_LBL[x.st], join=x.st==='plan'||x.st==='trial';
     return '<div class="li"><img class="li-av" src="'+x.av+'" alt="">'
       +'<div class="li-b"><div class="li-t">'+x.time+' · '+(x.st==='trial'||x.st==='trialp'?'Пробний · '+x.subj:x.stu)+'</div><div class="li-d">'+(x.st==='trial'||x.st==='trialp'?x.stu:x.subj+(x.lvl!=='—'?' '+x.lvl:''))+' · Онлайн <span class="st '+t[1]+'">'+t[0]+'</span></div></div>'
       +'<div class="li-r">'+(join?'<button class="btn b-pri b-sm" onclick="toast(\'Відкриваємо посилання на урок…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>':'')+'<button class="btn b-sec b-sm" onclick="openLesson(\''+key+'\','+ix+')">Деталі</button></div></div>';
-  }).join('')||'<div class="ls-empty" style="padding:24px 0">Сьогодні уроків немає</div>';
+  }).join('')||'<div class="ls-empty" style="padding:24px 0">'+(calStuFilter?'У цього учня сьогодні уроків немає':'Сьогодні уроків немає')+'</div>';
   h+='<div class="hr"></div><button class="btn b-pri b-sm" onclick="openNewLesson()"><i class="fa-solid fa-plus"></i>Створити урок</button>';
   document.getElementById('sched-day').innerHTML=h;
 }
@@ -3018,14 +3140,17 @@ function schedMode(m,btn){
 /* модалка дня — всі уроки цього дня */
 function openDay(key){
   const day=TLESSONS[key]||[], d=parseISO(key);
+  let shown=0;
   const rows=day.map(function(x,ix){
+    if(!calMatch(x)) return '';
+    shown++;
     const t=TST_LBL[x.st]||['',''];
     return '<div class="li"><img class="li-av" src="'+x.av+'" alt="">'
       +'<div class="li-b"><div class="li-t">'+x.time+' · '+(x.st==='trial'||x.st==='trialp'?'Пробний · '+x.subj:x.stu)+'</div><div class="li-d">'+(x.st==='trial'||x.st==='trialp'?x.stu:x.subj)+' <span class="st '+t[1]+'">'+t[0]+'</span></div></div>'
       +'<div class="li-r"><button class="btn '+(x.st==='plan'||x.st==='trialp'?'b-pri':'b-sec')+' b-sm" onclick="openLesson(\''+key+'\','+ix+')">Деталі</button></div></div>';
   }).join('');
   document.getElementById('mTitle').textContent=d.getDate()+' '+MON_GEN[d.getMonth()]+' '+d.getFullYear();
-  document.getElementById('mSub').textContent=day.length+' '+plUr(day.length);
+  document.getElementById('mSub').textContent=shown+' '+plUr(shown)+(calStuFilter?' · '+calStuFilter:'');
   document.getElementById('mBody').innerHTML=rows||'<div style="text-align:center;color:var(--muted);padding:20px 0">Немає уроків цього дня</div>';
   document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
@@ -3037,7 +3162,7 @@ function openLesson(key,ix){
   const d=parseISO(key), t=TST_LBL[x.st];
   const isTrial=x.st==='trial'||x.st==='trialp', pending=x.st==='trialp';
   const upcoming=(x.st==='plan'||x.st==='trial') && !(d<TODAYT);
-  const dur=isTrial?25:(x.subj==='IELTS'?60:40);
+  const dur=isTrial?25:60;
   document.getElementById('mTitle').textContent=(isTrial?'Пробний урок · ':'Урок · ')+x.subj;
   document.getElementById('mSub').textContent=d.getDate()+' '+MON_GEN[d.getMonth()]+', '+x.time+' · '+x.stu;
   let b='<div class="row" style="gap:12px;margin-bottom:16px">'
@@ -3071,7 +3196,7 @@ function openLesson(key,ix){
       +'</div>';
     if(x.st==='moved') b+='<div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-arrows-rotate"></i></div><div><div class="bn-d">Урок перенесено. Узгодьте новий час з учнем.</div></div></div>';
     else if(x.st==='cancel') b+='<div class="bn bn-bad" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-ban"></i></div><div><div class="bn-d">Урок скасовано — оплата не потрібна.</div></div></div>';
-    else if(x.st==='done') b+='<div class="sw-row" style="border-top:1px solid var(--border);border-bottom:none;padding:14px 0 0;margin-top:2px"><div class="sw-tx"><div class="sw-t">Урок оплачено</div><div class="sw-d">Проведений урок за замовчуванням вважається оплаченим. Зніміть позначку, якщо оплати ще не було — тоді він не входить у «Зароблено».</div></div><button class="sw '+(paid?'on':'')+'" onclick="togglePaidCal(\''+key+'\','+ix+')"></button></div>';
+    else if(x.st==='done') b+='<div style="border-top:1px solid var(--border);margin-top:2px;padding-top:8px"><div class="cx'+(paid?' on':'')+'" onclick="togglePaidCal(\''+key+'\','+ix+')"><div class="cx-b"></div><div class="cx-t nodone"><b>Урок оплачено</b><div style="font-size:12px;color:var(--muted);font-weight:500;margin-top:2px">Проведений урок за замовчуванням оплачений. Зніміть галочку, якщо оплати ще не було — тоді він не входить у «Зароблено».</div></div></div></div>';
     else if(upcoming) b+='<div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Урок ще не відбувся. Ви можете приєднатися в час уроку або перенести його на інший день.</div></div></div>';
   }
   document.getElementById('mBody').innerHTML=b;
@@ -3182,7 +3307,7 @@ function openNewLesson(){
       +'<option disabled>──────────</option><option value="add">➕ Додати нового учня…</option>'
     +'</select>';
   b+='<div class="lbl">Тип уроку</div><div class="row" id="nlType" style="margin-bottom:16px">'
-    +'<span class="chip on" data-t="reg" onclick="nlType(this)"><i class="fa-solid fa-chalkboard-user"></i>Звичайний · 40 хв</span>'
+    +'<span class="chip on" data-t="reg" onclick="nlType(this)"><i class="fa-solid fa-chalkboard-user"></i>Звичайний · 60 хв</span>'
     +'<span class="chip" data-t="trial" onclick="nlType(this)"><i class="fa-solid fa-flask"></i>Пробний · 25 хв</span></div>';
   // regular: weekly schedule
   b+='<div id="nlRegWrap">'
@@ -3314,12 +3439,9 @@ const M={
       <div class="li-b"><div class="li-t">Комісія ₴480 — залишилось 2 дні</div><div class="li-d">Інакше акаунт стане на паузу</div></div></div>`,
     f:[['Позначити прочитаними','b-sec','toast("Усі сповіщення прочитано")']]},
 
-  addstudent:{t:'Додати учня',s:'Власний учень або учень з платформи',b:`
-    <div class="lbl">Тип учня</div>
-    <div class="row" style="margin-bottom:16px">
-      <span class="chip on" onclick="pickChip(this)">Власний учень</span>
-      <span class="chip" onclick="pickChip(this)">З платформи</span>
-    </div>
+  addstudent:{t:'Додати власного учня',s:'Учні з платформи додаються автоматично',b:`
+    <div class="bn bn-ok" style="margin:0 0 16px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div>
+      <div><div class="bn-d">Тут ви додаєте <b>власного учня</b> — того, хто прийшов не з платформи. Учні з платформи зʼявляються у списку самі після призначення.</div></div></div>
     <div class="f-row"><label class="f"><span class="lbl">Ім'я учня <span class="req">*</span></span><input class="inp" placeholder="Наприклад: Назар П."></label>
     <label class="f"><span class="lbl">Клас / вік</span><select class="sel"><option>1–4 клас</option><option>5–9 клас</option><option>10–11 клас</option><option>Дорослий</option></select></label></div>
     <div class="f-row"><label class="f"><span class="lbl">Предмет</span><select class="sel"><option>Англійська мова</option><option>Німецька мова</option></select></label>
@@ -3475,7 +3597,7 @@ function pickSheet(el){
 }
 /* ══════════ INIT ══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
-  renderWeek();renderDay();renderMonth();renderSlots();renderLib();renderProf();renderFin();renderJournal();renderUp();reqRefresh();renderTasks();renderStu();
+  renderCalStuFilter();renderWeek();renderDay();renderMonth();renderSlots();renderLib();renderProf();renderFin();renderJournal();renderUp();reqRefresh();renderTasks();renderStu();renderSpec();
   setMod('pending');
   const vp=document.getElementById('v-profile');
   if(vp){
