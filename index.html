@@ -2286,10 +2286,33 @@ function openPay(id){
     +'<div class="stu-cell"><div class="stu-cell-l">Комісія (20%)</div><div class="stu-cell-v">'+num(t.amt)+'</div></div>'
     +'</div>'
     +'<div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-exclamation"></i></div><div><div class="bn-d">Дедлайн: '+t.deadline+'. Якщо не сплатити — акаунт стане на паузу: анкета зникне з каталогу, нові заявки не приходитимуть.</div></div></div>';
-  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Пізніше</button><button class="btn b-pri" onclick="payTx(\''+t.id+'\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити '+num(t.amt)+'</button>';
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Пізніше</button><button class="btn b-pri" onclick="openUaCardsNotice(\'payTx\',\''+t.id+'\',\'openPay\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити '+num(t.amt)+'</button>';
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
 function payTx(id){ const t=txById(id); if(t){ t.status='paid'; t.paidDate='сьогодні'; } closeM(); renderFin(); if(document.getElementById('v-fintx').classList.contains('on')) renderFinAll(); toast('Комісію сплачено · Monobank'); }
+
+/* ── Попап: оплата лише українськими картками (перед сплатою комісії) ── */
+let uaNoticeHide=false;
+try{ uaNoticeHide = localStorage.getItem('lb_ua_notice_hide')==='1'; }catch(e){}
+function openUaCardsNotice(payFn, id, reopenFn){
+  if(uaNoticeHide){ if(window[payFn]) window[payFn](id); return; }
+  document.getElementById('mTitle').textContent='Оплата лише українськими картками';
+  document.getElementById('mSub').textContent='Перш ніж перейти до оплати комісії';
+  document.getElementById('mBody').innerHTML=
+    '<div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-credit-card"></i></div><div><div class="bn-t">Приймаємо лише картки українських банків</div><div class="bn-d">Комісію можна сплатити <b>тільки карткою, випущеною в Україні</b> (Visa або Mastercard українського банку — Monobank, ПриватБанк, ПУМБ тощо). Картки іноземних банків наразі не підтримуються.</div></div></div>'
+    +'<div class="cx" id="uaHideCx" onclick="toggleUaHide(this)" style="padding:8px 0 0"><div class="cx-b"></div><div class="cx-t nodone">Більше не показувати це повідомлення — я зрозумів(ла)</div></div>';
+  document.getElementById('mFoot').innerHTML=
+    '<button class="btn b-sec" onclick="uaNoticeCancel(\''+(reopenFn||'')+'\',\''+id+'\')">Скасувати</button>'
+    +'<button class="btn b-pri" onclick="uaNoticeConfirm(\''+payFn+'\',\''+id+'\')"><i class="fa-solid fa-arrow-right"></i>Так, продовжити</button>';
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function toggleUaHide(el){ el.classList.toggle('on'); }
+function uaNoticeConfirm(payFn, id){
+  const cx=document.getElementById('uaHideCx');
+  if(cx && cx.classList.contains('on')){ uaNoticeHide=true; try{ localStorage.setItem('lb_ua_notice_hide','1'); }catch(e){} }
+  if(window[payFn]) window[payFn](id);
+}
+function uaNoticeCancel(reopenFn, id){ if(reopenFn && window[reopenFn]){ window[reopenFn](id); } else { closeM(); } }
 function finRefresh(){ renderFin(); if(document.getElementById('v-fintx').classList.contains('on')) renderFinAll(); }
 function confirmPay(id){ const t=txById(id); if(t) t.status='confirmed'; closeM(); finRefresh(); toast('Оплату підтверджено · додано до заробітку'); }
 function rejectPay(id){ const t=txById(id); if(t) t.status='disputed'; closeM(); finRefresh(); toast('Позначено: кошти не надійшли · очікуємо повторного підтвердження учня'); }
@@ -2693,7 +2716,7 @@ function openLeadPay(id){
     +'</div>'
     +'<div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-exclamation"></i></div><div><div class="bn-d">Дедлайн: '+(l.deadline||'3 дні')+'. Якщо не сплатити — акаунт стане на паузу: анкета зникне з каталогу.</div></div></div>';
   document.getElementById('mBody').innerHTML=b;
-  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Пізніше</button><button class="btn b-pri" onclick="payLead(\''+l.id+'\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити '+num(c)+'</button>';
+  document.getElementById('mFoot').innerHTML='<button class="btn b-sec" onclick="closeM()">Пізніше</button><button class="btn b-pri" onclick="openUaCardsNotice(\'payLead\',\''+l.id+'\',\'openLeadPay\')"><i class="fa-solid fa-hryvnia-sign"></i>Сплатити '+num(c)+'</button>';
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
 function payLead(id){ const l=leadById(id); if(l){ l.commPaid=true; l.paidDate='сьогодні'; } closeM(); reqRefresh(); toast('Комісію сплачено · Monobank'); }
