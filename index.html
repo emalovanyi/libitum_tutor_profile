@@ -521,6 +521,9 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .pt-p-mut{font-size:10.5px;font-weight:700;color:var(--muted-2);margin-top:2px}
 .pt-p-inh{font-size:11.5px;font-weight:700;color:var(--muted)}
 .pt-act{display:flex;gap:5px;flex-shrink:0}
+.pt-tg{width:22px;height:22px;border-radius:7px;border:none;background:none;color:var(--muted-2);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:transform .2s}
+.pt-tg:hover{background:var(--bg);color:var(--teal-600)}
+.pt-tg-sp{width:22px;flex-shrink:0}
 .pt-kids{margin-left:22px;border-left:1.5px solid var(--border);padding-left:4px}
 @media(max-width:640px){
   .pt-price{min-width:74px}
@@ -1879,7 +1882,11 @@ function renderNode(node,path,depth,inh){
   else if(own){ sub='власна ціна'; }
   else if(inh!=null){ sub='ціна як у «батька»'; }
   else { sub='задайте ціну або додайте рівні'; }
+  const collapsed=hasKids&&ptCollapsed.has(path);
   let h='<div class="pt-node"><div class="pt-row">';
+  h+= hasKids
+    ? '<button class="pt-tg" onclick="togglePt(\''+path+'\')" title="'+(collapsed?'Розгорнути':'Згорнути')+'"><i class="fa-solid fa-chevron-'+(collapsed?'right':'down')+'"></i></button>'
+    : '<span class="pt-tg-sp"></span>';
   h+='<div class="pt-ic" style="background:'+m.bg+';color:'+m.c+'"><i class="fa-solid '+m.ic+'"></i></div>';
   h+='<div class="pt-main"><div class="pt-name">'+node.name+'</div><div class="pt-sub">'+sub+'</div></div>';
   h+='<div class="pt-price">'+price+'</div>';
@@ -1888,11 +1895,12 @@ function renderNode(node,path,depth,inh){
     +'<button class="btn b-ic b-sm" title="Редагувати" onclick="openNodeEdit(\''+path+'\','+depth+')"><i class="fa-solid fa-pen"></i></button>'
     +'<button class="btn b-ic b-sm" title="Видалити" onclick="delNode(\''+path+'\')"><i class="fa-regular fa-trash-can"></i></button>'
   +'</div></div>';
-  if(hasKids){ h+='<div class="pt-kids">'+node.kids.map(function(k,i){return renderNode(k,path+'-'+i,depth+1,eff);}).join('')+'</div>'; }
+  if(hasKids && !collapsed){ h+='<div class="pt-kids">'+node.kids.map(function(k,i){return renderNode(k,path+'-'+i,depth+1,eff);}).join('')+'</div>'; }
   h+='</div>';
   return h;
 }
-let nodeOp=null;
+let nodeOp=null, ptCollapsed=new Set();
+function togglePt(path){ if(ptCollapsed.has(path)) ptCollapsed.delete(path); else ptCollapsed.add(path); renderSpec(); }
 function nodeKindLbl(depth){ return depth===0?'предмет':(depth===1?'підкатегорію':'рівень'); }
 function nodePlaceholder(depth){ return depth===0?'Напр., Англійська мова':(depth===1?'Напр., Для дорослих · Підготовка до НМТ':'Напр., A2–B1 · Початковий'); }
 function openNodeEdit(path,depth){ const node=nodeAt(path); if(!node) return; nodeOp={mode:'edit',path:path,depth:depth}; buildNodeModal(node,ancestorPrice(path)); }
@@ -1923,7 +1931,7 @@ function saveNode(){
   if(hasOwn){ const v=parseInt((document.getElementById('ndPrice')||{}).value,10); if(!v||v<=0){ toast('Вкажіть коректну ціну'); return; } price=v; }
   const durEl=document.getElementById('ndDur'), dur=durEl?durEl.value:undefined;
   if(o.mode==='edit'){ const node=nodeAt(o.path); if(node){ node.name=name; node.price=price; if(dur!==undefined) node.dur=dur; } }
-  else{ const nn={name:name,price:price,kids:[]}; if(o.depth===0) nn.dur=dur||'40 хв'; if(o.parentPath==null) treeRoot().push(nn); else { const p=nodeAt(o.parentPath); p.kids=p.kids||[]; p.kids.push(nn); } }
+  else{ const nn={name:name,price:price,kids:[]}; if(o.depth===0) nn.dur=dur||'40 хв'; if(o.parentPath==null) treeRoot().push(nn); else { const p=nodeAt(o.parentPath); p.kids=p.kids||[]; p.kids.push(nn); ptCollapsed.delete(o.parentPath); } }
   nodeOp=null; closeM(); renderSpec(); toast(o.mode==='edit'?'Збережено · іде на модерацію':'Додано · іде на модерацію');
 }
 function delNode(path){ const pa=parentArr(path); const node=pa.arr[pa.idx]; pa.arr.splice(pa.idx,1); nodeOp=null; closeM(); renderSpec(); toast('Видалено'+(node?': '+node.name:'')); }
