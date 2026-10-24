@@ -509,6 +509,26 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
 .tbl .num{font-weight:800}
 .tbl .cell-n{font-weight:800}
 
+/* price tree (предмет → підкатегорія → рівень) */
+.pt-row{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--border)}
+.pt-row:hover{background:#FCFDFE}
+.pt-ic{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px}
+.pt-main{flex:1;min-width:0}
+.pt-name{font-size:13.5px;font-weight:800;line-height:1.25;word-break:break-word}
+.pt-sub{font-size:11px;color:var(--muted-2);margin-top:2px}
+.pt-price{flex-shrink:0;text-align:right;min-width:96px}
+.pt-p-own{font-family:'Fraunces',serif;font-weight:900;font-size:15px;line-height:1}
+.pt-p-mut{font-size:10.5px;font-weight:700;color:var(--muted-2);margin-top:2px}
+.pt-p-inh{font-size:11.5px;font-weight:700;color:var(--muted)}
+.pt-act{display:flex;gap:5px;flex-shrink:0}
+.pt-kids{margin-left:22px;border-left:1.5px solid var(--border);padding-left:4px}
+@media(max-width:640px){
+  .pt-price{min-width:74px}
+  .pt-sub{display:none}
+  .pt-kids{margin-left:12px}
+  .pt-act .btn{width:30px;height:30px}
+}
+
 /* lock overlay */
 .lk{position:relative}
 .lk-badge{display:inline-flex;align-items:center;gap:5px;background:var(--violet-50);border:1px solid var(--violet-100);color:#5B21B6;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
@@ -1356,14 +1376,9 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       <div class="card">
         <div class="ch">
           <div><div class="ct"><i class="fa-solid fa-book"></i><span id="specSubjTitle">Предмети, рівні та ціни</span></div><div class="ct-s" id="specSubjSub">—</div></div>
-          <div class="ch-r"><button class="btn b-pri b-sm" id="specSubjAdd" onclick="openSubjectModal()"><i class="fa-solid fa-plus"></i>Додати пару</button></div>
+          <div class="ch-r"><button class="btn b-pri b-sm" id="specSubjAdd" onclick="openNodeAddRoot()"><i class="fa-solid fa-plus"></i>Додати предмет</button></div>
         </div>
-        <div class="tblw">
-          <table class="tbl">
-            <thead><tr id="specSubjHead"></tr></thead>
-            <tbody id="specSubjBody"></tbody>
-          </table>
-        </div>
+        <div class="cb" id="specSubjTree" style="padding-top:6px;padding-bottom:8px"></div>
         <div class="cb tight" style="padding-top:14px;padding-bottom:16px">
           <div class="bn bn-ok" style="margin:0">
             <div class="bn-ic"><i class="fa-solid fa-tag"></i></div>
@@ -1747,26 +1762,42 @@ function completeReq(k){ const r=PROF_REQ.find(x=>x.k===k); if(r){ r.done=true; 
 /* ══════════ ДЕМО: тип спеціаліста (репетитор / психолог / логопед) ══════════ */
 const SPEC={
   rep:{sub:'Кабінет репетитора',badge:'Репетитор',btn:'b-pri',exp:'Стаж викладання',
-    subjTitle:'Предмети, рівні та ціни',subjSub:'Своя ціна для кожної пари «предмет + рівень»',col1:'Предмет',col2:'Рівень / клас',addLbl:'Додати пару',unit:'урок',unitAcc:'урок',
-    rows:[['Англійська мова','1–4 клас','40 хв',350],['Англійська мова','5–9 клас','40 хв',400],['Англійська мова','НМТ / ЗНО','60 хв',650],['Німецька мова','A1–B1','40 хв',380]],
-    priceNote:'Це найдешевша пара з вашого списку. Ціна оновлюється автоматично.',
+    subjTitle:'Предмети, підкатегорії та ціни',subjSub:'Предмет → підкатегорія → рівень. Ціну задавайте на будь-якому рівні — це не обовʼязково для кожного.',col1:'Предмет',col2:'Рівень / клас',addLbl:'Додати предмет',unit:'урок',unitAcc:'урок',
+    tree:[
+      {name:'Англійська мова',dur:'40 хв',price:null,kids:[
+        {name:'Для дітей (1–4 клас)',price:350,kids:[]},
+        {name:'Школа (5–9 клас)',price:400,kids:[]},
+        {name:'Підготовка НМТ / ЗНО',price:null,kids:[{name:'Базовий курс',price:600,kids:[]},{name:'Інтенсив',price:650,kids:[]}]},
+        {name:'Дорослі',price:null,kids:[{name:'A0–A1 (початок)',price:420,kids:[]},{name:'A2–B1',price:450,kids:[]},{name:'B2–C1',price:500,kids:[]}]}
+      ]},
+      {name:'Німецька мова',dur:'40 хв',price:380,kids:[]}
+    ],
+    priceNote:'Це найдешевша підсумкова ціна з вашого дерева. Оновлюється автоматично.',
     eduTitle:'Освіта та сертифікати',eduSub:'Мінімум 1 запис із файлом диплому',eduHint:'',
     edu:[['fa-graduation-cap','blue','КНУ ім. Шевченка · Іноземна філологія','Бакалавр · 2015–2019 · diploma_knu.pdf','ok','Підтверджено'],
          ['fa-certificate','teal','Cambridge CELTA','Сертифікат викладача · 2020 · celta.pdf','ok','Підтверджено'],
          ['fa-award','violet','Goethe-Zertifikat C1','Goethe-Institut · 2022 · goethe_c1.pdf','warn','На перевірці']]},
   psy:{sub:'Кабінет психолога',badge:'Психолог',btn:'b-amber',exp:'Стаж практики',
-    subjTitle:'Напрямки та ціни',subjSub:'Своя ціна для кожного напрямку роботи',col1:'Напрямок',col2:'Категорія',addLbl:'Додати напрямок',unit:'сесія',unitAcc:'сесію',
-    rows:[['Тривожність та стрес','Дорослі','60 хв',800],['Депресія','Дорослі','60 хв',800],['Сімейна терапія','Пари / сімʼї','90 хв',1200],['Дитяча психологія','Діти 6–12','50 хв',700]],
-    priceNote:'Це найдешевший напрямок із вашого списку. Ціна оновлюється автоматично.',
+    subjTitle:'Напрямки та ціни',subjSub:'Напрямок → категорія клієнтів. Ціну задавайте на напрямку (спільна) або на окремій категорії.',col1:'Напрямок',col2:'Категорія',addLbl:'Додати напрямок',unit:'сесія',unitAcc:'сесію',
+    tree:[
+      {name:'Тривожність та стрес',dur:'60 хв',price:null,kids:[{name:'Дорослі',price:800,kids:[]},{name:'Підлітки',price:700,kids:[]}]},
+      {name:'Сімейна терапія',dur:'90 хв',price:1200,kids:[]},
+      {name:'Дитяча психологія',dur:'50 хв',price:700,kids:[]}
+    ],
+    priceNote:'Це найдешевша підсумкова ціна з вашого дерева. Оновлюється автоматично.',
     eduTitle:'Освіта та сертифікація методів',eduSub:'Диплом психолога + підтвердження методів — обовʼязково',
     eduHint:'Для психолога обовʼязковий диплом за напрямком «Психологія» та сертифікати методів терапії (КПТ, гештальт, схема-терапія тощо). Без цього профіль не проходить модерацію.',
     edu:[['fa-graduation-cap','blue','КНУ ім. Шевченка · Психологія','Магістр · 2013–2018 · diploma_psy.pdf','ok','Підтверджено'],
          ['fa-certificate','teal','Сертифікат КПТ','Когнітивно-поведінкова терапія · 2020 · kpt.pdf','ok','Підтверджено'],
          ['fa-user-shield','violet','Супервізія (200 год)','Супервізійні години · 2022 · supervision.pdf','warn','На перевірці']]},
   logo:{sub:'Кабінет логопеда',badge:'Логопед',btn:'b-violet',exp:'Стаж роботи',
-    subjTitle:'Напрямки корекції та ціни',subjSub:'Своя ціна для кожного напрямку корекції',col1:'Напрямок',col2:'Категорія',addLbl:'Додати напрямок',unit:'заняття',unitAcc:'заняття',
-    rows:[['Постановка звуків','Діти 4–7','40 хв',500],['Затримка мовлення (ЗНМ)','Діти 3–6','40 хв',550],['Дислексія / дисграфія','Школярі','45 хв',550],['Корекція заїкання','Діти / підлітки','45 хв',600]],
-    priceNote:'Це найдешевший напрямок із вашого списку. Ціна оновлюється автоматично.',
+    subjTitle:'Напрямки корекції та ціни',subjSub:'Напрямок → категорія / рівень. Ціну задавайте на напрямку або глибше.',col1:'Напрямок',col2:'Категорія',addLbl:'Додати напрямок',unit:'заняття',unitAcc:'заняття',
+    tree:[
+      {name:'Постановка звуків',dur:'40 хв',price:500,kids:[]},
+      {name:'Затримка мовлення (ЗНМ)',dur:'40 хв',price:null,kids:[{name:'Діти 3–6',price:550,kids:[]},{name:'Школярі',price:600,kids:[]}]},
+      {name:'Корекція заїкання',dur:'45 хв',price:600,kids:[]}
+    ],
+    priceNote:'Це найдешевша підсумкова ціна з вашого дерева. Оновлюється автоматично.',
     eduTitle:'Освіта та кваліфікація',eduSub:'Диплом логопеда / дефектолога — обовʼязково',
     eduHint:'Для логопеда обовʼязковий диплом за напрямком «Логопедія» або «Дефектологія» та курси з корекції мовлення.',
     edu:[['fa-graduation-cap','blue','НПУ ім. Драгоманова · Логопедія','Магістр дефектології · 2014–2019 · diploma_logo.pdf','ok','Підтверджено'],
@@ -1786,14 +1817,13 @@ let specType='rep';
 function specCfg(){ return SPEC[specType]; }
 function renderSpec(){
   const c=specCfg(), g=function(id){return document.getElementById(id)};
-  if(!g('specSubjBody')) return;
+  if(!g('specSubjTree')) return;
   g('specSubjTitle').textContent=c.subjTitle;
   g('specSubjSub').textContent=c.subjSub;
-  g('specSubjHead').innerHTML='<th>'+c.col1+'</th><th>'+c.col2+'</th><th>Тривалість</th><th>Ціна</th><th style="text-align:right">Дії</th>';
-  g('specSubjBody').innerHTML=c.rows.map(function(r){return '<tr><td class="cell-n">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="num">'+num(r[3])+'</td><td style="text-align:right"><button class="btn b-ic b-sm" onclick="openSubjectModal()"><i class="fa-solid fa-pen"></i></button></td></tr>';}).join('');
+  g('specSubjTree').innerHTML=c.tree.length?c.tree.map(function(n,i){return renderNode(n,String(i),0,null);}).join(''):'<div class="stu-empty" style="padding:22px 8px">Ще не додано жодного предмета. Натисніть «'+c.addLbl+'».</div>';
   const aB=g('specSubjAdd'); aB.className='btn '+c.btn+' b-sm'; aB.innerHTML='<i class="fa-solid fa-plus"></i>'+c.addLbl;
-  const minP=Math.min.apply(null,c.rows.map(function(r){return r[3]}));
-  g('specPriceT').textContent='У каталозі показуємо ціну «від '+num(minP)+'»';
+  const minP=minLeafPrice(c.tree,null);
+  g('specPriceT').textContent=isFinite(minP)?('У каталозі показуємо ціну «від '+num(minP)+'»'):'Додайте хоча б одну ціну, щоб показувати «від …»';
   g('specPriceD').textContent=c.priceNote+' Ціна вказується за '+c.unitAcc+'.';
   g('specEduTitle').textContent=c.eduTitle;
   g('specEduSub').textContent=c.eduSub;
@@ -1828,6 +1858,75 @@ function openSubjectModal(){
   document.getElementById('mFoot').innerHTML='<button class="btn b-danger" onclick="closeM();toast(\'Видалено\')">Видалити</button><button class="btn '+c.btn+'" onclick="closeM();toast(\'Збережено · іде на модерацію\')"><i class="fa-solid fa-check"></i>Зберегти</button>';
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
+/* ── Дерево цін: предмет → підкатегорія → рівень (ціна не обовʼязкова на кожному рівні) ── */
+function treeRoot(){ return SPEC[specType].tree; }
+function nodeAt(path){ const parts=path.split('-').map(Number); let arr=treeRoot(),node=null; for(let i=0;i<parts.length;i++){ node=arr[parts[i]]; if(!node) return null; arr=node.kids||[]; } return node; }
+function parentArr(path){ const parts=path.split('-').map(Number); let arr=treeRoot(); for(let i=0;i<parts.length-1;i++){ arr=arr[parts[i]].kids; } return {arr:arr,idx:parts[parts.length-1]}; }
+function ancestorPrice(path){ const parts=path.split('-').map(Number); let arr=treeRoot(),price=null; for(let i=0;i<parts.length-1;i++){ const n=arr[parts[i]]; if(!n) break; if(n.price!=null) price=n.price; arr=n.kids||[]; } return price; }
+function minLeafPrice(nodes,inh){ let min=Infinity; (nodes||[]).forEach(function(n){ const p=(n.price!=null)?n.price:inh; if(n.kids&&n.kids.length){ min=Math.min(min,minLeafPrice(n.kids,p)); } else if(p!=null){ min=Math.min(min,p); } }); return min; }
+function ptMeta(depth){ return depth===0?{ic:'fa-book',bg:'var(--teal-50)',c:'var(--teal-600)',child:'підкатегорію'}:(depth===1?{ic:'fa-layer-group',bg:'var(--violet-50)',c:'var(--violet)',child:'рівень'}:{ic:'fa-tag',bg:'var(--amber-50)',c:'var(--amber)',child:'рівень'}); }
+function plLv(n){ return n+' рівн'+(n===1?'ень':(n<5?'і':'ів')); }
+function plSub(n){ return n+' підкатегорі'+(n===1?'я':(n<5?'ї':'й')); }
+function renderNode(node,path,depth,inh){
+  const m=ptMeta(depth), hasKids=node.kids&&node.kids.length, own=node.price!=null, eff=own?node.price:inh;
+  let price,sub;
+  if(own){ price='<div class="pt-p-own">'+num(node.price)+'</div>'+(hasKids?'<div class="pt-p-mut">спільна ціна</div>':''); }
+  else if(hasKids){ price='<div class="pt-p-mut">за '+(depth===0?'підкатегоріями':'рівнями')+'</div>'; }
+  else if(inh!=null){ price='<div class="pt-p-inh"><i class="fa-solid fa-turn-up" style="font-size:9px;margin-right:3px"></i>успадк. '+num(inh)+'</div>'; }
+  else { price='<span class="st st-bad" style="font-size:10px;padding:2px 7px"><i class="fa-solid fa-circle-exclamation"></i>ціну не задано</span>'; }
+  if(depth===0&&node.dur){ sub=node.dur+(hasKids?' · '+plSub(node.kids.length):(own?' · власна ціна':'')); }
+  else if(hasKids){ sub=plLv(node.kids.length); }
+  else if(own){ sub='власна ціна'; }
+  else if(inh!=null){ sub='ціна як у «батька»'; }
+  else { sub='задайте ціну або додайте рівні'; }
+  let h='<div class="pt-node"><div class="pt-row">';
+  h+='<div class="pt-ic" style="background:'+m.bg+';color:'+m.c+'"><i class="fa-solid '+m.ic+'"></i></div>';
+  h+='<div class="pt-main"><div class="pt-name">'+node.name+'</div><div class="pt-sub">'+sub+'</div></div>';
+  h+='<div class="pt-price">'+price+'</div>';
+  h+='<div class="pt-act">'
+    +(depth<2?'<button class="btn b-ic b-sm" title="Додати '+m.child+'" onclick="openNodeAdd(\''+path+'\','+depth+')"><i class="fa-solid fa-plus"></i></button>':'')
+    +'<button class="btn b-ic b-sm" title="Редагувати" onclick="openNodeEdit(\''+path+'\','+depth+')"><i class="fa-solid fa-pen"></i></button>'
+    +'<button class="btn b-ic b-sm" title="Видалити" onclick="delNode(\''+path+'\')"><i class="fa-regular fa-trash-can"></i></button>'
+  +'</div></div>';
+  if(hasKids){ h+='<div class="pt-kids">'+node.kids.map(function(k,i){return renderNode(k,path+'-'+i,depth+1,eff);}).join('')+'</div>'; }
+  h+='</div>';
+  return h;
+}
+let nodeOp=null;
+function nodeKindLbl(depth){ return depth===0?'предмет':(depth===1?'підкатегорію':'рівень'); }
+function nodePlaceholder(depth){ return depth===0?'Напр., Англійська мова':(depth===1?'Напр., Для дорослих · Підготовка до НМТ':'Напр., A2–B1 · Початковий'); }
+function openNodeEdit(path,depth){ const node=nodeAt(path); if(!node) return; nodeOp={mode:'edit',path:path,depth:depth}; buildNodeModal(node,ancestorPrice(path)); }
+function openNodeAdd(parentPath,parentDepth){ const p=nodeAt(parentPath); const inh=(p&&p.price!=null)?p.price:ancestorPrice(parentPath); nodeOp={mode:'add',parentPath:parentPath,depth:parentDepth+1}; buildNodeModal({},inh); }
+function openNodeAddRoot(){ nodeOp={mode:'add',parentPath:null,depth:0}; buildNodeModal({},null); }
+function buildNodeModal(node,inh){
+  const c=specCfg(), o=nodeOp, depth=o.depth, isRoot=depth===0, kind=nodeKindLbl(depth), hasOwn=node.price!=null;
+  document.getElementById('mTitle').textContent=(o.mode==='edit'?'Редагувати ':'Додати ')+kind;
+  document.getElementById('mSub').textContent=isRoot?'Головний предмет':(depth===1?'Гілка предмета (напр. «для дорослих»)':'Рівень усередині підкатегорії');
+  let b='<label class="f"><span class="lbl">Назва <span class="req">*</span></span><input class="inp" id="ndName" value="'+(node.name||'')+'" placeholder="'+nodePlaceholder(depth)+'"></label>';
+  if(isRoot){ b+='<label class="f"><span class="lbl">Тривалість уроку</span><select class="sel" id="ndDur">'+['40 хв','25 хв','60 хв','90 хв'].map(function(d){return '<option'+(node.dur===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></label>'; }
+  b+='<div class="cx'+(hasOwn?' on':'')+'" id="ndPriceCx" onclick="toggleNodePrice(this)" style="padding:6px 0 0"><div class="cx-b"></div><div class="cx-t nodone"><b>Задати ціну саме для цього пункту</b><div style="font-size:12px;color:var(--muted);font-weight:500;margin-top:2px">Якщо вимкнено — ціна '+(inh!=null?('успадкується від «батька» ('+num(inh)+')'):'задається глибше, на підкатегоріях / рівнях')+'.</div></div></div>';
+  b+='<label class="f" id="ndPriceWrap" style="margin:12px 0 0;'+(hasOwn?'':'display:none')+'"><span class="lbl">Ціна за '+c.unitAcc+', ₴ <span class="req">*</span></span><input class="inp" type="number" id="ndPrice" value="'+(hasOwn?node.price:(inh||400))+'"></label>';
+  b+='<div class="bn bn-ok" style="margin:14px 0 0"><div class="bn-ic"><i class="fa-solid fa-sitemap"></i></div><div><div class="bn-d">Ціну можна задати на будь-якому рівні: на предметі — <b>спільна для всього</b>, на підкатегорії — <b>для всіх її рівнів</b>, або на конкретному рівні. У каталозі показуємо <b>найдешевшу</b> підсумкову ціну.</div></div></div>';
+  document.getElementById('mBody').innerHTML=b;
+  let foot='';
+  if(o.mode==='edit') foot+='<button class="btn b-danger" onclick="delNode(\''+o.path+'\')"><i class="fa-regular fa-trash-can"></i></button>';
+  foot+='<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn '+c.btn+'" onclick="saveNode()"><i class="fa-solid fa-check"></i>'+(o.mode==='edit'?'Зберегти':'Додати')+'</button>';
+  document.getElementById('mFoot').innerHTML=foot;
+  document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
+}
+function toggleNodePrice(el){ el.classList.toggle('on'); const w=document.getElementById('ndPriceWrap'); if(w) w.style.display=el.classList.contains('on')?'':'none'; }
+function saveNode(){
+  const o=nodeOp; if(!o) return;
+  const name=(document.getElementById('ndName').value||'').trim(); if(!name){ toast('Введіть назву'); return; }
+  const cx=document.getElementById('ndPriceCx'), hasOwn=cx&&cx.classList.contains('on');
+  let price=null;
+  if(hasOwn){ const v=parseInt((document.getElementById('ndPrice')||{}).value,10); if(!v||v<=0){ toast('Вкажіть коректну ціну'); return; } price=v; }
+  const durEl=document.getElementById('ndDur'), dur=durEl?durEl.value:undefined;
+  if(o.mode==='edit'){ const node=nodeAt(o.path); if(node){ node.name=name; node.price=price; if(dur!==undefined) node.dur=dur; } }
+  else{ const nn={name:name,price:price,kids:[]}; if(o.depth===0) nn.dur=dur||'40 хв'; if(o.parentPath==null) treeRoot().push(nn); else { const p=nodeAt(o.parentPath); p.kids=p.kids||[]; p.kids.push(nn); } }
+  nodeOp=null; closeM(); renderSpec(); toast(o.mode==='edit'?'Збережено · іде на модерацію':'Додано · іде на модерацію');
+}
+function delNode(path){ const pa=parentArr(path); const node=pa.arr[pa.idx]; pa.arr.splice(pa.idx,1); nodeOp=null; closeM(); renderSpec(); toast('Видалено'+(node?': '+node.name:'')); }
 function toggleProfDemo(el){ const full=!el.classList.contains('on'); el.classList.toggle('on',full); PROF_REQ.forEach(r=>{ r.done = full ? true : (r.k!=='zoom'); }); renderProf(); }
 function renderReward(){
   const body=document.getElementById('promoRewardBody');
