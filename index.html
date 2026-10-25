@@ -532,6 +532,47 @@ button,input,select,textarea{font-family:'Manrope',sans-serif}
   .pt-act .btn{width:30px;height:30px}
 }
 
+/* ціни: базова + напрямки + рівні (нова модель) */
+.money{display:inline-flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:0 12px;height:48px;transition:border-color .15s}
+.money:focus-within{border-color:var(--teal-500);background:#fff}
+.money.err{border-color:var(--red)}
+.money>span{font-weight:800;color:var(--muted);margin-right:4px}
+.money input{width:90px;border:none;outline:none;background:transparent;font-size:18px;font-weight:800;color:var(--ink)}
+.money input::placeholder{color:var(--muted-2);font-weight:700}
+.money.sm{height:42px}
+.money.sm input{width:64px;font-size:15px}
+.money input::-webkit-outer-spin-button,.money input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.money input[type=number]{-moz-appearance:textfield}
+.per{font-size:13px;color:var(--muted);font-weight:700}
+.warn-line{font-size:12px;font-weight:700;margin-top:7px;min-height:0;line-height:1.4}
+.warn-line.e{color:var(--red)}.warn-line.w{color:#B45309}
+.gp-goals{margin-top:4px;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden}
+.gp-row{border-bottom:1px solid var(--border)}
+.gp-row:last-child{border-bottom:none}
+.gp-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;transition:background .12s}
+.gp-head:hover{background:var(--bg)}
+.gp-row.open .gp-head{background:var(--teal-50)}
+.gp-name{flex:1;min-width:0;font-size:14px;font-weight:800;color:var(--ink)}
+.gp-sub{font-size:12px;font-weight:600;color:var(--muted-2);margin-top:2px}
+.gp-price{font-size:14.5px;font-weight:900;color:var(--muted);white-space:nowrap;font-family:'Fraunces',serif}
+.gp-price.own{color:var(--teal-700)}
+.gp-chev{width:16px;height:16px;color:var(--muted-2);transition:transform .2s;flex-shrink:0}
+.gp-row.open .gp-chev{transform:rotate(180deg)}
+.gp-body{padding:4px 16px 18px;background:var(--teal-50)}
+.gp-lbl{font-size:10px;font-weight:800;color:var(--muted-2);letter-spacing:.05em;text-transform:uppercase;margin:12px 0 8px}
+.gp-lnk{background:none;border:none;font-size:13px;font-weight:800;color:var(--teal-700);cursor:pointer;padding:0;margin-top:14px;display:inline-flex;align-items:center;gap:6px}
+.gp-lnk.grey{color:var(--muted);font-weight:700}
+.gp-lnk svg{width:14px;height:14px;transition:transform .2s}
+.gp-lnk.open svg{transform:rotate(90deg)}
+.lv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.lv-cell{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:10px}
+.lv-cell b{display:block;font-size:14px;color:var(--ink)}
+.lv-cell small{display:block;font-size:11.5px;color:var(--muted-2);margin-bottom:8px}
+.lv-cell .money{width:100%}
+.lv-cell .money input{width:100%}
+.gp-actions{display:flex;gap:18px;flex-wrap:wrap}
+@media(max-width:640px){.lv-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* lock overlay */
 .lk{position:relative}
 .lk-badge{display:inline-flex;align-items:center;gap:5px;background:var(--violet-50);border:1px solid var(--violet-100);color:#5B21B6;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
@@ -1378,10 +1419,35 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       <!-- предмети / напрямки + ціни -->
       <div class="card">
         <div class="ch">
-          <div><div class="ct"><i class="fa-solid fa-book"></i><span id="specSubjTitle">Предмети, рівні та ціни</span></div><div class="ct-s" id="specSubjSub">—</div></div>
-          <div class="ch-r"><button class="btn b-pri b-sm" id="specSubjAdd" onclick="openNodeAddRoot()"><i class="fa-solid fa-plus"></i>Додати предмет</button></div>
+          <div><div class="ct"><i class="fa-solid fa-book"></i><span id="specSubjTitle">Ціни на заняття</span></div><div class="ct-s" id="specSubjSub">—</div></div>
         </div>
-        <div class="cb" id="specSubjTree" style="padding-top:6px;padding-bottom:8px"></div>
+        <div class="cb" id="priceBody">
+          <div class="row" id="priceSubjTabs" style="gap:8px;margin-bottom:16px"></div>
+
+          <div class="lbl" id="goalsLbl">Напрямки, які ви викладаєте</div>
+          <div class="hint" id="goalsHint" style="margin:-2px 0 10px"></div>
+          <div class="row" id="teachChips" style="margin-bottom:4px"></div>
+          <div class="warn-line e" id="teachWarn"></div>
+
+          <div class="hr"></div>
+
+          <div class="lbl">Базова ціна <span class="req">*</span></div>
+          <div class="hint" style="margin:-2px 0 10px">Діє для всіх напрямків і рівнів. Якщо не хочете деталізувати — більше нічого заповнювати не треба.</div>
+          <div class="row" style="gap:10px;align-items:center">
+            <label class="money" id="baseMoney"><span>₴</span><input id="baseInp" type="number" inputmode="numeric" value="400" oninput="baseEdit()"></label>
+            <span class="per" id="basePer">за 60 хв</span>
+          </div>
+          <div class="warn-line" id="baseWarn"></div>
+
+          <div class="hr"></div>
+
+          <div class="sw-row" style="border:none;padding:0">
+            <div class="sw-tx"><div class="sw-t" id="detTitle">Різні ціни для різних напрямків або рівнів</div><div class="sw-d" id="detHint">—</div></div>
+            <button class="sw" id="detSw" onclick="toggleDetailed(this)"></button>
+          </div>
+          <div class="bn bn-ok" id="detOff" style="margin:14px 0 0"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Зараз усі заняття коштують однаково — <b id="offPrice">₴400</b>. Учням так найпростіше.</div></div></div>
+          <div id="detOn" style="display:none;margin-top:14px"><div class="gp-goals" id="goals"></div></div>
+        </div>
         <div class="cb tight" style="padding-top:14px;padding-bottom:16px">
           <div class="bn bn-ok" style="margin:0">
             <div class="bn-ic"><i class="fa-solid fa-tag"></i></div>
@@ -1820,14 +1886,10 @@ let specType='rep';
 function specCfg(){ return SPEC[specType]; }
 function renderSpec(){
   const c=specCfg(), g=function(id){return document.getElementById(id)};
-  if(!g('specSubjTree')) return;
-  g('specSubjTitle').textContent=c.subjTitle;
-  g('specSubjSub').textContent=c.subjSub;
-  g('specSubjTree').innerHTML=c.tree.length?c.tree.map(function(n,i){return renderNode(n,String(i),0,null);}).join(''):'<div class="stu-empty" style="padding:22px 8px">Ще не додано жодного предмета. Натисніть «'+c.addLbl+'».</div>';
-  const aB=g('specSubjAdd'); aB.className='btn '+c.btn+' b-sm'; aB.innerHTML='<i class="fa-solid fa-plus"></i>'+c.addLbl;
-  const minP=minLeafPrice(c.tree,null);
-  g('specPriceT').textContent=isFinite(minP)?('У каталозі показуємо ціну «від '+num(minP)+'»'):'Додайте хоча б одну ціну, щоб показувати «від …»';
-  g('specPriceD').textContent=c.priceNote+' Ціна вказується за '+c.unitAcc+'.';
+  if(!g('priceBody')) return;
+  g('specSubjTitle').textContent='Ціни на заняття';
+  g('specSubjSub').textContent='Базова ціна для всього + за бажанням різні ціни для напрямків і рівнів';
+  renderPricing();
   g('specEduTitle').textContent=c.eduTitle;
   g('specEduSub').textContent=c.eduSub;
   const aE=g('specEduAdd'); aE.className='btn '+c.btn+' b-sm';
@@ -1838,7 +1900,7 @@ function renderSpec(){
   const el=document.getElementById('specExpLbl'); if(el) el.textContent=c.exp;
   const sb=document.querySelector('.sb-logo-sub'); if(sb) sb.textContent=c.sub;
 }
-function setSpecType(t){ specType=t; document.querySelectorAll('.specSel').forEach(function(s){s.value=t}); renderSpec(); toast('Тип спеціаліста: '+SPEC[t].badge); }
+function setSpecType(t){ specType=t; priceSubjIdx=0; document.querySelectorAll('.specSel').forEach(function(s){s.value=t}); renderSpec(); toast('Тип спеціаліста: '+SPEC[t].badge); }
 function openSubjectModal(){
   const c=specCfg();
   document.getElementById('mTitle').textContent = specType==='rep'?'Предмет, рівень і ціна':(specType==='psy'?'Напрямок і ціна':'Напрямок корекції і ціна');
@@ -1935,6 +1997,131 @@ function saveNode(){
   nodeOp=null; closeM(); renderSpec(); toast(o.mode==='edit'?'Збережено · іде на модерацію':'Додано · іде на модерацію');
 }
 function delNode(path){ const pa=parentArr(path); const node=pa.arr[pa.idx]; pa.arr.splice(pa.idx,1); nodeOp=null; closeM(); renderSpec(); toast('Видалено'+(node?': '+node.name:'')); }
+/* ══════════ ЦІНИ: базова ціна + напрямки + рівні ══════════ */
+const PRICECFG={
+  rep:{ unitAcc:'урок', dur:'за 60 хв', levelBadge:true,
+    goalsTitle:'Напрямки, які ви викладаєте',
+    goalsHint:'За цими напрямками учні знаходять вас у каталозі. Оберіть усе, що підходить.',
+    detTitle:'Різні ціни для різних напрямків або рівнів',
+    detHint:'Напр., підготовка до IELTS дорожча за розмовну англійську. Для кожного напрямку можна ще й розбити ціну за рівнями.',
+    levelsTitle:'Різні ціни за рівнями',
+    levels:[['A1','Початковий'],['A2','Елементарний'],['B1','Середній'],['B2','Вище середнього'],['C1','Просунутий']],
+    subjects:[
+      {id:'en',name:'Англійська мова',base:400,
+       goals:[['general','Загальна англійська'],['school','Шкільна програма'],['speaking','Розмовна мова'],['nmt','Підготовка до НМТ'],['business','Ділова англійська'],['it','Англійська для IT'],['ielts','Підготовка до IELTS'],['toefl','Підготовка до TOEFL'],['cambridge','Підготовка до Cambridge']],
+       teach:['general','speaking','nmt','ielts']},
+      {id:'de',name:'Німецька мова',base:380,
+       goals:[['general','Загальна німецька'],['school','Шкільна програма'],['speaking','Розмовна мова'],['goethe','Підготовка до Goethe-Zertifikat'],['business','Ділова німецька']],
+       teach:['general','school']}
+    ]},
+  psy:{ unitAcc:'сесію', dur:'за 60 хв', levelBadge:false,
+    goalsTitle:'Напрямки роботи',
+    goalsHint:'За цими напрямками клієнти знаходять вас у каталозі. Оберіть усе, що підходить.',
+    detTitle:'Різні ціни для різних напрямків або категорій',
+    detHint:'Напр., сімейна терапія дорожча за індивідуальну сесію. Для кожного напрямку можна розбити ціну за категорією клієнтів.',
+    levelsTitle:'Різні ціни за категоріями клієнтів',
+    levels:[['adult','Дорослі'],['teen','Підлітки'],['child','Діти 6–12'],['couple','Пари / сімʼї']],
+    subjects:[
+      {id:'main',name:'Психологія',base:800,
+       goals:[['anxiety','Тривожність та стрес'],['depression','Депресія'],['family','Сімейна терапія'],['childpsy','Дитяча психологія'],['trauma','Травма та ПТСР'],['selfesteem','Самооцінка'],['relations','Стосунки'],['panic','Панічні атаки'],['burnout','Вигорання']],
+       teach:['anxiety','depression','family','childpsy']}
+    ]},
+  logo:{ unitAcc:'заняття', dur:'за 45 хв', levelBadge:false,
+    goalsTitle:'Напрямки корекції',
+    goalsHint:'За цими напрямками клієнти знаходять вас у каталозі. Оберіть усе, що підходить.',
+    detTitle:'Різні ціни для різних напрямків або категорій',
+    detHint:'Напр., корекція заїкання дорожча за постановку звуків. Для кожного напрямку можна розбити ціну за категорією.',
+    levelsTitle:'Різні ціни за категоріями',
+    levels:[['pre','Діти 3–6'],['kid','Діти 4–7'],['school','Школярі'],['teen','Підлітки'],['adult','Дорослі']],
+    subjects:[
+      {id:'main',name:'Логопедія',base:500,
+       goals:[['sounds','Постановка звуків'],['znm','Затримка мовлення (ЗНМ)'],['dyslexia','Дислексія / дисграфія'],['stutter','Корекція заїкання'],['ffn','ФФН / ФНМ'],['autism','Аутизм (мовлення)'],['preschool','Підготовка до школи']],
+       teach:['sounds','znm','stutter']}
+    ]}
+};
+Object.keys(PRICECFG).forEach(function(tp){ PRICECFG[tp].subjects.forEach(function(s){ s.detailed=false; s.gstate={}; s.goals.forEach(function(gp){ s.gstate[gp[0]]={teach:s.teach.indexOf(gp[0])>-1,price:null,levels:{},open:false,lvOpen:false}; }); }); });
+let priceSubjIdx=0;
+const PMIN=100, PMAX=5000;
+function pc(){ return PRICECFG[specType]||PRICECFG.rep; }
+function curSubj(){ return pc().subjects[priceSubjIdx]||pc().subjects[0]; }
+function priceDirty(){ profileDirty=true; }
+function num0(v){ return v===''||v==null?0:Math.round(+v); }
+function pval(v){ return v===''||v==null?null:Math.round(+v); }
+function taughtGoals(s){ return s.goals.filter(function(gp){return s.gstate[gp[0]].teach;}); }
+function presolve(s,gid,lv){ if(!s.detailed) return s.base; const g=s.gstate[gid]; if(lv && g.levels[lv]!=null) return g.levels[lv]; return g.price!=null?g.price:s.base; }
+function goalRange(s,gid){ const vals=pc().levels.map(function(lp){return presolve(s,gid,lp[0]);}); return [Math.min.apply(null,vals),Math.max.apply(null,vals)]; }
+function hasLevels(s,gid){ const L=s.gstate[gid].levels; return Object.keys(L).some(function(k){return L[k]!=null;}); }
+function priceCheck(v){ if(v==null||v==='') return ['','']; if(v<PMIN) return ['e','Мінімум '+num(PMIN)]; if(v>PMAX) return ['e','Максимум '+num(PMAX)]; if(v>=curSubj().base*2) return ['w','Вдвічі дорожче за базову — перевірте']; return ['','']; }
+function typeMin(){ let min=Infinity; pc().subjects.forEach(function(s){ const tg=taughtGoals(s); if(!s.detailed){ min=Math.min(min,s.base); } else { if(!tg.length) min=Math.min(min,s.base); tg.forEach(function(gp){ min=Math.min(min,goalRange(s,gp[0])[0]); }); } }); return min; }
+function updatePriceNote(){ const m=typeMin(), pt=document.getElementById('specPriceT'); if(pt) pt.textContent=isFinite(m)?('У каталозі показуємо ціну «від '+num(m)+'»'):'Вкажіть базову ціну'; }
+function setPriceSubj(i){ priceSubjIdx=i; renderPricing(); }
+function toggleTeach(gid){ const s=curSubj(); s.gstate[gid].teach=!s.gstate[gid].teach; priceDirty(); renderPricing(); }
+function toggleDetailed(el){ const s=curSubj(); s.detailed=!s.detailed; if(el) el.classList.toggle('on',s.detailed); priceDirty(); renderPricing(); }
+function baseEdit(){ const s=curSubj(), bi=document.getElementById('baseInp'); s.base=num0(bi.value); document.getElementById('offPrice').textContent=num(s.base); const t=(s.base<PMIN||s.base>PMAX)?'e':''; const w=document.getElementById('baseWarn'); w.className='warn-line '+t; w.textContent= t==='e'?(s.base<PMIN?'Мінімум '+num(PMIN):'Максимум '+num(PMAX)):''; document.getElementById('baseMoney').classList.toggle('err',t==='e'); document.querySelectorAll('#goals input[data-k="price"]').forEach(function(x){x.placeholder=s.base;}); updatePriceNote(); priceDirty(); }
+const GP_CHEV='<svg class="gp-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+const GP_ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>';
+function gHeadInfo(s,gid){ const g=s.gstate[gid], r=goalRange(s,gid); const sub=hasLevels(s,gid)?'ціни за рівнями':(g.price!=null?'своя ціна':'базова ціна'); return {sub:sub, price:(r[0]===r[1]?num(r[0]):num(r[0])+'–'+num(r[1])), own:(g.price!=null||hasLevels(s,gid))}; }
+function gActions(s,gid){ return (hasLevels(s,gid)?'<button class="gp-lnk grey" onclick="gpLvClear(\''+gid+'\')">Одна ціна для всіх рівнів</button>':'')+(gHeadInfo(s,gid).own?'<button class="gp-lnk grey" onclick="gpReset(\''+gid+'\')">Скинути до базової</button>':''); }
+function renderTeach(){ const s=curSubj(); document.getElementById('teachChips').innerHTML=s.goals.map(function(gp){return '<span class="chip'+(s.gstate[gp[0]].teach?' on':'')+'" onclick="toggleTeach(\''+gp[0]+'\')">'+gp[1]+'</span>';}).join(''); document.getElementById('teachWarn').textContent=taughtGoals(s).length?'':'Оберіть хоча б один напрямок'; }
+function renderGoals(){
+  const s=curSubj(), cfg=pc();
+  document.getElementById('goals').innerHTML=taughtGoals(s).map(function(gp){
+    const gid=gp[0], n=gp[1], g=s.gstate[gid], h=gHeadInfo(s,gid);
+    let body='';
+    if(g.open){
+      const wc=priceCheck(g.price), wt=wc[0], wm=wc[1];
+      body='<div class="gp-body">'
+        +'<div class="gp-lbl">Ціна для всього напрямку</div>'
+        +'<div class="row" style="gap:10px;align-items:center"><label class="money'+(wt==='e'?' err':'')+'"><span>₴</span><input type="number" inputmode="numeric" data-g="'+gid+'" data-k="price" placeholder="'+s.base+'" value="'+(g.price==null?'':g.price)+'"></label><span class="per">'+cfg.dur+' · порожньо = базова</span></div>'
+        +'<div class="warn-line '+wt+'" id="pw-'+gid+'">'+wm+'</div>'
+        +'<button class="gp-lnk'+(g.lvOpen?' open':'')+'" onclick="gpLvToggle(\''+gid+'\')">'+GP_ARROW+cfg.levelsTitle+'</button>'
+        +(g.lvOpen?'<div class="lv-grid">'+cfg.levels.map(function(lp){ const l=lp[0], ln=lp[1], v=g.levels[l], bad=priceCheck(v)[0]==='e'; return '<div class="lv-cell">'+(cfg.levelBadge?('<b>'+l+'</b><small>'+ln+'</small>'):('<b>'+ln+'</b><small>&nbsp;</small>'))+'<label class="money sm'+(bad?' err':'')+'"><span>₴</span><input type="number" inputmode="numeric" data-g="'+gid+'" data-k="lv" data-l="'+l+'" placeholder="'+(g.price==null?s.base:g.price)+'" value="'+(v==null?'':v)+'"></label></div>'; }).join('')+'</div>':'')
+        +'<div class="gp-actions" id="ga-'+gid+'">'+gActions(s,gid)+'</div>'
+      +'</div>';
+    }
+    return '<div class="gp-row'+(g.open?' open':'')+'"><div class="gp-head" onclick="gpOpen(\''+gid+'\')"><div class="gp-name">'+n+'<div class="gp-sub" id="gsub-'+gid+'">'+h.sub+'</div></div><div class="gp-price'+(h.own?' own':'')+'" id="gpp-'+gid+'">'+h.price+'</div>'+GP_CHEV+'</div>'+body+'</div>';
+  }).join('');
+}
+function gpOpen(gid){ const g=curSubj().gstate[gid]; g.open=!g.open; renderGoals(); }
+function gpLvToggle(gid){ const g=curSubj().gstate[gid]; g.lvOpen=!g.lvOpen; renderGoals(); }
+function gpLvClear(gid){ const g=curSubj().gstate[gid]; g.levels={}; g.lvOpen=false; priceDirty(); renderGoals(); updatePriceNote(); }
+function gpReset(gid){ const g=curSubj().gstate[gid]; g.price=null; g.levels={}; g.lvOpen=false; priceDirty(); renderGoals(); updatePriceNote(); }
+function gpInput(e){
+  const inp=e.target; if(!inp.dataset.g) return;
+  const s=curSubj(), gid=inp.dataset.g, g=s.gstate[gid], v=pval(inp.value);
+  if(inp.dataset.k==='price'){
+    g.price=v; const wc=priceCheck(v); const w=document.getElementById('pw-'+gid); if(w){ w.className='warn-line '+wc[0]; w.textContent=wc[1]; }
+    inp.parentElement.classList.toggle('err',wc[0]==='e');
+    document.querySelectorAll('#goals input[data-k="lv"][data-g="'+gid+'"]').forEach(function(x){ x.placeholder=(v==null?s.base:v); });
+  } else {
+    g.levels[inp.dataset.l]=v; inp.parentElement.classList.toggle('err',priceCheck(v)[0]==='e');
+  }
+  const h=gHeadInfo(s,gid);
+  const su=document.getElementById('gsub-'+gid); if(su) su.textContent=h.sub;
+  const pp=document.getElementById('gpp-'+gid); if(pp){ pp.textContent=h.price; pp.classList.toggle('own',h.own); }
+  const ga=document.getElementById('ga-'+gid); if(ga) ga.innerHTML=gActions(s,gid);
+  updatePriceNote(); priceDirty();
+}
+function renderPricing(){
+  const cfg=pc(), s=curSubj();
+  const tabs=document.getElementById('priceSubjTabs');
+  if(cfg.subjects.length>1){ tabs.style.display=''; tabs.innerHTML=cfg.subjects.map(function(su,i){return '<button class="chip'+(i===priceSubjIdx?' on':'')+'" onclick="setPriceSubj('+i+')">'+su.name+'</button>';}).join(''); }
+  else { tabs.style.display='none'; tabs.innerHTML=''; }
+  document.getElementById('goalsLbl').textContent=cfg.goalsTitle;
+  document.getElementById('goalsHint').textContent=cfg.goalsHint;
+  renderTeach();
+  const bi=document.getElementById('baseInp'); if(document.activeElement!==bi) bi.value=s.base;
+  document.getElementById('basePer').textContent=cfg.dur;
+  document.getElementById('offPrice').textContent=num(s.base);
+  document.getElementById('detTitle').textContent=cfg.detTitle;
+  document.getElementById('detHint').textContent=cfg.detHint;
+  document.getElementById('detSw').classList.toggle('on',s.detailed);
+  document.getElementById('detOff').style.display=s.detailed?'none':'';
+  document.getElementById('detOn').style.display=s.detailed?'':'none';
+  renderGoals();
+  updatePriceNote();
+  document.getElementById('specPriceD').textContent='Це найдешевша ціна з ваших напрямків. Оновлюється автоматично. Ціна за '+cfg.unitAcc+'.';
+}
 function toggleProfDemo(el){ const full=!el.classList.contains('on'); el.classList.toggle('on',full); PROF_REQ.forEach(r=>{ r.done = full ? true : (r.k!=='zoom'); }); renderProf(); }
 function renderReward(){
   const body=document.getElementById('promoRewardBody');
@@ -3728,6 +3915,7 @@ function pickSheet(el){
 /* ══════════ INIT ══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
   renderCalStuFilter();renderWeek();renderDay();renderMonth();renderSlots();renderLib();renderProf();renderFin();renderJournal();renderUp();reqRefresh();renderTasks();renderStu();renderSpec();
+  var _gb=document.getElementById('goals'); if(_gb) _gb.addEventListener('input',gpInput);
   setMod('pending');
   const vp=document.getElementById('v-profile');
   if(vp){
