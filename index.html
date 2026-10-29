@@ -581,6 +581,39 @@ body[data-plan="pro"] .free-only,body[data-plan="expert"] .free-only{display:non
 body[data-plan="free"] .expert-hide,body[data-plan="pro"] .expert-hide{display:none!important}
 body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 
+/* ── onboarding tour ── */
+.tour-catch{position:fixed;inset:0;z-index:9000;display:none}
+.tour-catch.on{display:block}
+.tour-hole{position:fixed;z-index:9001;border-radius:12px;box-shadow:0 0 0 9999px rgba(15,23,42,.62);pointer-events:none;opacity:0;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.tour-hole.on{opacity:1}
+.tour-tip{position:fixed;z-index:9002;width:324px;max-width:calc(100vw - 28px);max-height:calc(100vh - 32px);overflow:auto;background:#fff;border-radius:18px;box-shadow:0 24px 70px rgba(15,23,42,.4);padding:18px;opacity:0;transform:translateY(6px);transition:opacity .28s,transform .28s}
+.tour-tip.on{opacity:1;transform:none}
+.tour-tip.big{width:364px}
+.tour-x{position:absolute;top:12px;right:12px;width:28px;height:28px;border:none;background:var(--bg);border-radius:50%;color:var(--muted);font-size:17px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center}
+.tour-tip-step{font-size:10.5px;font-weight:800;color:var(--teal-600);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.tour-tip-t{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:var(--ink);line-height:1.2;margin-bottom:7px;padding-right:22px}
+.tour-tip-d{font-size:13px;color:var(--muted);line-height:1.6}
+.tour-tip-d b{color:var(--ink-2);font-weight:800}
+.tour-foot{display:flex;align-items:center;gap:8px;margin-top:16px}
+.tour-dots{display:flex;gap:5px;margin-right:auto}
+.tour-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .2s}
+.tour-dot.on{background:var(--teal-500);width:18px;border-radius:5px}
+.tour-focus{opacity:1!important}
+.tour-mock{border:1.5px solid var(--border);border-radius:14px;padding:10px;background:var(--bg);margin-bottom:12px}
+.tour-mock-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:11px;padding:9px 10px}
+.tour-mock-av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--teal-400),var(--teal-600));flex-shrink:0}
+.tour-mock-n{font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px}
+.tour-mock-badge{font-size:9px;font-weight:800;color:#92400E;background:var(--amber-50);border:1px solid var(--amber-100);border-radius:20px;padding:1px 7px}
+.tour-mock-sub{font-size:11px;color:var(--muted-2);margin-top:1px}
+.tour-mock-earn{font-family:'Fraunces',serif;font-weight:900;color:var(--green);font-size:13px;white-space:nowrap}
+.tour-mock-add{margin-top:8px;border:1.5px dashed var(--teal-400);color:var(--teal-700);background:#fff;border-radius:10px;padding:8px;text-align:center;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px}
+.tour-ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0}
+.tour-ul li{display:flex;gap:8px;font-size:12.5px;color:var(--ink-2);font-weight:600;line-height:1.45}
+.tour-ul li i{color:var(--teal-500);font-size:11px;margin-top:3px;flex-shrink:0}
+.tour-note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
+.tour-backmini{width:32px;height:32px;border:1.5px solid var(--border);background:#fff;border-radius:9px;color:var(--muted);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tour-backmini:hover{border-color:var(--teal-400);color:var(--teal-600)}
+
 /* views */
 .view{display:none;animation:fade .35s ease both}
 .view.on{display:block}
@@ -1301,6 +1334,7 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
         <div class="bn-ic"><i class="fa-solid fa-user-gear"></i></div>
         <div style="flex:1"><div class="bn-t">Демо: тип спеціаліста</div><div class="bn-d">Перемкніть роль — розділи «Напрямки/предмети» та «Освіта» змінять логіку під репетитора, психолога чи логопеда.</div></div>
         <div class="bn-r">
+          <button class="btn b-sm b-violet-soft" onclick="startTour()" title="Показати онбординг ще раз"><i class="fa-solid fa-route"></i>Онбординг</button>
           <select class="demo-sel specSel" onchange="setSpecType(this.value)" title="Демо: тип спеціаліста">
             <option value="rep">Репетитор</option>
             <option value="psy">Психолог</option>
@@ -1730,6 +1764,11 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- ══════════ ONBOARDING TOUR ══════════ -->
+<div class="tour-catch" id="tourCatch"></div>
+<div class="tour-hole" id="tourHole"></div>
+<div class="tour-tip" id="tourTip"></div>
 
 <script>
 /* ══════════ NAV ══════════ */
@@ -3912,6 +3951,104 @@ function pickSheet(el){
   el.parentElement.querySelectorAll('.sheet-i').forEach(x=>{x.style.borderColor='var(--border)';x.style.background='#fff'});
   el.style.borderColor='var(--violet)';el.style.background='var(--violet-50)';
 }
+/* ══════════ ONBOARDING TOUR ══════════ */
+const TOUR_STEPS=[
+ {center:true, title:'Вітаємо в Libitum! 👋', text:'Поки ваш профіль на модерації, за 30 секунд покажемо, що на вас чекає.'},
+ {sel:'.sb-i[data-view="req"]', title:'Заявки та Біржа', text:'Сюди приходять заявки на пробний від учнів і відкриті замовлення з <b>біржі</b>. Швидка реакція піднімає вас у каталозі.'},
+ {sel:'.sb-i[data-view="sched"]', title:'Розклад', text:'Календар уроків і слоти для пробних. Зручно переглядайте й керуйте своїм розкладом — забудьте про нотатки в телефоні.'},
+ {sel:'.sb-i[data-view="journal"]', title:'Журнал і ДЗ', text:'Мотивуйте учня коротким звітом і оцінкою після уроку. Прикріплюйте домашнє завдання з дедлайном, а після перевірки ставте оцінку.'},
+ {sel:'.sb-i[data-view="lib"]', title:'Бібліотека', text:'Зберігайте всі навчальні матеріали в одному місці. Потрібний файл завжди під рукою.'},
+ {sel:'.sb-i[data-view="students"]', big:true, center:true, addCta:true, html:
+   '<div class="tour-tip-t">Усі ваші учні — в одному місці ⭐️</div>'
+  +'<div class="tour-tip-d" style="margin-bottom:12px">Додайте учнів, з якими вже займаєтесь, і забудьте про таблиці, нотатки й пошук переписок. Усе, що потрібно для роботи, — під рукою та повністю безкоштовно.</div>'
+  +'<div class="tour-mock"><div class="tour-mock-row"><div class="tour-mock-av"></div><div style="flex:1;min-width:0"><div class="tour-mock-n">Назар П. <span class="tour-mock-badge">Власний</span></div><div class="tour-mock-sub">Англійська · 2× на тиждень</div></div></div></div>'
+  +'<ul class="tour-ul">'
+    +'<li><i class="fa-solid fa-check"></i>Розклад, ДЗ і звіти кожного учня — за один клік</li>'
+    +'<li><i class="fa-solid fa-check"></i>Контроль і аналітика оплат від учнів</li>'
+    +'<li><i class="fa-solid fa-check"></i>Матеріали зберігаються під кожного учня — нічого не губиться</li>'
+  +'</ul>'
+  +'<div class="tour-note">Розкажіть учню про платформу й спробуйте — ми впевнені, вам сподобається!</div>'}
+];
+let tourIdx=0, tourActive=false, tourOpenedSb=false, tourFocusEl=null;
+function tourHolePos(target){
+  const hole=document.getElementById('tourHole');
+  if(!target){ hole.style.width='0px'; hole.style.height='0px'; hole.style.left='50%'; hole.style.top='50%'; return; }
+  const r=target.getBoundingClientRect(), pad=6;
+  hole.style.left=(r.left-pad)+'px'; hole.style.top=(r.top-pad)+'px';
+  hole.style.width=(r.width+pad*2)+'px'; hole.style.height=(r.height+pad*2)+'px';
+}
+function tourPlace(target, center){
+  const tip=document.getElementById('tourTip'), mobile=window.innerWidth<=1023;
+  tip.style.left=''; tip.style.right=''; tip.style.top=''; tip.style.bottom=''; tip.style.transform=''; tip.style.width='';
+  if(center || !target){
+    tip.style.left='50%'; tip.style.top='50%'; tip.style.transform='translate(-50%,-50%)';
+  } else if(mobile){
+    tip.style.left='14px'; tip.style.right='14px'; tip.style.bottom='16px'; tip.style.width='auto';
+  } else {
+    const r=target.getBoundingClientRect(), w=tip.offsetWidth||324, h=tip.offsetHeight;
+    let left=r.right+16; if(left+w>window.innerWidth-12) left=r.left-w-16; if(left<12) left=12;
+    let top=r.top-4; if(top+h>window.innerHeight-12) top=window.innerHeight-h-12; if(top<12) top=12;
+    tip.style.left=left+'px'; tip.style.top=top+'px';
+  }
+}
+function tourTipHTML(s,idx){
+  const cnt = s.sel ? '<div class="tour-tip-step">Крок '+idx+' з 5</div>' : '';
+  const body = s.html || ('<div class="tour-tip-t">'+s.title+'</div><div class="tour-tip-d">'+s.text+'</div>');
+  const dots = TOUR_STEPS.map(function(_,k){return '<span class="tour-dot'+(k===idx?' on':'')+'"></span>';}).join('');
+  let foot;
+  if(s.addCta){
+    foot='<div class="tour-foot" style="flex-direction:column;align-items:stretch;gap:12px">'
+      +'<div style="display:flex;align-items:center;gap:10px"><button class="tour-backmini" onclick="tourBack()" aria-label="Назад">&larr;</button><div class="tour-dots">'+dots+'</div></div>'
+      +'<div style="display:flex;gap:8px"><button class="btn b-sec b-sm" onclick="endTour()" style="flex:1">Пізніше</button><button class="btn b-pri b-sm" onclick="tourAddStudent()" style="flex:2;justify-content:center"><i class="fa-solid fa-user-plus"></i>Додати першого учня</button></div>'
+    +'</div>';
+  } else {
+    const back = idx>0 ? '<button class="btn b-sec b-sm" onclick="tourBack()">Назад</button>' : '';
+    foot='<div class="tour-foot"><div class="tour-dots">'+dots+'</div>'+back+'<button class="btn b-pri b-sm" onclick="tourNext()">Далі →</button></div>';
+  }
+  return '<button class="tour-x" onclick="endTour()" aria-label="Закрити">&times;</button>'+cnt+body+foot;
+}
+function tourAddStudent(){ endTour(); if(typeof openM==='function') openM('addstudent'); }
+function renderTourStep(){
+  const s=TOUR_STEPS[tourIdx], target=s.sel?document.querySelector(s.sel):null;
+  if(tourFocusEl){ tourFocusEl.classList.remove('tour-focus'); tourFocusEl=null; }
+  if(target){ target.classList.add('tour-focus'); tourFocusEl=target; }
+  tourHolePos(target);
+  const tip=document.getElementById('tourTip');
+  tip.classList.toggle('big', !!s.big);
+  tip.innerHTML=tourTipHTML(s,tourIdx);
+  document.getElementById('tourHole').classList.add('on');
+  tip.classList.add('on');
+  requestAnimationFrame(function(){ tourPlace(target, s.center); });
+}
+function tourReposition(){ if(!tourActive) return; const s=TOUR_STEPS[tourIdx], target=s.sel?document.querySelector(s.sel):null; tourHolePos(target); tourPlace(target, s.center); }
+function tourKey(e){ if(e.key==='Escape') endTour(); }
+function startTour(){
+  tourIdx=0; tourActive=true;
+  if(window.innerWidth<=1023){ openSb(); tourOpenedSb=true; }
+  document.body.style.overflow='hidden';
+  document.getElementById('tourCatch').classList.add('on');
+  renderTourStep();
+  window.addEventListener('resize', tourReposition);
+  window.addEventListener('scroll', tourReposition, true);
+  document.addEventListener('keydown', tourKey);
+}
+function tourNext(){ if(tourIdx<TOUR_STEPS.length-1){ tourIdx++; renderTourStep(); } else endTour(); }
+function tourBack(){ if(tourIdx>0){ tourIdx--; renderTourStep(); } }
+function endTour(){
+  tourActive=false;
+  if(tourFocusEl){ tourFocusEl.classList.remove('tour-focus'); tourFocusEl=null; }
+  document.getElementById('tourCatch').classList.remove('on');
+  document.getElementById('tourHole').classList.remove('on');
+  document.getElementById('tourTip').classList.remove('on');
+  document.body.style.overflow='';
+  try{ localStorage.setItem('lb_tutor_tour_v1','1'); }catch(e){}
+  if(tourOpenedSb){ closeSb(); tourOpenedSb=false; }
+  window.removeEventListener('resize', tourReposition);
+  window.removeEventListener('scroll', tourReposition, true);
+  document.removeEventListener('keydown', tourKey);
+}
+function maybeStartTour(){ let done=false; try{ done=localStorage.getItem('lb_tutor_tour_v1')==='1'; }catch(e){} if(!done) setTimeout(startTour, 550); }
+
 /* ══════════ INIT ══════════ */
 document.addEventListener('DOMContentLoaded',()=>{
   renderCalStuFilter();renderWeek();renderDay();renderMonth();renderSlots();renderLib();renderProf();renderFin();renderJournal();renderUp();reqRefresh();renderTasks();renderStu();renderSpec();
@@ -3924,6 +4061,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
   const st=document.getElementById('streakTimer'); if(st) st.dataset.s='24135';
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();closeSb()}});
+  maybeStartTour();
 });
 </script>
 </body>
