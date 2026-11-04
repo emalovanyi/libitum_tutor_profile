@@ -726,6 +726,517 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
   .mth-evs{gap:2px;margin-top:3px}
 }
 </style>
+<style>
+
+/* ═══════════ AI-ПОМІЧНИК · ТАРИФИ (додано для мокапу) ═══════════ */
+:root{--violet-600:#7C3AED;--violet-700:#5B21B6;--violet-200:#DDD6FE}
+.b-v{background:var(--violet);color:#fff;box-shadow:0 6px 18px rgba(139,92,246,.32)}
+.b-v:hover{background:var(--violet-600)}
+.b-vs{background:var(--violet-50);border-color:var(--violet-200);color:var(--violet-700)}
+.b-ghost-w{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+.b-ghost-w:hover{background:rgba(255,255,255,.22)}
+.pr i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#A78BFA,var(--violet));transition:width .3s}
+.pr.warn i{background:linear-gradient(90deg,#FCD34D,var(--amber))}
+.pr.full i{background:linear-gradient(90deg,#FCA5A5,var(--red))}
+.lims .pr{height:6px}
+.sb-cnt.a{background:#FDE68A;color:#78350F}
+.sb-demo{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);margin:0 0 6px}
+.sb .demo-sel{width:100%;background-color:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;margin-bottom:10px}
+.sb .demo-sel option{color:var(--ink)}
+.ai-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:900;padding:2px 7px;border-radius:6px;background:var(--violet-50);color:var(--violet-700);border:1px solid var(--violet-200);vertical-align:middle}
+#aiTourTip .tour-dot.on{background:var(--violet)}
+#aiTourTip{width:340px}
+
+/* ══ AI: ЗАБЛОКОВАНИЙ СТАН (немає підписки) ══ */
+.lk-hero{position:relative;overflow:hidden;border-radius:30px;padding:34px;color:#fff;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:center;
+  background-color:#3B1C8C;
+  background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),radial-gradient(120% 140% at 100% 0%,#7C3AED 0%,#4C1D95 55%,#2E1065 100%);
+  background-size:26px 26px,26px 26px,100% 100%}
+.lkh-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:6px 12px;font-size:12px;font-weight:800;margin-bottom:16px}
+.lk-h{font-family:'Fraunces',serif;font-size:40px;line-height:1.08;font-weight:900;letter-spacing:-1px;margin-bottom:14px;max-width:560px}
+.lk-p{font-size:15px;line-height:1.65;color:rgba(255,255,255,.82);max-width:500px;margin-bottom:22px}
+.lk-cta{display:flex;gap:10px;flex-wrap:wrap}
+.lk-cta .b-white{background:#fff;color:var(--violet-700);box-shadow:0 10px 30px rgba(15,23,42,.25)}
+.lk-cta .b-white:hover{background:var(--violet-50)}
+.lk-note{font-size:12px;color:rgba(255,255,255,.65);margin-top:12px;line-height:1.5}
+/* «живий» приклад справа */
+.lk-demo{background:#fff;color:var(--ink);border-radius:22px;padding:16px;box-shadow:0 30px 70px rgba(20,8,60,.45);transform:rotate(-1.2deg)}
+.lk-demo-h{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.lk-demo-h img{width:36px;height:36px;border-radius:10px;object-fit:cover}
+.lk-demo-n{font-size:13.5px;font-weight:800}
+.lk-demo-m{font-size:11.5px;color:var(--muted)}
+.lk-ctx{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.ctag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 9px;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--ink-2)}
+.ctag.weak{background:var(--amber-50);border-color:var(--amber-100);color:#92400E}
+.ctag i{font-size:9px}
+.lk-msg{background:var(--violet);color:#fff;border-radius:16px 16px 4px 16px;padding:10px 13px;font-size:12.5px;font-weight:600;margin:0 0 10px auto;max-width:85%;width:fit-content}
+.lk-out{border:1.5px solid var(--violet-200);border-radius:16px;padding:12px;background:linear-gradient(180deg,var(--violet-50),#fff 70%)}
+.lk-out-t{font-size:13px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.lk-out ol{margin:0 0 10px 18px;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.lk-acts{display:flex;gap:6px;flex-wrap:wrap}
+.lk-acts span{font-size:11px;font-weight:800;border-radius:8px;padding:5px 9px;background:#fff;border:1.5px solid var(--border);color:var(--ink-2)}
+.lk-acts span.prim{background:var(--teal-600);border-color:var(--teal-600);color:#fff}
+
+.sec{margin-top:28px}
+.sec-h{font-family:'Fraunces',serif;font-size:22px;font-weight:900;letter-spacing:-.4px;margin-bottom:6px}
+.sec-p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:16px;max-width:620px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.feat-c{background:#fff;border:1.5px solid var(--border);border-radius:24px;padding:22px;display:flex;flex-direction:column}
+.feat-ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.feat-t{font-size:18px;font-weight:900;margin-bottom:6px}
+.feat-d{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.feat-fmts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.fmt{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:6px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--border);color:var(--ink-2)}
+.fmt i{font-size:11px;color:var(--violet)}
+.sample{margin-top:auto;border:1.5px dashed var(--violet-200);border-radius:16px;padding:14px;background:var(--violet-50)}
+.sample-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.sample-tabs button{border:none;background:#fff;border-radius:8px;padding:5px 10px;font-size:11.5px;font-weight:800;color:var(--muted);cursor:pointer;border:1.5px solid var(--violet-100)}
+.sample-tabs button.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.sample-b{font-size:12.5px;line-height:1.65;color:var(--ink-2);min-height:120px}
+.sample-b ol,.sample-b ul{margin-left:18px}
+.sample-b .q{font-weight:700;margin-top:6px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stp{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:18px;position:relative}
+.stp-n{width:30px;height:30px;border-radius:50%;background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;margin-bottom:12px}
+.stp-t{font-size:14.5px;font-weight:800;margin-bottom:4px}
+.stp-d{font-size:12.5px;color:var(--muted);line-height:1.55}
+.faq{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden}
+.faq-i+.faq-i{border-top:1px solid var(--border)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;background:none;border:none;text-align:left;font-size:14px;font-weight:800;color:var(--ink);cursor:pointer}
+.faq-q i{color:var(--muted-2);transition:transform .2s}
+.faq-i.on .faq-q i{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 18px 16px;font-size:13px;line-height:1.65;color:var(--muted)}
+.faq-i.on .faq-a{display:block}
+
+/* ══ ТАРИФИ ══ */
+.trial-bn{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:22px;background:linear-gradient(100deg,var(--violet-50),#fff);border:1.5px solid var(--violet-200);margin-bottom:18px;flex-wrap:wrap}
+.trial-bn .ic{width:46px;height:46px;border-radius:14px;background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.trial-bn .tx{flex:1;min-width:220px}
+.trial-bn b{font-size:15px;display:block;margin-bottom:3px}
+.trial-bn span{font-size:12.5px;color:var(--muted);line-height:1.5}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.pl{background:#fff;border:1.5px solid var(--border);border-radius:26px;padding:22px;display:flex;flex-direction:column;position:relative}
+.pl.rec{border-color:var(--violet);box-shadow:0 0 0 4px var(--violet-50),var(--sh-lg)}
+.pl-flag{position:absolute;top:-12px;left:22px;background:var(--violet);color:#fff;font-size:11px;font-weight:900;padding:4px 11px;border-radius:20px}
+.pl-cur{position:absolute;top:-12px;right:22px;background:var(--teal-600);color:#fff;font-size:11px;font-weight:900;padding:4px 11px;border-radius:20px}
+.pl-n{font-family:'Fraunces',serif;font-size:22px;font-weight:900}
+.pl-d{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.5;min-height:38px}
+.pl-p{display:flex;align-items:baseline;gap:6px;margin:14px 0 4px}
+.pl-pv{font-family:'Fraunces',serif;font-size:36px;font-weight:900;letter-spacing:-1px}
+.pl-pu{font-size:13px;color:var(--muted-2);font-weight:700}
+.pl-sub{font-size:11.5px;color:var(--muted-2);font-weight:600;margin-bottom:16px}
+.pl-lim{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:12px 14px;margin-bottom:14px}
+.pl.rec .pl-lim{background:var(--violet-50);border-color:var(--violet-200)}
+.pl-lim-r{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:5px 0}
+.pl-lim-r span{color:var(--muted);font-weight:600}
+.pl-lim-r b{font-weight:900;text-align:right}
+.pl-f{list-style:none;flex:1;margin-bottom:18px}
+.pl-f li{display:flex;gap:9px;font-size:13px;color:var(--ink-2);padding:6px 0;line-height:1.45}
+.pl-f li i{color:var(--teal-500);font-size:11px;margin-top:4px;flex-shrink:0}
+.pl-f li.no{color:var(--muted-2)}
+.pl-f li.no i{color:var(--muted-2)}
+.cmp{width:100%;border-collapse:collapse;min-width:640px}
+.cmp th,.cmp td{padding:12px 16px;text-align:left;font-size:13px;border-bottom:1px solid var(--border)}
+.cmp th{font-size:11px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em;background:var(--bg)}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp tr.grp td{background:#FCFCFE;font-weight:900;font-size:12px;color:var(--violet-700)}
+.cmp .y{color:var(--teal-600)}
+.cmp .n{color:var(--muted-2)}
+.cmp col.rec{background:rgba(139,92,246,.04)}
+.cmpw{overflow-x:auto;border-radius:20px;border:1.5px solid var(--border);background:#fff}
+
+/* ══ AI: РОБОЧИЙ ПРОСТІР (3 колонки як у референсі) ══ */
+body.is-ws .wrap{padding:0;max-width:none}
+.ws-top{display:flex;align-items:center;gap:12px;padding:10px 18px;background:#fff;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.mode{display:inline-flex;background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:3px;gap:3px}
+.mode button{display:inline-flex;align-items:center;gap:8px;border:none;background:none;border-radius:11px;padding:8px 14px;font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;white-space:nowrap}
+.mode button.on{background:#fff;color:var(--violet-700);box-shadow:var(--sh-sm)}
+.mode button i{font-size:12px}
+.ws-top-r{margin-left:auto;display:flex;align-items:center;gap:8px}
+.plan-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;border-radius:50px;padding:6px 12px;background:var(--violet-50);color:var(--violet-700);border:1px solid var(--violet-200);cursor:pointer}
+.ws{display:grid;grid-template-columns:256px minmax(0,1fr) 300px;height:calc(100vh - 64px - 59px);min-height:520px}
+/* ліво — учні */
+.rail{background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;min-height:0}
+.rail-s{margin:12px 12px 6px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--border);border-radius:11px;padding:0 11px;height:38px;color:var(--muted-2)}
+.rail-s input{border:none;outline:none;flex:1;min-width:0;font-size:13px;font-weight:600;background:transparent}
+.rail-l{flex:1;overflow-y:auto;padding:0 8px 10px}
+.rail-sec{font-size:10.5px;font-weight:800;color:var(--muted-2);letter-spacing:.06em;text-transform:uppercase;padding:12px 8px 6px}
+.su{position:relative;display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;cursor:pointer;border:1.5px solid transparent;width:100%;background:none;text-align:left}
+.su:hover{background:var(--bg)}
+.su.on{background:var(--violet-50);border-color:var(--violet-200)}
+.su img,.su .av{width:36px;height:36px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.su .av{display:flex;align-items:center;justify-content:center;background:var(--violet);color:#fff;font-size:14px}
+.su .av.tr{background:var(--amber-50);color:var(--amber);border:1.5px dashed var(--amber-100)}
+.su-n{font-size:13.5px;font-weight:800;color:var(--ink)}
+.su-m{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.su-t{min-width:0;flex:1}
+.su-dot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,.2);flex-shrink:0}
+.lims{margin:8px 12px 12px;padding:12px;border-radius:14px;background:var(--violet-50);border:1px solid var(--violet-200)}
+.lims-h{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900;color:var(--violet-700);margin-bottom:8px}
+.lim-r{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;color:var(--ink-2);margin:6px 0 4px}
+.lim-r b{font-weight:900}
+.lims-f{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.45}
+.lims-f a{color:var(--violet-700);font-weight:800;text-decoration:none;cursor:pointer}
+/* центр — чат */
+.chat{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--bg)}
+.chat-h{position:relative;background:#fff;border-bottom:1px solid var(--border);padding:11px 18px;display:flex;align-items:center;gap:12px;z-index:5}
+.who{display:flex;align-items:center;gap:11px;min-width:0;flex:1;background:none;border:none;text-align:left;cursor:default;padding:0}
+.who img,.who .av{width:40px;height:40px;border-radius:11px;object-fit:cover;flex-shrink:0}
+.who .av{display:flex;align-items:center;justify-content:center;background:var(--violet);color:#fff}
+.who .av.tr{background:var(--amber-50);color:var(--amber)}
+.who-n{font-family:'Fraunces',serif;font-size:16px;font-weight:900}
+.who-m{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who-chev{display:none;color:var(--muted-2);margin-left:6px}
+.ctx-btn{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;color:var(--violet-700);background:var(--violet-50);border:1.5px solid var(--violet-200);border-radius:11px;padding:8px 12px;cursor:pointer;white-space:nowrap}
+.ctx-btn.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.st-drop{display:none;position:absolute;left:10px;right:10px;top:calc(100% + 6px);background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--sh-xl);padding:6px;max-height:60vh;overflow-y:auto}
+.st-drop.open{display:block}
+.ctx{display:none;background:#fff;border-bottom:1px solid var(--border);padding:12px 18px}
+.ctx.open{display:block}
+.ctx-t{font-size:12px;font-weight:800;color:var(--violet-700);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ctx-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ctx-note{font-size:11.5px;color:var(--muted-2);margin-top:8px}
+.nudge{margin:14px 18px 0;display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:14px;background:#fff;border:1.5px solid var(--teal-100)}
+.nudge .ic{width:34px;height:34px;border-radius:10px;background:var(--teal-50);color:var(--teal-600);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nudge .tx{flex:1;min-width:0;font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+.nudge .tx b{font-weight:800}
+.msgs{flex:1;overflow-y:auto;padding:16px 18px 10px;scroll-behavior:smooth}
+.empty{max-width:420px;margin:30px auto;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
+.empty .e-ic{width:56px;height:56px;border-radius:18px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 12px}
+.empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+.msg{margin-bottom:14px;max-width:760px}
+.msg.me{margin-left:auto;width:fit-content;max-width:80%;background:var(--violet);color:#fff;border-radius:18px 18px 4px 18px;padding:11px 14px;font-size:13.5px;line-height:1.5;font-weight:600}
+.ai-intro{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2);line-height:1.55;margin-bottom:8px}
+.ai-b{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#A78BFA,var(--violet));color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.gen{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--sh-sm)}
+.gen-h{display:flex;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid var(--border)}
+.gic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.gen-t{font-size:14px;font-weight:900}
+.gen-s{font-size:11.5px;color:var(--muted)}
+.gen-badges{display:flex;flex-wrap:wrap;gap:6px;padding:10px 15px 0}
+.gen-b{padding:13px 15px;font-size:13px;line-height:1.7;color:var(--ink-2)}
+.gen-b ol,.gen-b ul{margin-left:20px}
+.gen-b li{margin-bottom:3px}
+.gen-b .blk{position:relative;border:1px dashed transparent;border-radius:10px;padding:4px 30px 4px 6px;margin:0 -6px}
+.gen-b .blk:hover{border-color:var(--violet-200);background:var(--violet-50)}
+.blk-re{position:absolute;right:4px;top:4px;width:22px;height:22px;border-radius:7px;border:none;background:#fff;color:var(--violet);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:10px;box-shadow:var(--sh-sm)}
+.blk:hover .blk-re{display:flex}
+.flash{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.flash div{border:1.5px solid var(--violet-200);border-radius:12px;padding:10px;text-align:center;font-size:11.5px;background:var(--violet-50);color:var(--muted)}
+.flash b{display:block;font-size:13px;color:var(--ink);margin-bottom:3px}
+.slides{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.slides div{aspect-ratio:16/10;border-radius:10px;background:linear-gradient(135deg,var(--violet-50),#fff);border:1.5px solid var(--violet-200);padding:8px;font-size:10.5px;font-weight:800;color:var(--violet-700);display:flex;align-items:flex-end}
+.gen-a{display:flex;flex-wrap:wrap;gap:7px;padding:12px 15px;border-top:1px solid var(--border);background:#FCFCFE}
+.act{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--border);background:#fff;border-radius:10px;padding:7px 11px;font-size:12px;font-weight:800;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.act:hover{border-color:var(--violet-200);color:var(--violet-700)}
+.act.prim{background:var(--teal-600);border-color:var(--teal-600);color:#fff}
+.act.prim:hover{background:var(--teal-700);color:#fff}
+.act small{font-weight:700;color:var(--muted-2)}
+.typing{display:flex;gap:4px;padding:12px 14px;background:#fff;border:1.5px solid var(--border);border-radius:16px;width:fit-content;margin-bottom:14px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--violet);opacity:.4;animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:1}}
+.composer{background:#fff;border-top:1px solid var(--border);padding:10px 18px 12px}
+.quick{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
+.quick::-webkit-scrollbar{display:none}
+.quick .chip{flex-shrink:0;padding:6px 11px;font-size:12px}
+.inp-w{display:flex;align-items:flex-end;gap:8px;border:1.5px solid var(--border);border-radius:16px;padding:6px 6px 6px 8px;background:#fff;transition:border-color .15s}
+.inp-w:focus-within{border-color:var(--violet);box-shadow:0 0 0 4px rgba(139,92,246,.1)}
+.inp-w textarea{flex:1;border:none;outline:none;resize:none;font-size:14px;line-height:1.5;padding:7px 4px;max-height:140px;min-height:36px;background:transparent}
+.ib{width:36px;height:36px;border-radius:11px;border:none;background:var(--bg);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ib.send{background:var(--violet);color:#fff}
+.ib.send[disabled]{opacity:.4;cursor:not-allowed}
+.comp-hint{font-size:11px;color:var(--muted-2);margin-top:7px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.comp-lock{display:none}
+.composer.locked .inp-w,.composer.locked .quick{display:none}
+.composer.locked .comp-lock{display:flex}
+/* право — інструменти */
+.tools{background:#fff;border-left:1px solid var(--border);overflow-y:auto;padding:16px}
+.tools-h{font-size:14px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.tools-p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.tile{display:flex;align-items:center;gap:11px;width:100%;padding:10px;border:1.5px solid var(--border);border-radius:14px;background:#fff;cursor:pointer;margin-bottom:7px;text-align:left;transition:border-color .15s,background .15s}
+.tile:hover{border-color:var(--violet-200);background:var(--violet-50)}
+.tile-t{font-size:13px;font-weight:800;color:var(--ink)}
+.tile-d{font-size:11.5px;color:var(--muted);margin-top:1px}
+.tile .cnt{margin-left:auto;font-size:10.5px;font-weight:800;color:var(--muted-2);white-space:nowrap}
+.tips-ex{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.tips-ex-h{font-size:12px;font-weight:900;color:var(--ink-2);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.ex{display:block;width:100%;text-align:left;font-size:12.5px;line-height:1.45;color:var(--ink-2);background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:9px 11px;margin-bottom:6px;cursor:pointer}
+.ex:hover{border-color:var(--violet-200);background:var(--violet-50)}
+.up-ls{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.up-l{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;border:1.5px solid var(--border);margin-bottom:6px;cursor:pointer;background:#fff;width:100%;text-align:left}
+.up-l:hover{border-color:var(--teal-100);background:var(--teal-50)}
+.ud{width:40px;text-align:center;flex-shrink:0;border-radius:9px;background:var(--bg);padding:4px 0;font-size:10px;font-weight:800;color:var(--muted)}
+.ud b{display:block;font-family:'Fraunces',serif;font-size:16px;color:var(--ink)}
+.mob-tools-btn{display:none}
+
+/* ══ МОДАЛКА / ДОВІДНИК / ШТОРКА ══ */
+.pick{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1.5px solid var(--border);border-radius:14px;margin-bottom:8px;cursor:pointer;width:100%;background:#fff;text-align:left}
+.pick.on{border-color:var(--teal-500);background:var(--teal-50)}
+.pick img{width:34px;height:34px;border-radius:10px;object-fit:cover}
+.pick-b{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--muted-2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;flex-shrink:0}
+.pick.on .pick-b{background:var(--teal-500);border-color:var(--teal-500)}
+.pick-t{flex:1;min-width:0}
+.pick-n{font-size:13.5px;font-weight:800}
+.pick-m{font-size:11.5px;color:var(--muted)}
+.pick.rad .pick-b{border-radius:50%}
+.sugg{border:1.5px dashed var(--violet-200);background:var(--violet-50);border-radius:16px;padding:12px;margin:6px 0 14px}
+.sugg-h{font-size:12.5px;font-weight:800;color:var(--violet-700);display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.sugg .pick{background:#fff}
+.sugg .pick-why{font-size:11.5px;color:#6D28D9;margin-top:2px}
+
+.guide-ov{position:fixed;inset:0;z-index:380;background:rgba(15,23,42,.4);opacity:0;pointer-events:none;transition:opacity .25s}
+.guide-ov.on{opacity:1;pointer-events:all}
+.guide{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100%;z-index:390;background:#fff;box-shadow:var(--sh-xl);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.guide.on{transform:none}
+.guide-h{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.guide-b{flex:1;overflow-y:auto;padding:18px 20px 28px}
+.g-sec{margin-bottom:22px}
+.g-sec h3{font-size:15px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.g-sec h3 i{color:var(--violet);font-size:13px}
+.g-sec p,.g-sec li{font-size:13px;line-height:1.65;color:var(--ink-2)}
+.g-steps{list-style:none;counter-reset:s}
+.g-steps li{counter-increment:s;display:flex;gap:11px;padding:8px 0}
+.g-steps li::before{content:counter(s);width:24px;height:24px;border-radius:50%;background:var(--violet-50);color:var(--violet-700);font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.g-cmp{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g-cmp div{border-radius:12px;padding:10px 11px;font-size:12px;line-height:1.5}
+.g-bad{background:var(--red-50);color:#991B1B}
+.g-good{background:var(--teal-50);color:var(--teal-700)}
+.g-cmp b{display:block;font-size:11px;margin-bottom:4px}
+.g-tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.g-tbl td{padding:7px 0;border-bottom:1px solid var(--border)}
+.g-tbl td:last-child{text-align:right;font-weight:800}
+
+.sheet-ov{display:none}
+
+/* ══ ОНБОРДИНГ (як у кабінеті) ══ */
+.tour-step{font-size:11px;font-weight:800;color:var(--violet);margin-bottom:6px}
+.tour-t{font-family:'Fraunces',serif;font-size:19px;font-weight:900;line-height:1.2;margin-bottom:7px;padding-right:24px}
+.tour-d{font-size:13px;color:var(--muted);line-height:1.6}
+.tour-d b{color:var(--ink-2)}
+.tour-ill{border-radius:16px;padding:14px;margin-bottom:14px;background-color:#3B1C8C;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:18px 18px;color:#fff;display:flex;gap:10px;align-items:center}
+.tour-ill .ic{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.tour-ill b{font-size:13.5px;display:block}
+.tour-ill span{font-size:11.5px;color:rgba(255,255,255,.75)}
+
+/* ══ ЖУРНАЛ / БІБЛІОТЕКА (заглушки для звʼязку з AI) ══ */
+.ai-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:900;padding:2px 7px;border-radius:6px;background:var(--violet-50);color:var(--violet-700);border:1px solid var(--violet-200)}
+.new-flash{animation:flash 1.6s ease}
+@keyframes flash{0%{background:var(--violet-100)}100%{background:transparent}}
+
+/* mobile tab bar */
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1200px){
+  .ws{grid-template-columns:236px minmax(0,1fr)}
+  .tools{display:none}
+  .mob-tools-btn{display:inline-flex}
+  /* шторка інструментів */
+  .sheet-ov{display:block;position:fixed;inset:0;z-index:350;background:rgba(15,23,42,.45);opacity:0;pointer-events:none;transition:opacity .25s}
+  .sheet-ov.on{opacity:1;pointer-events:all}
+  .tools.sheet{display:block;position:fixed;left:0;right:0;bottom:0;z-index:360;max-height:82vh;border-radius:24px 24px 0 0;border:none;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);padding:10px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+  .tools.sheet.on{transform:none}
+  .tools.sheet::before{content:'';display:block;width:42px;height:4px;border-radius:4px;background:var(--border);margin:0 auto 12px}
+  .tools .mob-lims{display:block}
+}
+@media(max-width:1023px){
+  .lk-hero{grid-template-columns:1fr;padding:24px}
+  .lk-h{font-size:30px}
+  .lk-demo{transform:none}
+  .feat,.steps,.plans{grid-template-columns:1fr}
+  .plans{gap:22px}
+  /* робочий простір на мобілі */
+  .ws{grid-template-columns:1fr;height:calc(100dvh - 64px - 59px - 62px)}
+  .rail{display:none}
+  .who{cursor:pointer}
+  .who-chev{display:inline-block}
+  .ctx-btn .ctx-l{display:none}
+  .ws-top{padding:8px 12px}
+  .ws-top-r .lbl-h{display:none}
+  .mode{flex:1}
+  .mode button{flex:1;justify-content:center;padding:8px 6px;font-size:12.5px}
+  .chat-h{padding:10px 12px}
+  .msgs{padding:12px}
+  .composer{padding:8px 12px 10px}
+  .nudge{margin:10px 12px 0}
+  .flash{grid-template-columns:repeat(2,1fr)}
+  .slides{grid-template-columns:repeat(2,1fr)}
+}
+.mob-lims{display:none}
+@media(max-width:640px){
+  .h-sec{font-size:21px}
+  .lk-hero{padding:20px;border-radius:24px}
+  .lk-h{font-size:26px}
+  .lk-p{font-size:14px}
+  .lk-cta .btn{flex:1}
+  .g-cmp{grid-template-columns:1fr}
+  .guide{width:100%}
+}
+
+.ai-demo{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ai-demo .demo-sel{height:34px}
+@media(max-width:1023px){.ws-top .ai-demo-lbl{display:none}}
+
+/* ═══ v3: менше шуму ═══ */
+.lkh-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:50px;padding:6px 12px;font-size:12px;font-weight:800;margin-bottom:16px}
+.lk-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:16px;padding:14px 18px;border-radius:18px;background:#fff;border:1.5px solid var(--border);font-size:13.5px;color:var(--muted)}
+.lk-foot b{color:var(--ink);font-family:'Fraunces',serif;font-size:16px}
+.feat-c .feat-d{margin-bottom:0}
+.demo-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 12px;border-radius:14px;border:1.5px dashed var(--violet-200);background:var(--violet-50);margin-bottom:16px;font-size:12px;font-weight:800;color:var(--violet-700)}
+.demo-bar span i{margin-right:6px}
+.demo-bar .demo-sel{height:32px;margin-left:auto}
+.trial-bn:empty{display:none}
+@media(min-width:1201px){.quick{display:none}}
+.act-wrap{position:relative;display:inline-flex}
+.act-menu{display:none;position:absolute;bottom:calc(100% + 6px);right:0;background:#fff;border:1.5px solid var(--border);border-radius:14px;box-shadow:var(--sh-xl);padding:6px;z-index:30;min-width:210px}
+.act-menu.on{display:block}
+.act-menu button{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border:none;background:none;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--ink-2);text-align:left;cursor:pointer}
+.act-menu button:hover{background:var(--violet-50);color:var(--violet-700)}
+.act-menu button i{width:14px;text-align:center;color:var(--muted-2)}
+.act.ic{padding:7px 10px}
+/* підписка */
+.sub{background:#fff;border:1.5px solid var(--border);border-radius:22px;overflow:hidden}
+.sub-h{display:flex;align-items:center;gap:14px;padding:18px 20px;flex-wrap:wrap}
+.sub-ic{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sub-t{font-size:16px;font-weight:900}
+.sub-d{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+.sub-h .btn{margin-left:auto}
+.sub-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 20px 18px}
+.sub-c{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:12px 13px}
+.sub-c-l{font-size:10px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em}
+.sub-c-v{font-size:13.5px;font-weight:800;margin-top:4px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.sub-c-v button{font-size:11.5px;font-weight:800;color:var(--violet-700);background:none;border:none;cursor:pointer;padding:0;text-decoration:underline}
+.sub-a{display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid var(--border);background:#FCFCFE}
+.sub-hist{border-top:1px solid var(--border)}
+.sub-hist table{width:100%;border-collapse:collapse}
+.sub-hist td,.sub-hist th{padding:11px 20px;font-size:12.5px;border-bottom:1px solid var(--border);text-align:left}
+.sub-hist th{font-size:10.5px;font-weight:900;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em;background:var(--bg)}
+.sub-hist tr:last-child td{border-bottom:none}
+.sub-hist td:last-child,.sub-hist th:last-child{text-align:right}
+@media(max-width:640px){
+  .sub-g{grid-template-columns:1fr}
+  .sub-h .btn{margin-left:0;width:100%}
+  .sub-hist th:nth-child(2),.sub-hist td:nth-child(2){display:none}
+  .sub-hist td,.sub-hist th{padding:10px 14px}
+  .demo-bar .demo-sel{margin-left:0;flex:1}
+  .lk-foot .btn{width:100%}
+}
+
+/* ═══ v4: промо, старт, підписка, стан у робочому просторі ═══ */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.why-i{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:16px}
+.why-ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.why-i b{display:block;font-size:14.5px;font-weight:800;margin-bottom:3px}
+.why-i span{font-size:12.5px;color:var(--muted);line-height:1.5}
+.start{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px;align-items:stretch}
+.sc{position:relative;background:#fff;border:1.5px solid var(--border);border-radius:22px;padding:20px;display:flex;flex-direction:column}
+.sc.rec{border-color:var(--violet);box-shadow:0 0 0 4px var(--violet-50)}
+.sc.trial{background:linear-gradient(180deg,var(--violet-50),#fff 70%);border-color:var(--violet-200)}
+.sc-flag{position:absolute;top:-11px;left:20px;background:var(--violet);color:#fff;font-size:10.5px;font-weight:900;padding:3px 10px;border-radius:20px}
+.sc-n{font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.sc-p{display:flex;align-items:baseline;gap:5px;margin:6px 0 12px}
+.sc-pv{font-family:'Fraunces',serif;font-size:32px;font-weight:900;letter-spacing:-.8px}
+.sc-pu{font-size:12.5px;color:var(--muted-2);font-weight:700}
+.sc-l{list-style:none;flex:1;margin-bottom:16px}
+.sc-l li{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:7px 0;border-bottom:1px dashed var(--border)}
+.sc-l li:last-child{border-bottom:none}
+.sc-l li span{color:var(--muted)}
+.sc-l li b{font-weight:900}
+.lk-meta{margin-top:16px;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lk-meta i{color:var(--muted-2)}
+.lk-meta a{color:var(--violet-700);font-weight:800;cursor:pointer;text-decoration:underline}
+/* стан підписки над робочим простором */
+.wsbar{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:12.5px;font-weight:700;border-bottom:1px solid var(--border)}
+.wsbar i{font-size:12px}
+.wsbar .btn{margin-left:auto}
+.wsbar.v{background:var(--violet-50);color:var(--violet-700)}
+.wsbar.a{background:var(--amber-50);color:#92400E}
+body.is-ws .ws{height:calc(100vh - 64px - 59px - var(--wsbar,0px))}
+/* порожній чат: стартові підказки під учня */
+.e-sugg{display:grid;gap:8px;margin-top:16px;text-align:left}
+.e-sugg button{display:flex;align-items:center;gap:11px;width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:14px;background:#fff;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.e-sugg button:hover{border-color:var(--violet-200);background:var(--violet-50)}
+.e-sugg b{display:block;font-size:13px;font-weight:800;color:var(--ink)}
+.e-sugg small{font-size:11.5px;color:var(--muted)}
+.e-sugg .fa-arrow-right{margin-left:auto;color:var(--violet);font-size:11px}
+/* сторінка «Підписка» */
+.sub-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:stretch}
+.sp-b{padding:20px}
+.sp-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sp-n{font-family:'Fraunces',serif;font-size:24px;font-weight:900;letter-spacing:-.4px}
+.sp-pr{font-size:13px;color:var(--muted);font-weight:700}
+.sp-use{display:grid;gap:10px;margin:4px 0 16px}
+.sp-use .lim-r{font-size:12.5px;margin:0 0 5px}
+.sp-use .pr{height:7px}
+.sp-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.sp-act{display:flex;gap:8px;flex-wrap:wrap}
+.pay-card{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:linear-gradient(135deg,#1E293B,#0F172A);color:#fff;margin-bottom:12px}
+.pay-card i{font-size:20px;opacity:.85}
+.pay-card b{display:block;font-size:14px}
+.pay-card span{font-size:11.5px;opacity:.7}
+.pay-empty{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;border:1.5px dashed var(--border);color:var(--muted);font-size:12.5px;margin-bottom:12px}
+.chg{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:16px;margin-bottom:10px;cursor:pointer;width:100%;background:#fff;text-align:left}
+.chg.on{border-color:var(--violet);background:var(--violet-50)}
+.chg .rb{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--muted-2);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.chg.on .rb{border-color:var(--violet)}
+.chg.on .rb::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--violet)}
+.chg-t{flex:1;min-width:0}
+.chg-t b{font-size:14px;display:block}
+.chg-t span{font-size:12px;color:var(--muted)}
+.chg-p{font-family:'Fraunces',serif;font-weight:900;font-size:18px;white-space:nowrap}
+@media(max-width:1023px){
+  .why,.start{grid-template-columns:1fr}
+  .start{gap:20px}
+  .sub-grid{grid-template-columns:1fr}
+  body.is-ws .ws{height:calc(100dvh - 64px - 59px - 62px - var(--wsbar,0px))}
+  .wsbar{padding:8px 12px}
+}
+@media(max-width:640px){.sp-info{grid-template-columns:1fr}}
+
+/* ═══ v5: мобільний робочий простір ═══ */
+body.is-ws #v-ai.on{display:flex;flex-direction:column;height:calc(100vh - 64px)}
+body.is-ws #v-ai.on .ws{flex:1;height:auto!important;min-height:0}
+.wsbar-t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:1023px){
+  body.is-ws #v-ai.on{height:calc(100dvh - 64px - 62px - env(safe-area-inset-bottom,0px))}
+  .ws-top{flex-wrap:nowrap;gap:8px;padding:8px 10px}
+  .ws-top-r{margin-left:0;flex-shrink:0}
+  #guideBtn{width:38px;height:38px;padding:0}
+  .mode button i{display:none}
+  .wsbar{padding:6px 10px;font-size:12px;gap:8px}
+  .wsbar>i{display:none}
+  .wsbar .btn{padding:5px 10px}
+  .wsbar-x{display:none}
+  .chat-h{padding:8px 10px;gap:8px}
+  .who img,.who .av{width:34px;height:34px}
+  .who-n{font-size:15px}
+  .ctx-btn{padding:7px 10px}
+  .nudge{margin:8px 10px 0;padding:8px 10px;gap:9px}
+  .nudge .ic{width:28px;height:28px;font-size:12px}
+  .nudge .tx{font-size:12px}
+  .msgs{padding:10px}
+  .composer{padding:6px 10px 8px}
+  .comp-hint{display:none}
+  .quick{padding-bottom:6px}
+  .empty{margin:14px auto}
+  .empty .e-ic{width:44px;height:44px;font-size:16px;margin-bottom:8px}
+  .gen-a{padding:10px 12px;gap:6px}
+  .act{padding:7px 9px;font-size:11.5px}
+  .act small{display:none}
+  .act-menu{right:0;bottom:calc(100% + 6px)}
+  .gen-b{padding:12px;font-size:12.5px}
+  .gen-h{padding:11px 12px}
+  .composer.locked .comp-lock{flex-wrap:wrap}
+}
+
+/* ═══ v6: шторка інструментів поверх затемнення, онбординг ═══ */
+#v-ai,#v-ai.on{animation:none}
+#aiTourTip{width:340px;max-width:calc(100vw - 28px)}
+#aiTourTip .tour-foot{flex-wrap:wrap;justify-content:flex-end;gap:8px}
+#aiTourTip .tour-dots{flex:1 1 100%;margin:0 0 4px}
+#aiTourTip .tour-foot .btn{white-space:nowrap}
+.mbody .guide-b .g-sec:last-child{margin-bottom:0}
+</style>
 </head>
 <body data-plan="free">
 
@@ -769,13 +1280,13 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
     <button class="sb-i" data-view="journal"><i class="fa-solid fa-book-open"></i>Журнал і ДЗ</button>
 
     <div class="sb-lbl">Інструменти</div>
-    <button class="sb-i ai" data-view="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI-помічник<span class="sb-cnt v">Скоро</span></button>
+    <button class="sb-i ai" data-view="ai"><i class="fa-solid fa-wand-magic-sparkles"></i>AI-помічник<span class="sb-cnt v" id="sbAiBadge">14 днів free</span></button>
     <button class="sb-i" data-view="lib"><i class="fa-solid fa-folder-open"></i>Бібліотека</button>
     <button class="sb-i shop" data-view="shop"><i class="fa-solid fa-bullhorn"></i>Магазин і просування</button>
 
     <div class="sb-lbl">Акаунт</div>
     <button class="sb-i" data-view="profile"><i class="fa-regular fa-id-badge"></i>Профіль</button>
-    <button class="sb-i" data-view="plans"><i class="fa-solid fa-crown"></i>Тарифи</button>
+    <button class="sb-i" data-view="sub"><i class="fa-solid fa-crown"></i>Підписка<span class="sb-cnt a" id="sbPlanBadge">Безкоштовний</span></button>
     <button class="sb-i" data-view="fin"><i class="fa-solid fa-wallet"></i>Фінанси</button>
   </nav>
 
@@ -1062,14 +1573,14 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
           </div>
         </div>
 
-        <div class="card" style="margin-top:16px">
+        <!-- AI у журналі: тепер веде в AI-помічника (мокап) -->
+        <div class="card" style="margin-top:16px" id="jrnAiCard">
           <div class="ch"><div class="ct"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--violet)"></i>AI у журналі</div></div>
           <div class="cb" style="text-align:center;padding:28px 18px">
             <div style="width:56px;height:56px;border-radius:16px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 12px"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-            <span class="st st-v"><i class="fa-solid fa-rocket"></i>Скоро</span>
-            <div style="font-size:14.5px;font-weight:800;margin:10px 0 4px">AI у журналі — незабаром</div>
-            <div style="font-size:12.5px;color:var(--muted);line-height:1.6;max-width:340px;margin:0 auto 14px">Генерація ДЗ, перевірка робіт і автоматичний звіт після уроку. Повідомимо, щойно запустимо.</div>
-            <button class="btn b-violet-soft b-sm" onclick="toast('Дякуємо! Повідомимо про запуск AI')"><i class="fa-regular fa-bell"></i>Повідомити про запуск</button>
+            <div style="font-size:14.5px;font-weight:800;margin:0 0 4px">ДЗ з AI-помічника потрапляють сюди</div>
+            <div style="font-size:12.5px;color:var(--muted);line-height:1.6;max-width:340px;margin:0 auto 14px">Згенеруйте ДЗ під рівень учня й надішліть — воно зʼявиться біля уроку з позначкою <span class="ai-tag">AI</span>, яку бачите лише ви.</div>
+            <button class="btn b-violet-soft b-sm" onclick="go('ai')"><i class="fa-solid fa-wand-magic-sparkles"></i>Відкрити AI-помічника</button>
           </div>
         </div>
       </div>
@@ -1105,23 +1616,109 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       </div>
     </section>
 
-    <!-- ═════════ 7. AI-ПОМІЧНИК (скоро) ═════════ -->
-    <section class="view" id="v-ai">
-      <div class="h-sec">AI-помічник</div>
-      <p class="p-sec">Розумний помічник для підготовки до уроків — зараз у розробці.</p>
-      <div class="card">
-        <div class="cb" style="text-align:center;padding:48px 24px">
-          <div style="width:76px;height:76px;border-radius:24px;background:var(--violet-50);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 16px"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-          <span class="st st-v"><i class="fa-solid fa-rocket"></i>Скоро</span>
-          <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:900;letter-spacing:-.6px;margin:14px 0 8px">AI-помічник зʼявиться найближчим часом</div>
-          <p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto 22px">Підбір матеріалів під рівень учня, генерація ДЗ і автоматичний звіт після уроку — за пару секунд. Ми повідомимо, щойно функція стане доступною.</p>
-          <div class="g3" style="max-width:640px;margin:0 auto 24px;text-align:left">
-            <div class="stu-cell"><div class="stu-cell-l">Підбір матеріалів</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">План уроку, вправи, картки</div></div>
-            <div class="stu-cell"><div class="stu-cell-l">Генерація ДЗ</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Тип, складність, дедлайн</div></div>
-            <div class="stu-cell"><div class="stu-cell-l">Звіт після уроку</div><div class="stu-cell-v" style="font-weight:700;font-size:12px">Готовий текст для учня</div></div>
+    <!-- ═════════ 7. AI-ПОМІЧНИК · БЕЗ ПІДПИСКИ: вигоди + активація ═════════ -->
+    <section class="view" id="v-ailock">
+      <div class="lk-hero">
+        <div>
+          <div class="lkh-badge"><i class="fa-solid fa-wand-magic-sparkles"></i>AI-помічник</div>
+          <h1 class="lk-h">ДЗ і план уроку за хвилину — під кожного учня</h1>
+          <p class="lk-p">AI бачить рівень, ціль і помилки учня з вашого журналу. Ви пишете тему, перевіряєте й надсилаєте — прямо з кабінету.</p>
+          <div class="lk-cta">
+            <button class="btn b-white" id="lkTrialBtn" onclick="aiOpenTrialModal()"><i class="fa-solid fa-gift"></i>Спробувати 14 днів безкоштовно</button>
           </div>
-          <button class="btn b-violet" onclick="toast('Дякуємо! Повідомимо про запуск AI-помічника')"><i class="fa-regular fa-bell"></i>Повідомити про запуск</button>
+          <div class="lk-note" id="lkNote">Без картки. Після 14 днів AI просто вимкнеться, якщо не оберете тариф.</div>
         </div>
+        <div class="lk-demo" aria-hidden="true">
+          <div class="lk-demo-h">
+            <img src="https://i.pravatar.cc/100?u=st1" alt="">
+            <div><div class="lk-demo-n">Софія Т.</div><div class="lk-demo-m">Англійська · B1 · ціль НМТ</div></div>
+          </div>
+          <div class="lk-ctx">
+            <span class="ctag">24 уроки</span><span class="ctag">Тема: Present Perfect</span>
+            <span class="ctag weak"><i class="fa-solid fa-triangle-exclamation"></i>for / since</span>
+          </div>
+          <div class="lk-msg">ДЗ на 20 хв по Present Perfect</div>
+          <div class="lk-out">
+            <div class="lk-out-t">Вправи · 8 завдань · ~20 хв</div>
+            <ol>
+              <li>Вставте for або since: I have lived here … 2019.</li>
+              <li>Present Perfect чи Past Simple: She … (visit) London last year.</li>
+            </ol>
+            <div class="lk-acts"><span class="prim">Надіслати як ДЗ</span><span>До уроку</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why">
+        <div class="why-i"><span class="why-ic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-solid fa-user-graduate"></i></span><div><b>Знає кожного учня</b><span>Рівень, ціль і слабкі місця — з журналу та оцінок за ДЗ</span></div></div>
+        <div class="why-i"><span class="why-ic" style="background:var(--teal-50);color:var(--teal-600)"><i class="fa-solid fa-book-open"></i></span><div><b>ДЗ за хвилину</b><span>Вправи, тест, картки, презентація — одразу в журнал учню</span></div></div>
+        <div class="why-i"><span class="why-ic" style="background:var(--amber-50);color:var(--amber)"><i class="fa-solid fa-chalkboard-user"></i></span><div><b>Готовий урок</b><span>План на 60 хв, пояснення теми, діагностика для пробного</span></div></div>
+      </div>
+
+      <div class="sec-h" style="margin-top:26px">Оберіть, як почати</div>
+      <div class="start" id="startCards"></div>
+      <div class="lk-meta"><i class="fa-solid fa-circle-info"></i>Кабінет, заявки й журнал — завжди безкоштовні. Керувати підпискою: <a onclick="go('sub')">Акаунт → Підписка</a></div>
+    </section>
+
+    <!-- ═════════ 7. AI-ПОМІЧНИК · РОБОЧИЙ ПРОСТІР ═════════ -->
+    <section class="view" id="v-ai">
+      <div class="ws-top" id="wsTop">
+        <div class="mode" id="modeSw" role="tablist">
+          <button class="on" data-m="hw" onclick="setMode('hw')" role="tab"><i class="fa-solid fa-book-open"></i>Домашні завдання</button>
+          <button data-m="ls" onclick="setMode('ls')" role="tab"><i class="fa-solid fa-chalkboard-user"></i>Матеріали до уроку</button>
+        </div>
+        <div class="ws-top-r">
+          <button class="btn b-sec b-sm" onclick="openGuide()" id="guideBtn" title="Довідник"><i class="fa-regular fa-circle-question"></i><span class="lbl-h">Довідник</span></button>
+        </div>
+      </div>
+      <div id="wsBar"></div>
+      <div class="ws">
+        <aside class="rail" id="rail">
+          <label class="rail-s"><i class="fa-solid fa-magnifying-glass" style="font-size:12px"></i><input id="stSearch" placeholder="Знайти учня" oninput="renderRail()"></label>
+          <div class="rail-l" id="railList"></div>
+          <div class="lims" id="lims"></div>
+        </aside>
+
+        <main class="chat">
+          <div class="chat-h">
+            <button class="who" id="who" onclick="toggleDrop()">
+              <span id="whoAv"></span>
+              <div style="min-width:0"><div class="who-n" id="whoN"></div><div class="who-m" id="whoM"></div></div>
+              <i class="fa-solid fa-chevron-down who-chev"></i>
+            </button>
+            <button class="ctx-btn" id="ctxBtn" onclick="toggleCtx()" aria-expanded="false"><i class="fa-regular fa-eye"></i><span class="ctx-l">Що знає AI</span></button>
+            <button class="ctx-btn mob-tools-btn" onclick="openSheet()" aria-label="Що згенерувати"><i class="fa-solid fa-shapes"></i></button>
+            <div class="st-drop" id="stDrop"></div>
+          </div>
+          <div class="ctx" id="ctx"></div>
+          <div id="nudge"></div>
+          <div class="msgs" id="msgs"></div>
+          <div class="composer" id="composer">
+            <div class="quick" id="quick"></div>
+            <div class="inp-w">
+              <button class="ib" title="Взяти файл з бібліотеки за основу" onclick="openLibPick()"><i class="fa-solid fa-paperclip"></i></button>
+              <textarea id="inp" rows="1" placeholder="Що підготувати для учня?" oninput="autosize()"></textarea>
+              <button class="ib send" id="send" onclick="aiSend()" disabled aria-label="Надіслати запит"><i class="fa-solid fa-arrow-up"></i></button>
+            </div>
+            <div class="comp-hint"><span>Enter — надіслати · Shift+Enter — новий рядок</span><span id="attHint"></span></div>
+            <div class="comp-lock bn bn-warn" style="margin:0">
+              <div class="bn-ic"><i class="fa-solid fa-battery-empty"></i></div>
+              <div style="flex:1"><div class="bn-t" id="lockT">Ліміт ДЗ на цей місяць вичерпано</div><div class="bn-d" id="lockD">—</div></div>
+              <button class="btn b-v b-sm" onclick="aiOpenChangePlan()">Більше лімітів</button>
+            </div>
+          </div>
+        </main>
+
+        <aside class="tools" id="tools">
+          <div class="mob-lims" id="mobLims"></div>
+          <div class="tools-h"><i class="fa-solid fa-shapes" style="color:var(--violet)"></i><span id="toolsT">Що згенерувати</span></div>
+          <div class="tools-p">Оберіть формат — запит підставиться в поле. Залишиться вписати тему.</div>
+          <div id="tiles"></div>
+          <div class="tips-ex">
+            <div class="tips-ex-h"><i class="fa-regular fa-lightbulb" style="color:var(--amber)"></i>Приклади запитів</div>
+            <div id="examples"></div>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -1640,19 +2237,25 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
       </div></div></div>
     </section>
 
-    <!-- ═════════ 10. ТАРИФИ (скоро) ═════════ -->
-    <section class="view" id="v-plans">
-      <div class="h-sec">Тарифи</div>
-      <p class="p-sec">Платні підписки — у розробці.</p>
-      <div class="card">
-        <div class="cb" style="text-align:center;padding:48px 24px">
-          <div style="width:76px;height:76px;border-radius:24px;background:var(--amber-50);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 16px"><i class="fa-solid fa-crown"></i></div>
-          <span class="st st-warn"><i class="fa-solid fa-rocket"></i>Скоро</span>
-          <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:900;letter-spacing:-.6px;margin:14px 0 8px">Підписки зʼявляться найближчим часом</div>
-          <p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:540px;margin:0 auto 22px">Зараз усі можливості кабінету доступні безкоштовно та без лімітів. Платні плани з AI-функціями додамо в наступному релізі — повідомимо заздалегідь.</p>
-          <div class="bn bn-ok" style="max-width:520px;margin:0 auto 22px;text-align:left"><div class="bn-ic"><i class="fa-solid fa-gift"></i></div><div><div class="bn-t">Все безкоштовно на старті</div><div class="bn-d">Ліди, розклад, журнал, учні та просування працюють без обмежень.</div></div></div>
-          <button class="btn b-amber" onclick="toast('Дякуємо! Повідомимо про запуск підписок')"><i class="fa-regular fa-bell"></i>Повідомити про запуск</button>
-        </div>
+    <!-- ═════════ 10. ПІДПИСКА (Акаунт): тариф, оплата, історія ═════════ -->
+    <section class="view" id="v-sub">
+      <div class="h-sec">Підписка</div>
+      <p class="p-sec">Ваш тариф AI-помічника, спосіб оплати й історія платежів. Кабінет, заявки та журнал — безкоштовні завжди.</p>
+      <div class="demo-bar">
+        <span><i class="fa-solid fa-sliders"></i>Демо · стан підписки</span>
+        <select class="demo-sel planSel" onchange="aiSetPlan(this.value)" aria-label="Демо: стан AI-підписки">
+          <option value="none">Без підписки</option><option value="trial">Пробний період</option><option value="pro">Pro · 349 ₴</option><option value="premium">Premium · 699 ₴</option><option value="limit">Pro · ліміт ДЗ вичерпано</option>
+        </select>
+        <button class="btn b-xs b-violet-soft" onclick="aiResetTour()"><i class="fa-solid fa-route"></i>Онбординг AI</button>
+      </div>
+      <div class="sub-grid">
+        <div class="card" style="margin-top:0" id="subPlan"></div>
+        <div class="card" style="margin-top:0" id="subPay"></div>
+      </div>
+      <div class="card" id="subHist" style="margin-top:16px"></div>
+      <div class="sec" style="margin-top:22px">
+        <div class="sec-h">Часті питання</div>
+        <div class="faq" id="plFaq"></div>
       </div>
     </section>
 
@@ -1770,6 +2373,21 @@ body:not([data-plan="expert"]) .expert-only-badge{display:inline-flex}
 <div class="tour-hole" id="tourHole"></div>
 <div class="tour-tip" id="tourTip"></div>
 
+<!-- ══════════ AI: ДОВІДНИК, ШТОРКА ІНСТРУМЕНТІВ, ОНБОРДИНГ AI (мокап) ══════════ -->
+<div class="guide-ov" id="guideOv" onclick="closeGuide()"></div>
+<aside class="guide" id="guide" aria-label="Довідник AI-помічника">
+  <div class="guide-h">
+    <div class="gic" style="background:var(--violet-50);color:var(--violet)"><i class="fa-regular fa-circle-question"></i></div>
+    <div style="flex:1"><div class="mh-t">Довідник AI-помічника</div><div class="mh-s">Як отримати найкращий результат</div></div>
+    <button class="mx" onclick="closeGuide()" aria-label="Закрити довідник"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="guide-b" id="guideBody"></div>
+</aside>
+<div class="sheet-ov" id="sheetOv" onclick="closeSheet()"></div>
+<div class="tour-catch" id="aiTourCatch"></div>
+<div class="tour-hole" id="aiTourHole"></div>
+<div class="tour-tip" id="aiTourTip" role="dialog" aria-live="polite"></div>
+
 <script>
 /* ══════════ NAV ══════════ */
 const TITLES = {
@@ -1779,11 +2397,12 @@ const TITLES = {
   students:['Мої учні','4 активних · ліміт 5'],
   journal:['Журнал і ДЗ','Звіти після уроків та ДЗ'],
   journaltx:['Усі уроки','Історія звітів та ДЗ'],
-  ai:['AI-помічник','Скоро — у наступному релізі'],
+  ai:['AI-помічник','ДЗ і матеріали до уроку під кожного учня'],
+  ailock:['AI-помічник','ДЗ і матеріали до уроку під кожного учня'],
   lib:['Бібліотека матеріалів','18 матеріалів'],
   shop:['Магазин і просування','2 активні позиції'],
   profile:['Профіль','Статус: на модерації'],
-  plans:['Тарифи','Скоро — у наступному релізі'],
+  sub:['Підписка','Тариф, оплата та історія платежів'],
   fin:['Фінанси','Доходи та комісії платформи'],
   fintx:['Усі транзакції','Історія операцій']
 };
@@ -2776,7 +3395,7 @@ function openUpLesson(id){
   document.getElementById('mBody').innerHTML=b;
   let foot='<button class="btn b-sec" onclick="closeM()">Закрити</button>';
   if(u.state!=='trialp') foot+='<button class="btn b-pri" onclick="toast(\'Відкриваємо '+u.plat+'…\')"><i class="fa-solid fa-video"></i>Приєднатися</button>';
-  else foot+='<button class="btn b-sec" onclick="openM(\'trial\')">Перенести</button>';
+  else foot+='<button class="btn b-sec" onclick="closeM();go(\'sched\')"><i class="fa-regular fa-calendar"></i>У розкладі</button>';
   document.getElementById('mFoot').innerHTML=foot;
   document.getElementById('mv').classList.add('on'); document.body.style.overflow='hidden';
 }
@@ -4062,6 +4681,695 @@ document.addEventListener('DOMContentLoaded',()=>{
   const st=document.getElementById('streakTimer'); if(st) st.dataset.s='24135';
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();closeSb()}});
   maybeStartTour();
+});
+</script>
+
+<script>
+
+/* ═══════════════════════════════════════════════════════════
+   МОКАП · AI-помічник репетитора
+   Стан підписки, ліміти, учні та генерації — демо-дані.
+   Логіка для розробника позначена коментарями «DEV:».
+═══════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ── ТАРИФИ (ліміти з розрахунку «Libitum_AI_budget_v3») ── */
+const PLANS = {
+  free:    { n:'Безкоштовний', price:0,   hw:0,    prez:0,   ls:0,   d:'Увесь кабінет без AI' },
+  trial:   { n:'Пробний',      price:0,   hw:150,  prez:23,  ls:60,  d:'14 днів, одноразово' },
+  pro:     { n:'Pro',          price:349, hw:100,  prez:15,  ls:40,  d:'Для репетитора з 5–10 учнями' },
+  premium: { n:'Premium',      price:699, hw:1000, prez:150, ls:400, d:'Для тих, хто готує багато матеріалів' }
+};
+/* DEV: plan береться з підписки; used — лічильники за поточний розрахунковий період */
+const USAGE_DEMO = {
+  trial:{hw:6,prez:1,ls:3}, pro:{hw:18,prez:2,ls:11}, premium:{hw:142,prez:9,ls:37}, limit:{hw:100,prez:15,ls:23}
+};
+const AIS = { plan:'none', used:{hw:0,prez:0,ls:0}, trialUsed:false, mode:'hw', cur:null, attach:null };
+const TODAY = '17 серпня';
+function tier(){ return AIS.plan==='limit' ? 'pro' : (AIS.plan==='none' ? 'free' : AIS.plan); }
+function lim(){ return PLANS[tier()]; }
+function hwLeft(){ return lim().hw - AIS.used.hw; }
+function prezLeft(){ return lim().prez - AIS.used.prez; }
+function lsLeft(){ return lim().ls - AIS.used.ls; }
+function renewTxt(){ return AIS.plan==='trial' ? 'Пробний до 31 серпня · залишилось 14 днів' : 'Оновиться 15 вересня'; }
+
+/* ── УЧНІ (DEV: з «Мої учні», журналу, звітів, оцінок ДЗ і заявок) ── */
+const AV = u => 'https://i.pravatar.cc/100?u='+u;
+const STUDENTS = [
+  { id:'sofia', n:'Софія Т.', img:AV('st1'), subj:'Англійська', fam:'en-nmt', meta:'B1 · ціль НМТ 170+',
+    ctx:['24 уроки','Рівень B1','Ціль: НМТ 170+','Остання тема: Present Perfect','Середня за ДЗ: 10,6'],
+    weak:['for / since','Present Perfect vs Past Simple'],
+    lessons:[['17','серп.','Сьогодні, 15:00','Reading · швидкість'],['20','серп.','Чт, 15:00','Conditionals'],['24','серп.','Пн, 15:00','Тема ще не вказана']],
+    lastNoHw:'16 серп. · Present Perfect', unread:false },
+  { id:'artem', n:'Артем К.', img:AV('st2'), subj:'Німецька', fam:'de', meta:'A2 · шкільна програма',
+    ctx:['13 уроків','Рівень A2','Ціль: шкільна програма','Остання тема: Modalverben'],
+    weak:['Akkusativ / Dativ після Wechselpräpositionen','Perfekt: haben чи sein'],
+    lessons:[['17','серп.','Сьогодні, 18:00','Perfekt · закріплення'],['24','серп.','Пн, 18:00','Trennbare Verben']],
+    lastNoHw:null, unread:true },
+  { id:'marta', n:'Марта Л.', img:AV('st3'), subj:'IELTS', fam:'en-ielts', meta:'B2 · ціль Band 7.0',
+    ctx:['33 уроки','Рівень B2','Ціль: IELTS Band 7.0','Остання тема: Speaking Part 2'],
+    weak:['Звʼязки між ідеями (linking)','Діапазон граматики у Writing'],
+    lessons:[['18','серп.','Завтра, 10:00','Speaking Part 3'],['21','серп.','Пт, 11:00','Writing Task 2']],
+    lastNoHw:null },
+  { id:'nazar', n:'Назар П.', img:AV('st4'), subj:'Англійська', fam:'en-nmt', meta:'НМТ · 11 клас',
+    ctx:['15 уроків','Ціль: НМТ','Остання тема: Use of English'],
+    weak:['Word formation: суфікси -tion / -ment'],
+    lessons:[['19','серп.','Ср, 16:00','Use of English'],['28','серп.','Пт, 16:00','Vocabulary']],
+    lastNoHw:null }
+];
+const TRIALS = [
+  { id:'oleg', n:'Олег Д.', trial:true, subj:'Розмовна англійська', fam:'en', meta:'Пробний · 19 серп., 19:00',
+    ctx:['Дорослий','Ціль: співбесіда англійською','Рівень ще невідомий','2× на тиждень'], weak:[],
+    lessons:[['19','серп.','Ср, 19:00','Пробне заняття · 25 хв']], note:'«Хочу підтягнути розмовну англійську для співбесіди. Вечірні години зручніші.»' },
+  { id:'iryna', n:'Ірина К.', trial:true, subj:'Англійська НМТ', fam:'en-nmt', meta:'Пробний · 20 серп., 11:00',
+    ctx:['9 клас','Ціль: підготовка до НМТ','Потрібна діагностика рівня'], weak:[],
+    lessons:[['20','серп.','Чт, 11:00','Пробне заняття · 25 хв']], note:'«Дитина в 9 класі, готуємось до НМТ. Треба діагностика рівня.»' }
+];
+const FREE = { id:'free', n:'Без учня', free:true, subj:'', meta:'Загальні матеріали з нуля', ctx:[], weak:[], lessons:[] };
+const ALL = () => [...STUDENTS, ...TRIALS, FREE];
+const byId = id => ALL().find(s => s.id === id);
+STUDENTS.concat(TRIALS, [FREE]).forEach(s => s.hist = { hw:[], ls:[] });
+/* демо-історія: є готова картка, щоб онбординг міг її показати */
+STUDENTS[0].hist.hw = [
+  { me:'ДЗ на 20 хв по Present Perfect, більше практики на for / since' },
+  { ai:'ex', topic:'Present Perfect', regen:2, badges:[] }
+];
+STUDENTS[0].hist.ls = [
+  { me:'План уроку на сьогодні: Reading на швидкість, 60 хв' },
+  { ai:'plan', topic:'Reading на швидкість', regen:2, badges:[] }
+];
+
+/* ── ФОРМАТИ ── */
+const TILES = {
+  hw:[
+    { k:'ex',    ic:'fa-list-check',    col:'var(--teal-600)', bg:'var(--teal-50)',  t:'Вправи',            d:'5–20 завдань від простих до складних', p:'Склади 10 вправ на тему «…»' },
+    { k:'test',  ic:'fa-square-check',  col:'#B45309',         bg:'var(--amber-50)', t:'Тест з відповідями', d:'варіанти + ключ лише для вас',          p:'Склади тест на 10 питань з теми «…» з відповідями' },
+    { k:'cards', ic:'fa-clone',         col:'#BE185D',         bg:'#FDF2F8',         t:'Картки',             d:'слова, формули, правила',               p:'Зроби 12 карток для запамʼятовування з теми «…»' },
+    { k:'creat', ic:'fa-feather',       col:'#4D7C0F',         bg:'#F7FEE7',         t:'Творче завдання',    d:'есе, діалог, міні-проєкт',              p:'Придумай творче завдання на 20 хв з теми «…»' },
+    { k:'pres',  ic:'fa-display',       col:'var(--violet)',   bg:'var(--violet-50)',t:'Презентація',        d:'8 слайдів для самостійного повторення', p:'Зроби презентацію на 8 слайдів з теми «…»', prez:true }
+  ],
+  ls:[
+    { k:'plan',  ic:'fa-bullseye',      col:'var(--violet)',   bg:'var(--violet-50)',t:'План уроку · 60 хв', d:'розминка, пояснення, практика, підсумок', p:'Підготуй план уроку на 60 хвилин на тему «…»' },
+    { k:'expl',  ic:'fa-lightbulb',     col:'#B45309',         bg:'var(--amber-50)', t:'Пояснення теми',     d:'правило, приклади, типові помилки',     p:'Поясни тему «…» простими словами з прикладами' },
+    { k:'lsex',  ic:'fa-pen-to-square', col:'var(--teal-600)', bg:'var(--teal-50)',  t:'Вправи для уроку',   d:'усні й письмові, на 15–20 хв',          p:'Склади вправи для роботи на уроці з теми «…»' },
+    { k:'speak', ic:'fa-comments',      col:'#0369A1',         bg:'#F0F9FF',         t:'Розмовна практика',  d:'питання, рольові ситуації',             p:'Підготуй розмовну практику на 15 хв на тему «…»' },
+    { k:'read',  ic:'fa-book',          col:'#4D7C0F',         bg:'#F7FEE7',         t:'Текст для читання',  d:'під рівень учня, з питаннями',          p:'Напиши текст для читання на тему «…» з 5 питаннями' },
+    { k:'diag',  ic:'fa-stethoscope',   col:'#BE185D',         bg:'#FDF2F8',         t:'Діагностика рівня',  d:'для пробного уроку · 25 хв',            p:'Підготуй діагностику рівня для пробного уроку на 25 хвилин' }
+  ]
+};
+const tileOf = k => TILES.hw.concat(TILES.ls).find(t => t.k === k);
+const gic = k => { const t = tileOf(k); return `<span class="gic" style="background:${t.bg};color:${t.col}"><i class="fa-solid ${t.ic}"></i></span>`; };
+const HW_KINDS = ['ex','test','cards','creat','pres'];
+const EXAMPLES = {
+  hw:['ДЗ на 15 хв: повтори теми, де учень помилявся минулого тижня','Тест на 10 питань у форматі НМТ з відповідями','Ту саму вправу, але простіше — учень не впорався'],
+  ls:['План наступного уроку з урахуванням останнього звіту','Пробний урок: діагностика рівня за 25 хвилин','5 питань для розмовної розминки на початку уроку']
+};
+
+/* ── ЗГЕНЕРОВАНИЙ ВМІСТ (мок) ── */
+const blk = h => `<div class="blk">${h}<button class="blk-re" title="Перегенерувати лише цей блок — безкоштовно" onclick="regenBlock(this)"><i class="fa-solid fa-rotate"></i></button></div>`;
+function GEN(k, s, topic, v){
+  const de = s.fam === 'de', w = (s.weak && s.weak[0]) || 'основи теми', T = topic || (de ? 'Perfekt' : 'Present Perfect');
+  const V = v > 0 ? ` · варіант ${v+1}` : '';
+  const M = {
+    ex:   { t:`Вправи · ${T}`, s:`8 завдань · ~20 хв${V}`, b: de
+            ? blk('<b>1. Haben чи sein?</b><ol><li>Ich … nach Berlin gefahren.</li><li>Wir … Pizza gegessen.</li><li>Er … spät aufgestanden.</li></ol>')+blk('<b>2. Перетворіть у Perfekt</b><ol><li>Sie spielt Tennis. → …</li><li>Ich lerne Deutsch. → …</li></ol>')+blk('<b>3. Напишіть 3 речення</b> про свої вихідні у Perfekt.')
+            : blk('<b>1. Вставте for або since</b><ol><li>I have lived here … 2019.</li><li>She has worked there … five years.</li><li>We haven\'t met … last summer.</li></ol>')+blk('<b>2. Present Perfect чи Past Simple?</b><ol><li>I … (visit) London last year.</li><li>Have you ever … (be) to Italy?</li></ol>')+blk('<b>3. Творча частина:</b> 3 речення про подорож, яку ви вже здійснили, з <i>ever / never / already</i>.') },
+    test: { t:`Тест · ${T}`, s:`10 питань · ключ відповідей лише для вас${V}`, b:
+            blk('<ol><li>I have known him … ten years. <br><small>a) since · b) for · c) from</small></li><li>… you ever been to Paris? <br><small>a) Did · b) Have · c) Were</small></li><li>…ще 8 питань у форматі НМТ</li></ol>')+blk('<div class="ctag" style="margin-top:4px"><i class="fa-solid fa-key"></i>Ключ: 1b · 2b · … (учень не бачить)</div>') },
+    cards:{ t:`Картки · ${T}`, s:`12 карток${V}`, b: blk(`<div class="flash">${de?'<div><b>haben</b>essen, spielen</div><div><b>sein</b>fahren, gehen</div><div><b>ge-…-t</b>gespielt</div><div><b>ge-…-en</b>gegessen</div>':'<div><b>for</b>період</div><div><b>since</b>точка в часі</div><div><b>already</b>вже</div><div><b>yet</b>ще (не)</div>'}</div>`) },
+    creat:{ t:`Творче завдання · ${T}`, s:`~20 хв${V}`, b: blk(de?'Напишіть листівку другу (60–80 слів) про поїздку минулого тижня. Використайте щонайменше 5 дієслів у Perfekt.':'Напишіть «тревел-пост» (80–100 слів) про місто, де ви вже були. Використайте <i>for / since</i> щонайменше двічі.')+blk('<b>Критерії:</b> граматика (4), лексика (4), структура (4) — разом 12 балів.') },
+    pres: { t:`Презентація · ${T}`, s:`8 слайдів для повторення вдома${V}`, b: blk('<div class="slides"><div>1 · Тема</div><div>2 · Правило</div><div>3 · Приклади</div><div>4 · for / since</div><div>5 · Типові помилки</div><div>6 · Порівняння</div><div>7 · Міні-вправа</div><div>8 · Підсумок</div></div>') },
+    plan: { t:`План уроку · ${T}`, s:`60 хв${V}`, b:
+            blk(`<b>Розминка · 5 хв</b> — 3 питання на повторення: ${esc(w).toLowerCase()}`)+blk('<b>Пояснення · 15 хв</b> — коротке правило з прикладами з життя учня')+blk('<b>Практика · 25 хв</b> — 6 завдань від простих до формату НМТ')+blk('<b>Міні-тест · 10 хв</b> — 4 питання, щоб перевірити розуміння')+blk('<b>Підсумок · 5 хв</b> — що вийшло, що задати додому') },
+    expl: { t:`Пояснення · ${T}`, s:`для учня, простими словами${V}`, b: blk('<b>Коли вживаємо:</b> дія почалась у минулому і триває досі або має результат зараз.')+blk('<b>Приклади:</b> I have lived in Kyiv for 10 years. She has just finished her homework.')+blk('<b>Типова помилка учня:</b> плутає for і since — for + період, since + точка в часі.') },
+    lsex: { t:`Вправи для уроку · ${T}`, s:`15–20 хв${V}`, b: blk('<ol><li>Усно: розкажіть, що ви вже зробили сьогодні (5 речень).</li><li>Письмово: виправте помилки в 6 реченнях.</li><li>У парі з репетитором: питання Have you ever…?</li></ol>') },
+    speak:{ t:`Розмовна практика · ${T}`, s:`15 хв${V}`, b: blk('<ol><li>Tell me about a job interview you have had.</li><li>What have you achieved this year?</li><li>Рольова ситуація: співбесіда на посаду менеджера, 5 хв.</li></ol>') },
+    read: { t:`Текст для читання · ${T}`, s:`~250 слів · 5 питань${V}`, b: blk('<i>«My first trip abroad»</i> — текст під рівень учня з виділеними конструкціями.')+blk('<b>Питання:</b> 5 на розуміння + 2 на лексику.') },
+    diag: { t:'Діагностика рівня · пробний урок', s:`25 хв · з даних заявки${V}`, b:
+            blk('<b>Знайомство · 5 хв</b> — ціль, досвід, що вже пробували')+blk('<b>Швидкий тест · 10 хв</b> — 12 питань від A1 до B2, зупиняємось на помилках')+blk('<b>Розмова · 7 хв</b> — 4 питання на тему цілі учня')+blk('<b>Підсумок · 3 хв</b> — рівень, план на перші 4 уроки, наступний крок') }
+  };
+  return M[k];
+}
+
+/* ── РЕНДЕР: УЧНІ ── */
+function suItem(s){
+  const av = s.free ? '<span class="av"><i class="fa-solid fa-wand-magic-sparkles"></i></span>' : (s.trial ? '<span class="av tr"><i class="fa-solid fa-flask"></i></span>' : `<img src="${s.img}" alt="">`);
+  return `<button class="su${AIS.cur.id===s.id?' on':''}" onclick="pickStudent('${s.id}')">${av}<span class="su-t"><span class="su-n">${s.n}</span><br><span class="su-m">${s.subj?s.subj+' · ':''}${s.meta}</span></span>${s.unread?'<span class="su-dot" title="Є урок без матеріалів"></span>':''}</button>`;
+}
+function renderRail(){
+  const q = ($('stSearch').value||'').toLowerCase();
+  const f = a => a.filter(s => s.n.toLowerCase().includes(q));
+  $('railList').innerHTML = `<div class="rail-sec">Мої учні</div>${f(STUDENTS).map(suItem).join('')}
+    <div class="rail-sec">Пробні уроки</div>${f(TRIALS).map(suItem).join('')}
+    <div class="rail-sec">Інше</div>${suItem(FREE)}`;
+  $('stDrop').innerHTML = `<div class="rail-sec">Мої учні</div>${STUDENTS.map(suItem).join('')}<div class="rail-sec">Пробні уроки</div>${TRIALS.map(suItem).join('')}<div class="rail-sec">Інше</div>${suItem(FREE)}`;
+}
+function limsHTML(){
+  const L = lim(), u = AIS.used;
+  const bar = (v,m) => { const p = Math.min(100, Math.round(v/m*100)); return `<div class="pr${p>=100?' full':(p>=80?' warn':'')}"><i style="width:${p}%"></i></div>`; };
+  return `<div class="lims-h"><span><i class="fa-solid fa-gauge" style="margin-right:6px"></i>${PLANS[tier()].n}${AIS.plan==='trial'?' · 14 днів':''}</span></div>
+    <div class="lim-r"><span>Домашні завдання</span><b>${u.hw} / ${L.hw}</b></div>${bar(u.hw,L.hw)}
+    <div class="lim-r"><span>з них презентацій</span><b>${u.prez} / ${L.prez}</b></div>${bar(u.prez,L.prez)}
+    <div class="lim-r"><span>Уроки з матеріалами</span><b>${u.ls} / ${L.ls}</b></div>${bar(u.ls,L.ls)}
+    <div class="lims-f">${renewTxt()}${tier()!=='premium'&&AIS.plan!=='none'?' · <a onclick="aiOpenChangePlan()">Більше лімітів</a>':''}</div>`;
+}
+function renderLims(){ $('lims').innerHTML = limsHTML(); $('mobLims').innerHTML = `<div class="lims" style="margin:0 0 16px">${limsHTML()}</div>`;
+}
+
+/* ── РЕНДЕР: ШАПКА ЧАТУ, КОНТЕКСТ, ПІДКАЗКА ── */
+function renderHead(){
+  const s = AIS.cur;
+  $('whoAv').innerHTML = s.free ? '<span class="av"><i class="fa-solid fa-wand-magic-sparkles"></i></span>' : (s.trial ? '<span class="av tr"><i class="fa-solid fa-flask"></i></span>' : `<img src="${s.img}" alt="">`);
+  $('whoN').textContent = s.n;
+  $('whoM').textContent = s.free ? 'Генерація без привʼязки до учня' : `${s.subj} · ${s.meta}`;
+  $('ctxBtn').style.display = s.free ? 'none' : '';
+  $('ctx').innerHTML = s.free ? '' : `<div class="ctx-t"><i class="fa-solid fa-wand-magic-sparkles"></i>AI враховує при кожній генерації</div>
+    <div class="ctx-tags">${s.ctx.map(t=>`<span class="ctag">${t}</span>`).join('')}${s.weak.map(t=>`<span class="ctag weak"><i class="fa-solid fa-triangle-exclamation"></i>${t}</span>`).join('')}</div>
+    ${s.note?`<div class="ctx-note" style="color:var(--ink-2)">Повідомлення із заявки: ${s.note}</div>`:''}
+    <div class="ctx-note">${s.trial?'Дані взято із заявки на пробний урок.':'Дані з журналу, звітів і оцінок за ДЗ — оновлюються після кожного уроку.'} Контакти учня AI не бачить.</div>`;
+  if (s.free){ $('ctx').classList.remove('open'); $('ctxBtn').classList.remove('on'); }
+  renderNudge();
+}
+function renderNudge(){
+  const s = AIS.cur; let h = '';
+  if (!hist().length){ $('nudge').innerHTML=''; return; }
+  if (AIS.mode==='hw' && s.lastNoHw) h = nudge('fa-book-open',`Після уроку <b>${s.lastNoHw}</b> ДЗ ще не задано.`,'Скласти ДЗ',`fillPrompt('ДЗ на 20 хв за темою останнього уроку')`);
+  else if (AIS.mode==='hw' && s.trial) h = nudge('fa-flask',`Для пробного уроку зазвичай готують <b>діагностику</b>, а не ДЗ.`,'До матеріалів',`setMode('ls')`);
+  else if (AIS.mode==='ls' && s.lessons.length && !s.free){ const l = s.lessons[0]; h = nudge(s.trial?'fa-flask':'fa-calendar-day', `${s.trial?'Пробний':'Урок'} <b>${l[2]}</b> · ${l[3]}. Підготувати матеріали?`,'Підготувати', s.trial?`fillPrompt('Підготуй діагностику рівня для пробного уроку на 25 хвилин')`:`fillPrompt('План уроку на 60 хв: ${l[3].replace(/'/g,'')}')`); }
+  $('nudge').innerHTML = h;
+}
+const nudge = (ic,tx,btn,fn) => `<div class="nudge"><span class="ic"><i class="fa-solid ${ic}"></i></span><span class="tx">${tx}</span><button class="btn b-sec b-xs" onclick="${fn}">${btn}</button></div>`;
+
+/* ── РЕНДЕР: ПОВІДОМЛЕННЯ ── */
+function hist(){ return AIS.cur.hist[AIS.mode]; }
+function genCard(m, idx){
+  const g = GEN(m.ai, AIS.cur, m.topic, m.v||0), isHw = HW_KINDS.includes(m.ai), s = AIS.cur;
+  const badges = (m.badges||[]).map(b=>`<span class="st ${b[0]}"><i class="fa-solid ${b[1]}"></i>${b[2]}</span>`).join('');
+  let prim, sec = '';
+  if (isHw) prim = `<button class="act prim" onclick="openSendHw(${idx})"><i class="fa-solid fa-paper-plane"></i>${s.free?'Надіслати учням':'Надіслати як ДЗ'}</button>`;
+  else if (s.free) prim = `<button class="act prim" onclick="saveLib(${idx})"><i class="fa-regular fa-folder"></i>У бібліотеку</button>`;
+  else prim = `<button class="act prim" onclick="openAttach(${idx})"><i class="fa-regular fa-calendar-plus"></i>${s.trial?'До пробного уроку':'Прикріпити до уроку'}</button>`;
+  if (isHw && !s.free) sec = `<button class="act" onclick="openAttach(${idx})"><i class="fa-regular fa-calendar-plus"></i>До уроку</button>`;
+  if (!isHw && !s.trial) sec = `<button class="act" onclick="lsToHw(${idx})"><i class="fa-solid fa-book-open"></i>Зробити ДЗ</button>`;
+  const regen = `<button class="act" onclick="regenAll(${idx})" title="${m.regen>0?'Безкоштовно':'Рахується в ліміт'}"><i class="fa-solid fa-rotate"></i>Інший варіант <small>${m.regen>0?'· '+m.regen+' безкошт.':'· з ліміту'}</small></button>`;
+  const more = `<span class="act-wrap"><button class="act ic" onclick="toggleActMenu(this,event)" aria-label="Ще дії" title="Ще дії"><i class="fa-solid fa-ellipsis"></i></button>
+    <span class="act-menu">${!(s.free && !isHw)?`<button onclick="closeActMenus();saveLib(${idx})"><i class="fa-regular fa-folder"></i>Зберегти в бібліотеку</button>`:''}
+      <button onclick="closeActMenus();editCard(this)"><i class="fa-solid fa-pen"></i>Редагувати текст</button>
+      <button onclick="closeActMenus();toast('PDF завантажується')"><i class="fa-solid fa-download"></i>Завантажити PDF</button></span></span>`;
+  return `<div class="gen" data-idx="${idx}">
+    <div class="gen-h">${gic(m.ai)}<div style="min-width:0"><div class="gen-t">${g.t}</div><div class="gen-s">${g.s}</div></div></div>
+    ${badges?`<div class="gen-badges">${badges}</div>`:''}
+    <div class="gen-b">${g.b}</div>
+    <div class="gen-a">${prim}${sec}${regen}${more}</div></div>`;
+}
+function toggleActMenu(btn, e){ e.stopPropagation(); const m = btn.nextElementSibling, was = m.classList.contains('on'); closeActMenus(); if (!was) m.classList.add('on'); }
+function closeActMenus(){ document.querySelectorAll('.act-menu.on').forEach(x=>x.classList.remove('on')); }
+document.addEventListener('click', e => { if (!e.target.closest('.act-wrap')) closeActMenus(); });
+function startSugg(s){
+  const w = (s.weak && s.weak[0]) || 'тема останнього уроку', l = (s.lessons && s.lessons[0]) || null;
+  if (AIS.mode==='hw'){
+    if (s.free) return [['ex','Вправи на тему','10 завдань від простих до складних','Склади 10 вправ на тему «…»'],['test','Тест з відповідями','10 питань + ключ','Склади тест на 10 питань з теми «…» з відповідями'],['cards','Картки','слова, правила, формули','Зроби 12 карток з теми «…»']];
+    if (s.trial) return [['ex','Коротке ДЗ після пробного','щоб закріпити знайомство','Коротке ДЗ на 10 хв після пробного уроку']];
+    return [['ex','ДЗ на слабке місце',w,'ДЗ на 20 хв: більше практики на «'+w+'»'],['test','Тест за останньою темою',s.ctx.find(c=>c.indexOf('Остання тема')===0)||'перевірка розуміння','Тест на 10 питань за останньою темою з відповідями'],['cards','Картки для повторення','12 карток','Зроби 12 карток для повторення останньої теми']];
+  }
+  if (s.trial) return [['diag','Діагностика рівня · 25 хв',l?l[2]:'пробний урок','Підготуй діагностику рівня для пробного уроку на 25 хвилин'],['speak','Питання для знайомства','5 хв розмови','5 питань для знайомства на пробному уроці']];
+  if (s.free) return [['plan','План уроку · 60 хв','розминка, пояснення, практика','Підготуй план уроку на 60 хвилин на тему «…»'],['expl','Пояснення теми','правило і приклади','Поясни тему «…» простими словами з прикладами']];
+  return [['plan','План наступного уроку',l?l[2]+' · '+l[3]:'60 хв','План уроку на 60 хв: '+(l?l[3]:'наступна тема')],['lsex','Вправи на слабке місце',w,'Вправи для уроку на «'+w+'»'],['speak','Розмовна розминка','5 питань на початок','5 питань для розмовної розминки на початку уроку']];
+}
+function renderMsgs(){
+  const box = $('msgs'), h = hist(), s = AIS.cur;
+  if (!h.length){
+    box.innerHTML = `<div class="empty"><div class="e-ic"><i class="fa-solid ${s.trial?'fa-flask':'fa-wand-magic-sparkles'}"></i></div>
+      <b>${s.free?'Загальні матеріали':(s.trial?'Пробний урок з '+s.n.split(' ')[0]:s.n+' — з чого почати?')}</b>
+      ${s.free?'Без привʼязки до учня — розіслати можна потім.':(s.trial?'AI уже знає ціль із заявки.':'AI вже знає рівень, теми й слабкі місця учня.')}
+      <div class="e-sugg">${startSugg(s).map(x=>`<button onclick="fillPrompt('${x[3].replace(/'/g,'')}')"><span class="gic" style="background:${tileOf(x[0]).bg};color:${tileOf(x[0]).col}"><i class="fa-solid ${tileOf(x[0]).ic}"></i></span><span><b>${x[1]}</b><small>${x[2]}</small></span><i class="fa-solid fa-arrow-right"></i></button>`).join('')}</div></div>`;
+    return;
+  }
+  box.innerHTML = h.map((m,i) => m.me ? `<div class="msg me">${esc(m.me)}</div>` :
+    `<div class="msg"><div class="ai-intro"><span class="ai-b"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div>${m.intro || introFor(s)}</div></div>${genCard(m,i)}</div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+function introFor(s){
+  if (s.free) return 'Готово. Збережіть у бібліотеку або надішліть учням — AI запропонує, кому підійде.';
+  if (s.trial) return `Врахував ціль із заявки: «${s.ctx[1].replace('Ціль: ','')}». Рівень визначимо на уроці.`;
+  return `Врахував рівень учня і слабке місце «${s.weak[0]}» — додав більше практики саме на це.`;
+}
+
+/* ── РЕНДЕР: ІНСТРУМЕНТИ ── */
+function renderTools(){
+  const tiles = TILES[AIS.mode];
+  $('toolsT').textContent = AIS.mode==='hw' ? 'Що задати додому' : 'Що підготувати до уроку';
+  $('tiles').innerHTML = tiles.map(t => `<button class="tile" onclick="fillPrompt('${t.p}');closeSheet()">${gic(t.k)}<span><span class="tile-t">${t.t}</span><br><span class="tile-d">${t.d}</span></span>${t.prez?`<span class="cnt">${prezLeft()} лишилось</span>`:''}</button>`).join('');
+  $('examples').innerHTML = EXAMPLES[AIS.mode].map(e => `<button class="ex" onclick="fillPrompt('${e}');closeSheet()">${e}</button>`).join('');
+  $('quick').innerHTML = tiles.map(t => `<button class="chip" onclick="fillPrompt('${t.p}')"><i class="fa-solid ${t.ic}"></i>${t.t}</button>`).join('');
+}
+function renderComposer(){
+  const lockHw = AIS.mode==='hw' && hwLeft() <= 0, lockLs = AIS.mode==='ls' && lsLeft() <= 0;
+  $('composer').classList.toggle('locked', lockHw || lockLs);
+  if (lockLs){ $('lockT').textContent='Ліміт уроків з матеріалами вичерпано'; $('lockD').textContent='Ліміт оновиться 15 вересня. Домашні завдання ще доступні.'; }
+  else { $('lockT').textContent='Ліміт ДЗ на цей місяць вичерпано'; $('lockD').textContent='Оновиться 15 вересня. Матеріали до уроку ще доступні.'; }
+  $('inp').placeholder = AIS.mode==='hw' ? (AIS.cur.free?'Яке ДЗ підготувати?':'Що задати '+AIS.cur.n.split(' ')[0]+' додому?') : (AIS.cur.trial?'Що підготувати до пробного?':'Що підготувати до уроку?');
+  $('attHint').innerHTML = AIS.attach ? `<span class="st st-v"><i class="fa-solid fa-paperclip"></i>Основа: ${AIS.attach} <i class="fa-solid fa-xmark" style="cursor:pointer;margin-left:4px" onclick="AIS.attach=null;renderComposer()"></i></span>` : '';
+}
+function renderWs(){
+  document.querySelectorAll('#modeSw button').forEach(b => b.classList.toggle('on', b.dataset.m===AIS.mode));
+  renderWsBar(); renderRail(); renderHead(); renderMsgs(); renderTools(); renderLims(); renderComposer();
+}
+
+/* ── ВЗАЄМОДІЯ В ЧАТІ ── */
+function pickStudent(id){ AIS.cur = byId(id); AIS.cur.unread = false; if (AIS.cur.trial) AIS.mode='ls'; closeDrop(); renderWs(); }
+function setMode(m){ AIS.mode = m; renderWs(); }
+function toggleDrop(){ if (!matchMedia('(max-width:1023px)').matches) return; $('stDrop').classList.toggle('open'); }
+function closeDrop(){ $('stDrop').classList.remove('open'); }
+document.addEventListener('click', e => { if (!e.target.closest('#who') && !e.target.closest('#stDrop')) closeDrop(); });
+function toggleCtx(){ $('ctxBtn').classList.toggle('on', $('ctx').classList.toggle('open')); }
+function fillPrompt(p){ const t = $('inp'); t.value = p; autosize(); t.focus(); const i = p.indexOf('…'); if (i>-1) t.setSelectionRange(i, i+1); }
+function autosize(){ const t = $('inp'); t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,140)+'px'; $('send').disabled = !t.value.trim(); }
+function detectKind(t){
+  t = t.toLowerCase();
+  if (AIS.mode==='ls'){
+    if (/діагност|пробн/.test(t)) return 'diag';
+    if (/поясн/.test(t)) return 'expl';
+    if (/розмов|speaking|питан/.test(t)) return 'speak';
+    if (/текст|читан|reading/.test(t) && !/план/.test(t)) return 'read';
+    if (/вправ/.test(t)) return 'lsex';
+    return 'plan';
+  }
+  if (/тест/.test(t)) return 'test';
+  if (/карт/.test(t)) return 'cards';
+  if (/презент|слайд/.test(t)) return 'pres';
+  if (/творч|есе|лист|пост/.test(t)) return 'creat';
+  return 'ex';
+}
+function topicOf(t){ const m = t.match(/«([^»]+)»/) || t.match(/тем[уиі]\s+([^,.;]+)/i) || t.match(/по\s+([A-Za-zА-Яа-яІіЇїЄєҐґ' ]{3,40})/); return m && m[1] && m[1] !== '…' ? m[1].trim() : null; }
+function aiSend(){
+  const t = $('inp').value.trim(); if (!t) return;
+  const k = detectKind(t), isHw = HW_KINDS.includes(k);
+  if (isHw && hwLeft() <= 0){ toast('Ліміт ДЗ вичерпано'); return; }
+  if (k==='pres' && prezLeft() <= 0){ toast('Ліміт презентацій вичерпано — оберіть інший формат'); return; }
+  if (!isHw && lsLeft() <= 0){ toast('Ліміт уроків з матеріалами вичерпано'); return; }
+  const h = hist(); h.push({ me:t }); $('inp').value=''; autosize(); renderMsgs();
+  $('msgs').insertAdjacentHTML('beforeend','<div class="typing" aria-label="AI готує відповідь"><i></i><i></i><i></i></div>'); $('msgs').scrollTop = $('msgs').scrollHeight;
+  /* DEV: 1 запит = 1 одиниця ліміту (ДЗ або урок з матеріалами); презентація — ще й окремий лічильник */
+  setTimeout(() => {
+    h.push({ ai:k, topic:topicOf(t), regen:2, badges:[], intro: AIS.attach ? `Взяв за основу «${AIS.attach}» і підлаштував під учня.` : null });
+    if (isHw){ AIS.used.hw++; if (k==='pres') AIS.used.prez++; } else AIS.used.ls++;
+    AIS.attach = null; renderMsgs(); renderLims(); renderTools(); renderComposer();
+  }, 1100);
+}
+function regenBlock(btn){ const b = btn.parentElement; b.style.background='var(--violet-50)'; setTimeout(()=>b.style.background='',700); toast('Блок оновлено · безкоштовно'); }
+function regenAll(idx){
+  const m = hist()[idx];
+  if (m.regen > 0){ m.regen--; m.v = (m.v||0)+1; renderMsgs(); toast('Новий варіант · залишилось безкоштовних: '+m.regen); return; }
+  const isHw = HW_KINDS.includes(m.ai);
+  if ((isHw && hwLeft()<=0) || (!isHw && lsLeft()<=0)){ toast('Ліміт вичерпано'); return; }
+  if (isHw) AIS.used.hw++; else AIS.used.ls++;
+  m.v = (m.v||0)+1; renderMsgs(); renderLims(); toast('Новий варіант · списано 1 з ліміту');
+}
+function editCard(btn){
+  const card = btn.closest('.gen'), body = card.querySelector('.gen-b'), on = body.isContentEditable;
+  body.contentEditable = on ? 'false' : 'true';
+  body.style.outline = on ? '' : '2px solid var(--violet-200)'; body.style.borderRadius = '10px';
+  let done = card.querySelector('.edit-done');
+  if (!on){ body.focus(); if (!done){ card.querySelector('.gen-a').insertAdjacentHTML('afterbegin','<button class="act prim edit-done" onclick="editCard(this)"><i class="fa-solid fa-check"></i>Зберегти зміни</button>'); } }
+  else { if (done) done.remove(); toast('Зміни збережено'); }
+}
+function addBadge(idx, b){ const m = hist()[idx]; m.badges = (m.badges||[]).filter(x=>x[2]!==b[2]).concat([b]); renderMsgs(); }
+function lsToHw(idx){ const m = hist()[idx], g = GEN(m.ai, AIS.cur, m.topic); AIS.mode='hw'; renderWs(); fillPrompt(`ДЗ на 20 хв до уроку «${(m.topic||g.t.split('· ')[1]||'').trim()}»`); toast('Перейшли до ДЗ — запит уже підставлено'); }
+
+/* ── МОДАЛКА: використовуємо модалку кабінету (#mv) ── */
+function aiM(t, s, body, foot){ $('mTitle').textContent=t; $('mSub').textContent=s||''; $('mBody').innerHTML=body; $('mFoot').innerHTML=foot; $('mv').classList.add('on'); document.body.style.overflow='hidden'; }
+function togglePick(el, single){
+  if (single) el.parentElement.querySelectorAll('.pick').forEach(p => p.classList.remove('on'));
+  el.classList.toggle('on', single ? true : !el.classList.contains('on'));
+  const n = document.querySelectorAll('#mBody .pick.on[data-stu]').length, b = $('sendHwBtn');
+  if (b){ b.disabled = !n; b.innerHTML = `<i class="fa-solid fa-paper-plane"></i>Надіслати${n>1?' '+n+' учням':''}`; }
+}
+const pickRow = (s, on, why) => `<button class="pick${on?' on':''}" data-stu="${s.id}" onclick="togglePick(this)"><span class="pick-b"><i class="fa-solid fa-check"></i></span><img src="${s.img}" alt=""><span class="pick-t"><span class="pick-n">${s.n}</span><br><span class="pick-m">${s.subj} · ${s.meta}</span>${why?`<div class="pick-why"><i class="fa-solid fa-wand-magic-sparkles" style="font-size:9px;margin-right:4px"></i>${why}</div>`:''}</span></button>`;
+
+/* ── НАДІСЛАТИ ЯК ДЗ (з підказкою, кому ще підійде) ── */
+let sendIdx = null;
+function openSendHw(idx){
+  sendIdx = idx; const m = hist()[idx], g = GEN(m.ai, AIS.cur, m.topic, m.v||0), s = AIS.cur;
+  /* DEV: підказка = учні з тим самим предметом/ціллю і близьким рівнем, у яких тема ще не закрита */
+  const fam = s.free ? 'en-nmt' : s.fam;
+  const sugg = STUDENTS.filter(x => x.id!==s.id && x.fam===fam);
+  const why = { sofia:'теж готується до НМТ · B1, тема ще не пройдена', nazar:'теж готується до НМТ · тема є в плані', marta:'', artem:'' };
+  const nl = (s.lessons && s.lessons[0]) ? s.lessons[0] : null;
+  let b = '';
+  if (!s.free){ b += `<div class="lbl">Кому</div>${pickRow(s,true)}`; }
+  if (sugg.length){
+    b += `<div class="sugg"><div class="sugg-h"><i class="fa-solid fa-wand-magic-sparkles"></i>${s.free?'AI пропонує надіслати':'Це ДЗ підійде ще'}</div>${sugg.map(x => pickRow(x, s.free, why[x.id])).join('')}</div>`;
+  } else if (s.free){ b += `<div class="lbl">Кому</div>${STUDENTS.map(x=>pickRow(x,false)).join('')}`; }
+  b += `<div class="f-row"><label class="f"><span class="lbl">Дедлайн</span><select class="sel" id="hwDue"><option>До наступного уроку${nl&&!s.free?' ('+nl[0]+' '+nl[1]+')':''}</option><option>Через 3 дні</option><option>Через тиждень</option><option>Обрати дату…</option></select></label>
+        <label class="f"><span class="lbl">Орієнтовний час</span><select class="sel"><option>20 хв</option><option>30 хв</option><option>45 хв</option></select></label></div>
+    ${nl && !s.free ? `<div class="sw-row"><div class="sw-tx"><div class="sw-t">Привʼязати до уроку ${nl[0]} ${nl[1]}</div><div class="sw-d">ДЗ зʼявиться в журналі біля цього уроку</div></div><button class="sw on" onclick="this.classList.toggle('on')"></button></div>`:''}
+    <div class="sw-row"><div class="sw-tx"><div class="sw-t">Надіслати в Telegram</div><div class="sw-d">Учень отримає ДЗ і дедлайн у боті</div></div><button class="sw on" onclick="this.classList.toggle('on')"></button></div>
+    <div class="bn bn-ok" style="margin-top:8px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Учень побачить ДЗ у своєму кабінеті як звичайне завдання від вас. Позначка «AI» видна лише вам.</div></div></div>`;
+  aiM('Надіслати як ДЗ', g.t, b, `<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" id="sendHwBtn" onclick="confirmSendHw()"><i class="fa-solid fa-paper-plane"></i>Надіслати</button>`);
+  const n = document.querySelectorAll('#mBody .pick.on[data-stu]').length; const bt=$('sendHwBtn'); if(bt){ bt.disabled=!n; bt.innerHTML=`<i class="fa-solid fa-paper-plane"></i>Надіслати${n>1?' '+n+' учням':''}`; }
+}
+function confirmSendHw(){
+  const ids = [...document.querySelectorAll('#mBody .pick.on[data-stu]')].map(p => p.dataset.stu);
+  if (!ids.length) return;
+  const m = hist()[sendIdx], g = GEN(m.ai, AIS.cur, m.topic, m.v||0), due = $('hwDue').value.replace('До наступного уроку','до уроку');
+  ids.forEach(id => aiAddHwToJournal(byId(id), g.t, due));
+  const names = ids.map(id => byId(id).n).join(', ');
+  closeM(); addBadge(sendIdx, ['st-ok','fa-check','Надіслано: '+names]);
+  toast(`ДЗ надіслано: ${names} · зʼявилось у «Журнал і ДЗ»`);
+}
+
+/* ── ПРИКРІПИТИ ДО УРОКУ ── */
+let attIdx = null;
+function openAttach(idx){
+  attIdx = idx; const s = AIS.cur, m = hist()[idx], g = GEN(m.ai, s, m.topic, m.v||0);
+  const rows = s.lessons.map((l,i) => `<button class="pick rad${i===0?' on':''}" data-l="${i}" onclick="togglePick(this,true)"><span class="pick-b"><i class="fa-solid fa-check"></i></span><span class="ud"><b>${l[0]}</b>${l[1]}</span><span class="pick-t"><span class="pick-n">${l[2]}</span><br><span class="pick-m">${l[3]}</span></span></button>`).join('');
+  aiM(s.trial?'Прикріпити до пробного уроку':'Прикріпити до уроку', g.t,
+    `<div class="lbl">Найближчі уроки · ${s.n}</div>${rows}
+     <div class="sw-row"><div class="sw-tx"><div class="sw-t">Також зберегти в бібліотеку</div><div class="sw-d">Щоб використати для інших учнів</div></div><button class="sw on" id="attLib" onclick="this.classList.toggle('on')"></button></div>
+     <div class="bn bn-ok" style="margin-top:6px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Матеріал зʼявиться в картці уроку в розкладі — відкриєте його одним кліком під час заняття. Учень його не бачить, поки ви не поділитесь.</div></div></div>`,
+    `<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="confirmAttach()"><i class="fa-regular fa-calendar-plus"></i>Прикріпити</button>`);
+}
+function confirmAttach(){
+  const p = document.querySelector('#mBody .pick.on'), l = AIS.cur.lessons[p ? +p.dataset.l : 0], lib = $('attLib').classList.contains('on');
+  const m = hist()[attIdx], g = GEN(m.ai, AIS.cur, m.topic, m.v||0);
+  closeM(); addBadge(attIdx, ['st-v','fa-calendar-check',`Урок ${l[0]} ${l[1]}`]);
+  if (lib){ aiSaveToLib(g.t, AIS.cur); addBadge(attIdx, ['st-mut','fa-folder','У бібліотеці']); }
+  toast(`Прикріплено до уроку ${l[0]} ${l[1]}${lib?' · збережено в бібліотеку':''}`);
+}
+function saveLib(idx){ const m = hist()[idx], g = GEN(m.ai, AIS.cur, m.topic, m.v||0); aiSaveToLib(g.t, AIS.cur); addBadge(idx, ['st-mut','fa-folder','У бібліотеці']); toast('Збережено в «Бібліотека»'); }
+
+/* ── ОСНОВА З БІБЛІОТЕКИ ── */
+function openLibPick(){
+  const rows = LIB.filter(x=>x.tags.indexOf('AI')<0).slice(0,6).map((x,i) => `<button class="pick rad${i===0?' on':''}" data-n="${esc(x.name)}" onclick="togglePick(this,true)"><span class="pick-b"><i class="fa-solid fa-check"></i></span><span class="gic" style="background:${x.type==='pdf'?'var(--red-50)':'var(--teal-50)'};color:${x.type==='pdf'?'var(--red)':'var(--teal-600)'}"><i class="fa-regular ${x.type==='pdf'?'fa-file-pdf':'fa-file-lines'}"></i></span><span class="pick-t"><span class="pick-n">${x.name}</span><br><span class="pick-m">${x.subj} · ${x.lvl}${x.type==='pdf'?' · '+x.size:''}</span></span></button>`).join('');
+  aiM('Взяти за основу файл', 'AI використає ваш матеріал і підлаштує під учня',
+    rows + `<div class="bn bn-v" style="margin-top:6px"><div class="bn-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div><div class="bn-d">Приклад: «Зроби з цього тест на 10 питань» або «Спрости вправи під рівень A2».</div></div></div>`,
+    `<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-v" onclick="AIS.attach=document.querySelector('#mBody .pick.on').dataset.n;closeM();renderComposer();$('inp').focus()"><i class="fa-solid fa-paperclip"></i>Використати</button>`);
+}
+
+/* ── ТАРИФИ І ПІДПИСКА ── */
+/* DEV: sub — стан з білінгу; картка зберігається лише як маска */
+AIS.sub = { status:'active', card:'Monobank · •••• 4417' };
+const isPaid = () => ['pro','premium','limit'].includes(AIS.plan);
+const NEXT = '15 вересня';
+
+/* Промо (немає підписки): 3 картки старту */
+function renderPromo(){
+  const el = $('startCards'); if (!el) return;
+  const row = (l,v) => `<li><span>${l}</span><b>${v}</b></li>`;
+  const card = (k) => { const P = PLANS[k]; return `<div class="sc${k==='pro'?' rec':''}">${k==='pro'?'<span class="sc-flag">Найпопулярніший</span>':''}
+    <div class="sc-n">${P.n}</div><div class="sc-p"><span class="sc-pv">${P.price} ₴</span><span class="sc-pu">/ місяць</span></div>
+    <ul class="sc-l">${row('ДЗ на місяць',P.hw)}${row('з них презентацій','до '+P.prez)}${row('Уроки з матеріалами',P.ls)}</ul>
+    <button class="btn ${k==='pro'?'b-vs':'b-sec'} b-block" onclick="aiOpenBuy('${k}')">Обрати ${P.n}</button></div>`; };
+  const trial = AIS.trialUsed
+    ? `<div class="sc trial"><div class="sc-n">Пробний період</div><div class="sc-p"><span class="sc-pv">0 ₴</span><span class="sc-pu">/ 14 днів</span></div>
+       <ul class="sc-l">${row('Статус','використано')}</ul><button class="btn b-sec b-block" disabled>Уже використано</button></div>`
+    : `<div class="sc trial"><div class="sc-n">Пробний період</div><div class="sc-p"><span class="sc-pv">0 ₴</span><span class="sc-pu">/ 14 днів</span></div>
+       <ul class="sc-l">${row('ДЗ',150)}${row('з них презентацій','до 23')}${row('Уроки з матеріалами',60)}</ul>
+       <button class="btn b-v b-block" onclick="aiOpenTrialModal()"><i class="fa-solid fa-gift"></i>Почати безкоштовно</button></div>`;
+  el.innerHTML = trial + card('pro') + card('premium');
+}
+
+/* Акаунт → Підписка */
+function useBars(){
+  const L = lim(), u = AIS.used, bar = (l,v,m) => { const p = Math.min(100, Math.round(v/m*100)); return `<div><div class="lim-r"><span>${l}</span><b>${v} / ${m}</b></div><div class="pr${p>=100?' full':(p>=80?' warn':'')}"><i style="width:${p}%"></i></div></div>`; };
+  return `<div class="sp-use">${bar('Домашні завдання',u.hw,L.hw)}${bar('з них презентацій',u.prez,L.prez)}${bar('Уроки з матеріалами',u.ls,L.ls)}</div>`;
+}
+const cell = (l,v) => `<div class="sub-c"><div class="sub-c-l">${l}</div><div class="sub-c-v">${v}</div></div>`;
+function renderSubPage(){
+  if (!$('subPlan')) return;
+  const canc = AIS.sub.status==='cancelled';
+  let plan, pay, hist;
+  if (AIS.plan==='none'){
+    plan = `<div class="ch"><div class="ct"><i class="fa-solid fa-crown"></i>Поточний тариф</div></div><div class="sp-b">
+      <div class="sp-top"><div class="sp-n">Безкоштовний</div><span class="st st-mut">AI не підключено</span></div>
+      <div class="sub-d" style="margin-bottom:16px">Усі функції кабінету працюють без обмежень. AI-помічник підключається окремо.</div>
+      <div class="sp-act"><button class="btn b-v b-sm" onclick="go('ai')"><i class="fa-solid fa-wand-magic-sparkles"></i>Підключити AI-помічника</button></div></div>`;
+  } else if (AIS.plan==='trial'){
+    plan = `<div class="ch"><div class="ct"><i class="fa-solid fa-crown"></i>Поточний тариф</div></div><div class="sp-b">
+      <div class="sp-top"><div class="sp-n">Пробний період</div><span class="st st-v">до 31 серпня · 14 днів</span></div>
+      ${useBars()}
+      <div class="sp-act"><button class="btn b-v b-sm" onclick="aiOpenChangePlan()">Обрати тариф</button><button class="btn b-sec b-sm" onclick="go('ai')">Відкрити AI</button></div></div>`;
+  } else {
+    const P = PLANS[tier()];
+    plan = `<div class="ch"><div class="ct"><i class="fa-solid fa-crown"></i>Поточний тариф</div></div><div class="sp-b">
+      <div class="sp-top"><div class="sp-n">${P.n}</div><span class="sp-pr">${P.price} ₴ / міс.</span><span class="st ${canc?'st-warn':'st-ok'}">${canc?'Скасовано':'Активна'}</span></div>
+      ${useBars()}
+      <div class="sp-info">${cell(canc?'AI працює до':'Наступна оплата', canc?NEXT:NEXT+' · '+P.price+' ₴')}${cell('Ліміти оновляться',NEXT)}</div>
+      ${canc?`<div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Після ${NEXT} тариф стане безкоштовним. Усе створене з AI залишиться.</div></div></div>`:''}
+      <div class="sp-act">${canc?'<button class="btn b-v b-sm" onclick="aiResumeSub()"><i class="fa-solid fa-rotate-left"></i>Відновити підписку</button>':'<button class="btn b-sec b-sm" onclick="aiOpenChangePlan()"><i class="fa-solid fa-arrow-right-arrow-left"></i>Змінити тариф</button><button class="btn b-danger b-sm" onclick="aiOpenCancel()">Скасувати підписку</button>'}</div></div>`;
+  }
+  pay = `<div class="ch"><div class="ct"><i class="fa-regular fa-credit-card"></i>Спосіб оплати</div></div><div class="sp-b">` +
+    (isPaid() ? `<div class="pay-card"><i class="fa-regular fa-credit-card"></i><div><b>${AIS.sub.card}</b><span>Автосписання щомісяця</span></div></div>
+      <button class="btn b-sec b-sm b-block" onclick="aiChangeCard()">Змінити картку</button>`
+      : `<div class="pay-empty"><i class="fa-regular fa-credit-card"></i>Картку не додано — нічого не списується</div>`) +
+    `<div class="hint" style="margin-top:10px"><i class="fa-solid fa-shield-halved" style="margin-right:5px"></i>Лише картки українських банків. Дані картки вводяться на сторінці Monobank.</div></div>`;
+  const rows = [];
+  if (isPaid()){ const P = PLANS[tier()]; rows.push(['15.08.2026', 'AI-помічник · '+P.n, P.price+' ₴', 'ok']); rows.push(['15.07.2026', 'AI-помічник · '+P.n, P.price+' ₴', 'ok']); }
+  if (AIS.trialUsed && AIS.plan!=='trial') rows.push(['01.07.2026','Пробний період · 14 днів','0 ₴','tr']);
+  if (AIS.plan==='trial') rows.push(['17.08.2026','Пробний період · 14 днів','0 ₴','tr']);
+  hist = `<div class="ch"><div><div class="ct"><i class="fa-solid fa-receipt"></i>Історія оплат</div><div class="ct-s">Платежі за AI-помічника</div></div></div>` +
+    (rows.length ? `<div class="tblw"><table class="tbl" style="min-width:0"><thead><tr><th>Дата</th><th>Опис</th><th>Сума</th><th style="text-align:right">Чек</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td style="font-weight:800">${r[2]}</td><td style="text-align:right">${r[3]==='ok'?'<button class="btn b-sec b-xs" onclick="toast(\'Завантажуємо чек PDF\')">Чек</button>':'<span class="st st-mut">Без оплати</span>'}</td></tr>`).join('')}</tbody></table></div>`
+      : `<div class="cb" style="text-align:center;color:var(--muted);font-size:13px">Оплат ще не було.</div>`);
+  $('subPlan').innerHTML = plan; $('subPay').innerHTML = pay; $('subHist').innerHTML = hist;
+}
+function aiOpenChangePlan(){
+  const cur = isPaid() ? tier() : null;
+  let sel = cur==='pro' ? 'premium' : 'pro';
+  const opt = k => { const P = PLANS[k]; return `<button class="chg${k===sel?' on':''}" data-k="${k}" onclick="this.parentElement.querySelectorAll('.chg').forEach(x=>x.classList.remove('on'));this.classList.add('on')"><span class="rb"></span><span class="chg-t"><b>${P.n}${k===cur?' · поточний':''}</b><span>${P.hw} ДЗ · ${P.ls} уроків з матеріалами / міс.</span></span><span class="chg-p">${P.price} ₴</span></button>`; };
+  aiM(cur ? 'Змінити тариф' : 'Обрати тариф', cur ? 'Підвищення — одразу, зниження — з '+NEXT : 'Щомісячна оплата через Monobank',
+    `<div>${opt('pro')}${opt('premium')}</div>`,
+    `<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-v" onclick="const k=document.querySelector('#mBody .chg.on').dataset.k; if(k==='${cur}'){toast('Це ваш поточний тариф');return;} aiOpenBuy(k, ${cur?'true':'false'})">Продовжити</button>`);
+}
+function aiOpenCancel(){
+  const P = PLANS[tier()];
+  aiM('Скасувати підписку?', `${P.n} · ${P.price} ₴ / міс.`,
+    `<div class="bn bn-warn" style="margin:0 0 14px"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">AI працюватиме до <b>${NEXT}</b> — до кінця оплаченого місяця. Далі тариф стане безкоштовним. Створене з AI залишиться.</div></div></div>
+     <div class="lbl">Чому скасовуєте? (необовʼязково)</div>
+     ${['Задорого','Мало користуюся AI','Не влаштовує якість','Тимчасова пауза','Інше'].map(r=>`<div class="cx" onclick="pick(this)"><div class="cx-b"></div><div class="cx-t nodone">${r}</div></div>`).join('')}`,
+    `<button class="btn b-sec" onclick="closeM()">Залишити підписку</button><button class="btn b-danger" onclick="aiCancelSub()">Скасувати</button>`);
+}
+function aiCancelSub(){ AIS.sub.status='cancelled'; closeM(); aiRefreshAll(); toast('Підписку скасовано · AI працює до '+NEXT); }
+function aiResumeSub(){ AIS.sub.status='active'; aiRefreshAll(); toast('Підписку відновлено'); }
+function aiChangeCard(){
+  aiM('Змінити картку', 'Для щомісячної оплати AI',
+    `<div class="pay-card"><i class="fa-regular fa-credit-card"></i><div><b>${AIS.sub.card}</b><span>Поточна картка</span></div></div>
+     <div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-credit-card"></i></div><div><div class="bn-d">Лише картки українських банків. Нову картку ви введете на сторінці Monobank — Libitum її даних не бачить.</div></div></div>`,
+    `<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-pri" onclick="AIS.sub.card='ПриватБанк · •••• 0932';closeM();renderSubPage();toast('Картку змінено')"><i class="fa-solid fa-arrow-up-right-from-square"></i>Перейти до Monobank</button>`);
+}
+function aiOpenTrialModal(){
+  if (AIS.trialUsed){ toast('Пробний період уже використано'); return; }
+  aiM('14 днів AI безкоштовно', 'З 17 по 31 серпня · без картки',
+    `<div class="pl-lim" style="margin-bottom:14px"><div class="pl-lim-r"><span>AI-домашні завдання</span><b>150</b></div><div class="pl-lim-r"><span>з них презентацій</span><b>до 23</b></div><div class="pl-lim-r"><span>Уроки з матеріалами</span><b>60</b></div></div>
+     <div class="bn bn-ok" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-circle-info"></i></div><div><div class="bn-d">Після 31 серпня AI вимкнеться, якщо не оберете тариф. Усе створене залишиться.</div></div></div>`,
+    `<button class="btn b-sec" onclick="closeM()">Пізніше</button><button class="btn b-v" onclick="aiStartTrial()"><i class="fa-solid fa-play"></i>Почати пробний</button>`);
+}
+function aiStartTrial(){ closeM(); AIS.trialUsed = true; aiSetPlan('trial'); go('ai'); toast('Пробний період активовано · до 31 серпня'); }
+function aiOpenBuy(k, change){
+  const P = PLANS[k], down = change && isPaid() && P.price < PLANS[tier()].price;
+  aiM(change ? `Перейти на ${P.n}` : `Тариф ${P.n}`, 'Щомісячна оплата через Monobank',
+    `<div class="pl-lim" style="margin-bottom:14px"><div class="pl-lim-r"><span>AI-домашні завдання</span><b>${P.hw} / міс.</b></div><div class="pl-lim-r"><span>з них презентацій</span><b>до ${P.prez}</b></div><div class="pl-lim-r"><span>Уроки з матеріалами</span><b>${P.ls} / міс.</b></div></div>
+     <div class="pl-lim-r" style="font-size:14px;padding:4px 2px 14px"><span>${down?'Списання з '+NEXT:'До сплати сьогодні'}</span><b style="font-family:'Fraunces',serif;font-size:22px">${P.price} ₴</b></div>
+     <div class="bn bn-warn" style="margin:0"><div class="bn-ic"><i class="fa-solid fa-credit-card"></i></div><div><div class="bn-d">Лише картки українських банків. Скасувати можна в «Акаунт → Підписка».</div></div></div>`,
+    `<button class="btn b-sec" onclick="closeM()">Скасувати</button><button class="btn b-v" onclick="aiBuyPlan('${k}')"><i class="fa-solid fa-lock"></i>${down?'Підтвердити':'Оплатити '+P.price+' ₴'}</button>`);
+}
+function aiBuyPlan(k){ closeM(); AIS.trialUsed = true; AIS.sub.status='active'; const wasPaid = isPaid(); aiSetPlan(k); if (!wasPaid) go('ai'); else aiRefreshAll(); toast(`Тариф ${PLANS[k].n} активовано`); }
+const FAQ_PL = [
+  ['Що рахується як одне ДЗ?','Одна генерація домашнього завдання будь-якого формату. Презентації рахуються ще й окремо, бо вони найбільші.'],
+  ['Що таке урок з матеріалами?','Матеріали для одного уроку: план, пояснення, вправи або текст. Кожна генерація списує одну одиницю.'],
+  ['Що не рахується в ліміт?','«Інший варіант» окремого блоку, редагування, надсилання учням, збереження в бібліотеку й прикріплення до уроку.'],
+  ['Що буде, якщо скасувати?','AI працює до кінця оплаченого місяця, потім тариф стає безкоштовним. Усе створене залишається.']
+];
+const faqHTML = a => a.map(q => `<div class="faq-i"><button class="faq-q" onclick="this.parentElement.classList.toggle('on')">${q[0]}<i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">${q[1]}</div></div>`).join('');
+function aiSyncBadges(){
+  const b = $('sbAiBadge'), pb = $('sbPlanBadge'), canc = AIS.sub.status==='cancelled' && isPaid();
+  if (b) b.textContent = AIS.plan==='none' ? (AIS.trialUsed?'Вимкнено':'14 днів free') : (AIS.plan==='trial' ? 'Пробний' : PLANS[tier()].n);
+  if (pb) pb.textContent = AIS.plan==='none' ? 'Безкоштовний' : (AIS.plan==='trial' ? 'Пробний' : PLANS[tier()].n + (canc?' · скасовано':''));
+}
+function renderWsBar(){
+  const el = $('wsBar'); if (!el) return; let h = '';
+  if (AIS.plan==='trial') h = `<div class="wsbar v"><i class="fa-solid fa-gift"></i><span class="wsbar-t">Пробний період · <b>14 днів</b><span class="wsbar-x"> (до 31 серпня)</span></span><button class="btn b-v b-xs" onclick="aiOpenChangePlan()">Обрати тариф</button></div>`;
+  else if (isPaid() && AIS.sub.status==='cancelled') h = `<div class="wsbar a"><i class="fa-solid fa-pause"></i><span class="wsbar-t">Скасовано · AI до ${NEXT}</span><button class="btn b-sec b-xs" onclick="aiResumeSub()">Відновити</button></div>`;
+  el.innerHTML = h;
+  document.documentElement.style.setProperty('--wsbar', h ? '37px' : '0px');
+}
+function aiRefreshAll(){ aiSyncBadges(); renderPromo(); renderSubPage(); if ($('v-ai').classList.contains('on')) renderWs(); }
+
+/* ── ДОВІДНИК ── */
+function guideHTML(){
+  const L = lim();
+  return `
+  <div class="g-sec"><h3><i class="fa-solid fa-rocket"></i>Швидкий старт</h3><ol class="g-steps">
+    <li>Оберіть учня ліворуч. На телефоні — натисніть на імʼя вгорі.</li>
+    <li>Оберіть, що готуєте: «Домашні завдання» чи «Матеріали до уроку».</li>
+    <li>Натисніть формат праворуч або напишіть запит своїми словами.</li>
+    <li>Перевірте результат. Змініть блок кнопкою <i class="fa-solid fa-rotate" style="color:var(--violet)"></i> або відредагуйте текст.</li>
+    <li>Надішліть як ДЗ, прикріпіть до уроку або збережіть у бібліотеку.</li></ol></div>
+  <div class="g-sec"><h3><i class="fa-regular fa-eye"></i>Що враховує AI</h3><p>Рівень, ціль, теми уроків, звіти й оцінки за ДЗ з вашого журналу. Для пробних уроків — дані із заявки. Якщо прикріпите файл з бібліотеки, AI візьме його за основу. Контакти учня AI не бачить, а учень не бачить ваш чат з AI.</p></div>
+  <div class="g-sec"><h3><i class="fa-solid fa-pen-nib"></i>Як написати запит</h3>
+    <div class="g-cmp"><div class="g-bad"><b>Загально</b>Дай вправи з англійської</div><div class="g-good"><b>Конкретно</b>10 вправ на for / since, від простих до формату НМТ, на 20 хвилин</div>
+    <div class="g-bad"><b>Без мети</b>План уроку</div><div class="g-good"><b>З метою</b>План на 60 хв: Speaking Part 3, фокус на linking words, в кінці міні-тест</div></div>
+    <p style="margin-top:10px">Додайте: тему, тривалість, кількість завдань, формат. Усе інше AI візьме з профілю учня.</p></div>
+  <div class="g-sec"><h3><i class="fa-solid fa-shapes"></i>Коли що обирати</h3><table class="g-tbl">
+    <tr><td>Закріпити тему вдома</td><td>Вправи</td></tr><tr><td>Перевірити перед контрольною</td><td>Тест</td></tr><tr><td>Слова, формули, правила</td><td>Картки</td></tr>
+    <tr><td>Підготувати заняття</td><td>План уроку</td></tr><tr><td>Перше заняття з новим учнем</td><td>Діагностика</td></tr></table></div>
+  <div class="g-sec"><h3><i class="fa-solid fa-gauge"></i>Ліміти · ${PLANS[tier()].n}</h3><table class="g-tbl">
+    <tr><td>Домашні завдання</td><td>${AIS.used.hw} / ${L.hw}</td></tr><tr><td>з них презентацій</td><td>${AIS.used.prez} / ${L.prez}</td></tr><tr><td>Уроки з матеріалами</td><td>${AIS.used.ls} / ${L.ls}</td></tr>
+    <tr><td>Перегенерація блоку</td><td>безкоштовно</td></tr><tr><td>Перегенерація всього завдання</td><td>2 рази безкоштовно</td></tr></table>
+    <p style="margin-top:8px;font-size:12px;color:var(--muted)">${renewTxt()}.</p></div>
+  <div class="g-sec"><h3><i class="fa-solid fa-shield-halved"></i>Перевіряйте перед надсиланням</h3><p>AI може помилитися у відповідях тесту чи фактах. Перегляньте завдання, перш ніж надіслати учню — так само, як ви перевіряли б підручник.</p></div>
+  <div class="g-sec"><h3><i class="fa-regular fa-comments"></i>Потрібна допомога?</h3><p style="margin-bottom:10px">Напишіть нам у Telegram — відповідаємо 09:00–19:00 (Пн–Сб).</p>
+    <div class="row"><button class="btn b-sec b-sm" onclick="toast('Відкриваємо @libitum_support')"><i class="fa-brands fa-telegram"></i>Написати в підтримку</button><button class="btn b-vs b-sm" onclick="closeGuide();aiResetTour()"><i class="fa-solid fa-route"></i>Пройти онбординг ще раз</button></div></div>`;
+}
+function openGuide(){ closeSheet(); aiM('Довідник AI-помічника', 'Як отримати найкращий результат', `<div class="guide-b" style="padding:0">${guideHTML()}</div>`, `<button class="btn b-sec" onclick="closeM()">Закрити</button>`); }
+function closeGuide(){ closeM(); }
+/* Мобільна панель «Що згенерувати» — у стандартній модалці кабінету (#mv), як усі попапи */
+let aiSheetOpen = false;
+function openSheet(){
+  const tiles = TILES[AIS.mode];
+  const body = `<div class="lims" style="margin:0 0 16px">${limsHTML()}</div>
+    <div class="tools-p" style="margin-bottom:10px">Оберіть формат — запит підставиться в поле. Залишиться вписати тему.</div>
+    ${tiles.map(t => `<button class="tile" onclick="fillPrompt('${t.p}');closeSheet()">${gic(t.k)}<span><span class="tile-t">${t.t}</span><br><span class="tile-d">${t.d}</span></span>${t.prez?`<span class="cnt">${prezLeft()} лишилось</span>`:''}</button>`).join('')}
+    <div class="tips-ex"><div class="tips-ex-h"><i class="fa-regular fa-lightbulb" style="color:var(--amber)"></i>Приклади запитів</div>
+    ${EXAMPLES[AIS.mode].map(e => `<button class="ex" onclick="fillPrompt('${e}');closeSheet()">${e}</button>`).join('')}</div>`;
+  aiM(AIS.mode==='hw' ? 'Що задати додому' : 'Що підготувати до уроку', `${AIS.cur.n} · ліміти та формати`, body, `<button class="btn b-sec" onclick="closeSheet()">Закрити</button>`);
+  aiSheetOpen = true;
+}
+function closeSheet(){ if (aiSheetOpen){ aiSheetOpen = false; closeM(); } }
+
+function aiSetPlan(p){
+  AIS.plan = p; AIS.used = Object.assign({hw:0,prez:0,ls:0}, USAGE_DEMO[p] || {});
+  if (p==='trial') AIS.trialUsed = true;
+  if (['pro','premium','limit'].includes(p)) AIS.sub.status = 'active';
+  document.querySelectorAll('.planSel').forEach(s => s.value = p);
+  aiSyncBadges();
+  $('lkTrialBtn').innerHTML = AIS.trialUsed ? '<i class="fa-solid fa-crown"></i>Обрати тариф' : '<i class="fa-solid fa-gift"></i>Спробувати 14 днів безкоштовно';
+  $('lkTrialBtn').onclick = AIS.trialUsed ? () => aiOpenChangePlan() : aiOpenTrialModal;
+  $('lkNote').textContent = AIS.trialUsed ? 'Пробний період уже використано. Оберіть тариф нижче — створене раніше збережено.' : 'Без картки. Після 14 днів AI просто вимкнеться, якщо не оберете тариф.';
+  renderPromo(); renderSubPage();
+  const v = document.querySelector('.view.on');
+  if (v && (v.id==='v-ai' || v.id==='v-ailock')) go('ai');
+}
+
+/* ── ОНБОРДИНГ AI (такий самий механізм, як у кабінеті) ── */
+const mob = () => matchMedia('(max-width:1023px)').matches;
+const narrow = () => matchMedia('(max-width:1200px)').matches;
+function aiTourSteps(){
+  const P = lim();
+  return [
+    { center:true, t:'Вітаємо в AI-помічнику', d:'За хвилину покажемо, як підготувати ДЗ і урок під конкретного учня.',
+      ill:`<span class="ic"><i class="fa-solid fa-gift"></i></span><span><b>${AIS.plan==='trial'?'Пробний період до 31 серпня':'Тариф '+PLANS[tier()].n}</b><span>${P.hw} ДЗ і ${P.ls} уроків з матеріалами ${AIS.plan==='trial'?'на 14 днів':'щомісяця'}</span></span>` },
+    { sel: mob() ? '#who' : '#rail', t:'Окремий чат для кожного учня', d:'AI памʼятає рівень, ціль і помилки учня з журналу. Пробні уроки — окремо, з даними заявки. «Без учня» — для загальних матеріалів.' },
+    { sel:'#modeSw', t:'Дві функції', d:'<b>Домашні завдання</b> — вправи, тести, картки, презентації з надсиланням учню. <b>Матеріали до уроку</b> — план, пояснення, вправи, діагностика для пробного.' },
+    { sel:'#ctxBtn', t:'Що знає AI', d:'Перевірте, що AI бачить про учня: рівень, теми, слабкі місця. Дані оновлюються після кожного уроку й звіту.' },
+    { sel: narrow() ? '.mob-tools-btn' : '#tools', t:'Що згенерувати', d:'Оберіть формат — запит підставиться в поле, залишиться вписати тему. Або пишіть своїми словами.' },
+    { sel:'.gen-a', t:'Готовий результат — одразу в роботу', d:'<b>Надіслати як ДЗ</b> — AI ще й підкаже, кому з учнів воно підійде. <b>Прикріпити до уроку</b> — відкриєте прямо з розкладу. Окремий блок можна перегенерувати безкоштовно.' },
+    { sel: narrow() ? '.mob-tools-btn' : '#lims', t:'Ліміти завжди на виду', d:mob()?'Скільки ДЗ і уроків з матеріалами залишилось — у панелі «Що згенерувати». Перегенерація блоку в ліміт не рахується.':'Скільки ДЗ і уроків з матеріалами залишилось цього місяця. Перегенерація блоку в ліміт не рахується.' },
+    { sel:'#guideBtn', t:'Довідник поруч', d:'Як писати запити, що рахується в ліміт і відповіді на часті питання. Почнімо з першого ДЗ для Софії?', last:true }
+  ];
+}
+let aiTIdx = 0, aiTOn = false;
+function aiMaybeTour(){ let done = false; try{ done = localStorage.getItem('lb_ai_tour_v1')==='1'; }catch(e){} if (!done && document.body.classList.contains('is-ws') && !aiTOn) aiStartTour(); }
+function aiResetTour(){ try{ localStorage.removeItem('lb_ai_tour_v1'); }catch(e){} if (AIS.plan==='none'){ toast('Онбординг показується після активації AI — оберіть стан у демо'); return; } go('ai'); }
+function aiStartTour(){ aiTIdx = 0; aiTOn = true; AIS.cur = STUDENTS[0]; AIS.mode='hw'; renderWs(); $('aiTourCatch').classList.add('on'); aiTourStep(); addEventListener('resize', aiTourPos); }
+function aiTourStep(){
+  const s = aiTourSteps()[aiTIdx], tip = $('aiTourTip'), n = aiTourSteps().length;
+  const el = s.sel ? document.querySelector(s.sel) : null;
+  if (el && el.scrollIntoView) el.scrollIntoView({ block:'nearest' });
+  tip.innerHTML = `<button class="tour-x" onclick="aiEndTour()" aria-label="Закрити">&times;</button>
+    ${s.center?'':`<div class="tour-step">Крок ${aiTIdx} з ${n-1}</div>`}
+    ${s.ill?`<div class="tour-ill">${s.ill}</div>`:''}
+    <div class="tour-t">${s.t}</div><div class="tour-d">${s.d}</div>
+    <div class="tour-foot"><div class="tour-dots">${aiTourSteps().map((_,i)=>`<span class="tour-dot${i===aiTIdx?' on':''}"></span>`).join('')}</div>
+      ${aiTIdx>0?'<button class="btn b-sec b-sm" onclick="aiTourGo(-1)">Назад</button>':''}
+      ${s.last?'<button class="btn b-v b-sm" onclick="aiEndTour(true)"><i class="fa-solid fa-wand-magic-sparkles"></i>Почати</button>':'<button class="btn b-v b-sm" onclick="aiTourGo(1)">Далі</button>'}</div>`;
+  $('aiTourHole').classList.add('on'); tip.classList.add('on');
+  requestAnimationFrame(aiTourPos);
+}
+function aiTourPos(){
+  if (!aiTOn) return;
+  const s = aiTourSteps()[aiTIdx], el = s.sel ? document.querySelector(s.sel) : null, hole = $('aiTourHole'), tip = $('aiTourTip');
+  if (!el || s.center){ hole.style.cssText='left:50%;top:50%;width:0;height:0'; tip.style.cssText='left:50%;top:50%;transform:translate(-50%,-50%)'; return; }
+  const r = el.getBoundingClientRect(), p = 6;
+  hole.style.cssText = `left:${r.left-p}px;top:${r.top-p}px;width:${r.width+p*2}px;height:${r.height+p*2}px`;
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  if (mob()){ const below = r.bottom + h + 20 < innerHeight; tip.style.cssText = `left:14px;right:14px;${below?`top:${r.bottom+12}px`:`top:${Math.max(12, r.top-h-12)}px`}`; return; }
+  let left = r.right + 16, top = r.top;
+  if (left + w > innerWidth - 12) left = r.left - w - 16;
+  if (left < 12){ left = Math.min(Math.max(12, r.left), innerWidth - w - 12); top = r.bottom + 12; if (top + h > innerHeight - 12) top = r.top - h - 12; }
+  top = Math.max(12, Math.min(top, innerHeight - h - 12));
+  tip.style.cssText = `left:${left}px;top:${top}px`;
+}
+function aiTourGo(d){ aiTIdx = Math.max(0, Math.min(aiTourSteps().length-1, aiTIdx+d)); aiTourStep(); }
+function aiEndTour(start){
+  aiTOn = false; $('aiTourCatch').classList.remove('on'); $('aiTourHole').classList.remove('on'); $('aiTourTip').classList.remove('on');
+  removeEventListener('resize', aiTourPos);
+  try{ localStorage.setItem('lb_ai_tour_v1','1'); }catch(e){}
+  if (start){ AIS.cur = STUDENTS[0]; AIS.mode='hw'; renderWs(); fillPrompt('Склади тест на 10 питань з теми «…» з відповідями'); }
+}
+
+
+/* ══════════ ІНТЕГРАЦІЯ AI З КАБІНЕТОМ ══════════ */
+/* DEV: ДЗ з AI потрапляє в журнал біля останнього уроку учня без ДЗ; якщо такого немає — окремим рядком «ДЗ без уроку» */
+function aiAddHwToJournal(s, title, due){
+  const own = LESSONS.filter(l => l.stu===s.n && l.hw.status==='none').sort((a,b)=> a.date<b.date?1:-1)[0];
+  const hw = { status:'assigned', task:title+' · створено в AI-помічнику', deadline:due, ai:true };
+  if (own){ own.hw = hw; }
+  else {
+    const id = Math.max.apply(null, LESSONS.map(l=>l.id)) + 1;
+    LESSONS.push({ id, date:'2026-08-17', time:'—', stu:s.n, subj:s.subj, topic:title, hwOnly:true, report:{status:'none'}, hw });
+  }
+  jrnRefresh();
+}
+function aiSaveToLib(title, s){
+  const id = Math.max.apply(null, LIB.map(x=>x.id)) + 1;
+  const subj = s && s.fam==='de' ? 'Німецька' : 'Англійська';
+  const m = s && s.meta ? s.meta.match(/^[ABC][12]/) : null;
+  LIB.push({ id, name:title, type:'text', size:'—', subj, lvl: m ? m[0] : '—', tags:['AI'], print:false, uses:0, date:'17.08',
+    desc:'Створено AI-помічником' + (s && !s.free ? ' для ' + s.n : '') + '. Можна використати для інших учнів.' });
+  renderLib();
+}
+const _jrb = jrnReportBadge;
+jrnReportBadge = function(l){ return l.hwOnly ? '<span class="st st-mut">ДЗ без уроку</span>' : _jrb(l); };
+const _jhb = jrnHwBadge;
+jrnHwBadge = function(l){ return _jhb(l) + (l.hw && l.hw.ai ? ' <span class="ai-tag"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</span>' : ''); };
+const _jact = jrnActions;
+jrnActions = function(l){ return l.hwOnly ? '<div class="row" style="justify-content:flex-end"><button class="btn b-sec b-xs" onclick="event.stopPropagation();openView('+l.id+')">Деталі</button></div>' : _jact(l); };
+
+/* Навігація: «AI-помічник» веде на робочий простір або на сторінку без підписки */
+const _cabGo = go;
+go = function(v){
+  let target = v;
+  if (v==='plans' || v==='aisub') target = 'sub';
+  if (v==='ai' || v==='ailock') target = AIS.plan==='none' ? 'ailock' : 'ai';
+  const acc = document.body.dataset.acc || 'active';
+  _cabGo(target);
+  if (acc!=='active' && target!=='profile') return;
+  document.body.classList.toggle('is-ws', target==='ai');
+  if (target==='ailock') document.querySelectorAll('.sb-i[data-view="ai"]').forEach(b=>b.classList.add('on'));
+  if (target==='ai'){ renderWs(); setTimeout(aiMaybeTour, 400); }
+  if (target==='sub') renderSubPage();
+  if (target==='ailock') renderPromo();
+  closeActMenus();
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (aiTOn) return aiEndTour();
+  if (aiSheetOpen) return closeSheet();
+  closeDrop();
+});
+
+const _cabCloseM = closeM;
+closeM = function(){ aiSheetOpen = false; _cabCloseM(); };
+
+/* ── INIT AI ── */
+document.addEventListener('DOMContentLoaded', () => {
+  AIS.cur = STUDENTS[0];
+  $('plFaq').innerHTML = faqHTML(FAQ_PL);
+  aiSetPlan('none');
+  $('inp').addEventListener('keydown', e => { if (e.key==='Enter' && !e.shiftKey){ e.preventDefault(); aiSend(); } });
 });
 </script>
 </body>
